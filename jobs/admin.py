@@ -1,3 +1,8 @@
 from django.contrib import admin
 
-# Register your models here.
+from .models import *
+
+admin.site.register(PrintJob)
+admin.site.register(PrintAssembly)
+admin.site.register(PrintPart)
+admin.site.register(SlicedModel)

@@ -1,3 +1,17 @@
 from django.db import models
 
-# Create your models here.
+
+class PrintJob(models.Model):
+    pass
+
+
+class PrintAssembly(models.Model):
+    pass
+
+
+class PrintPart(models.Model):
+    pass
+
+
+class SlicedModel(models.Model):
+    pass
