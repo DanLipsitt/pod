@@ -24,6 +24,9 @@ class PrintPart(models.Model):
         """Most recent sliced model rev."""
         return self.slicedmodelrev_set.latest()
 
+    def __str__(self):
+        return '{0.pk}'.format(self)
+
 
 class SourceModelFile(models.Model):
     """Unsliced geometry."""
@@ -33,7 +36,9 @@ class SourceModelFile(models.Model):
 class SlicedModelFile(models.Model):
     """Slicer output."""
     source_model = models.ForeignKey(SourceModelFile)
-    pass
+
+    def __str__(self):
+        return '{0.pk}'.format(self)
 
 
 class SlicedModelRev(models.Model):
@@ -44,3 +49,6 @@ class SlicedModelRev(models.Model):
     class Meta:
         unique_together = ('part', 'rev')
         get_latest_by = 'rev'
+
+    def __str__(self):
+        return 'part {0.part}, model {0.sliced_model}, rev {0.rev}'.format(self)
