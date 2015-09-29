@@ -22,7 +22,7 @@ class PrintPart(models.Model):
 
     def current_sliced_model(self):
         """Most recent sliced model rev."""
-        return SlicedModelRev.objects.filter(part=self).latest()
+        return self.slicedmodelrev_set.latest()
 
 
 class SourceModelFile(models.Model):

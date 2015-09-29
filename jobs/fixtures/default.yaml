@@ -1,0 +1,27 @@
+- fields: {}
+  model: jobs.material
+  pk: 1
+- fields: {}
+  model: jobs.printjob
+  pk: 1
+- fields: {job: 1}
+  model: jobs.printassembly
+  pk: 1
+- fields: {assembly: 1, material: 1, quantity_needed: 1}
+  model: jobs.printpart
+  pk: 1
+- fields: {}
+  model: jobs.sourcemodelfile
+  pk: 1
+- fields: {source_model: 1}
+  model: jobs.slicedmodelfile
+  pk: 1
+- fields: {part: 1, rev: 1, sliced_model: 1}
+  model: jobs.slicedmodelrev
+  pk: 1
+- fields: {part: 1, rev: 2, sliced_model: 1}
+  model: jobs.slicedmodelrev
+  pk: 2
+- fields: {part: 1, rev: 3, sliced_model: 1}
+  model: jobs.slicedmodelrev
+  pk: 3
