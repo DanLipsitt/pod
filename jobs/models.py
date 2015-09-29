@@ -18,7 +18,7 @@ class PrintAssembly(models.Model):
 class PrintPart(models.Model):
     assembly = models.ForeignKey(PrintAssembly)
     material = models.ForeignKey(Material)
-    quantity_needed = models.IntegerField()
+    quantity_needed = models.IntegerField(default=1)
 
     def current_sliced_model(self):
         """Most recent sliced model rev."""
