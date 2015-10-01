@@ -4,6 +4,7 @@ try:
     from unittest.mock import Mock
 except ImportError:
     from mock import Mock
+from model_mommy import mommy
 
 
 class PrintPartTests(TestCase):
@@ -22,10 +23,15 @@ class PrintPartTests(TestCase):
 class SlicedModelRevTests(TestCase):
 
     def test_auto_increment(self):
-        part = Mock(spec=PrintPart, _state=Mock(), id=1)
-        model1 = Mock(spec=SlicedModelFile, _state=Mock(), id=1)
-        model2 = Mock(spec=SlicedModelFile, _state=Mock(), id=2)
+        part = mommy.make(PrintPart)
+        model1 = mommy.make(SlicedModelFile)
+        model2 = mommy.make(SlicedModelFile)
 
-        rev1 = SlicedModelRev(part=part, sliced_model=model1)
-        rev2 = SlicedModelRev(part=part, sliced_model=model2)
-        self.assertEqual(rev2, rev1+1)
+        rev1 = SlicedModelRev.objects.create(
+            part=part, sliced_model=model1
+        )
+        rev2 = SlicedModelRev.objects.create(
+            part=part, sliced_model=model2
+        )
+        self.assertIsNotNone(rev1.rev)
+        self.assertEqual(rev2.rev, rev1.rev+1)
