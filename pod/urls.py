@@ -7,4 +7,5 @@ admin.site.site_title = 'Type A Print Pod'
 
 urlpatterns = [
     url(r'^admin/', include(admin.site.urls)),
+    url(r'^files/', include('files.urls', namespace='files')),
 ]

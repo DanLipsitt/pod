@@ -40,6 +40,7 @@ INSTALLED_APPS = (
     'django_extensions',
     'printers',
     'jobs',
+    'files',
 )
 
 MIDDLEWARE_CLASSES = (
