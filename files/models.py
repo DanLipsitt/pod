@@ -9,7 +9,6 @@ class PrintFile(models.Model):
 
 def distribute_file(f, filename, printers):
     import grequests
-    from io import StringIO
     from requests_toolbelt import MultipartEncoderMonitor
 
     url_template = "http://localhost:8081/post"
@@ -23,7 +22,7 @@ def distribute_file(f, filename, printers):
     for printer in printers:
         url = url_template.format()
         callback = make_progress_callback(url)
-        data = {'gcode': ('filename', StringIO('dummy data'))}
+        data = {'file': (filename, f)}
         monitor = MultipartEncoderMonitor.from_fields(data, callback)
         headers = {'Content-Type': monitor.content_type}
         reqs.append(grequests.post(url, data=monitor, headers=headers))
