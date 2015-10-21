@@ -11,7 +11,7 @@ def distribute_file(f, filename, printers):
     import grequests
     from requests_toolbelt import MultipartEncoderMonitor
 
-    url_template = "http://localhost:8081/post"
+    url_template = "http://localhost:8081/post#{printer}"
 
     def make_progress_callback(url):
         def progress(monitor):
@@ -20,7 +20,7 @@ def distribute_file(f, filename, printers):
 
     reqs = []
     for printer in printers:
-        url = url_template.format()
+        url = url_template.format(printer=printer)
         callback = make_progress_callback(url)
         data = {'file': (filename, f)}
         monitor = MultipartEncoderMonitor.from_fields(data, callback=callback)
