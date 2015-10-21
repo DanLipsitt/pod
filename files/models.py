@@ -23,7 +23,7 @@ def distribute_file(f, filename, printers):
         url = url_template.format()
         callback = make_progress_callback(url)
         data = {'file': (filename, f)}
-        monitor = MultipartEncoderMonitor.from_fields(data, callback)
+        monitor = MultipartEncoderMonitor.from_fields(data, callback=callback)
         headers = {'Content-Type': monitor.content_type}
         reqs.append(grequests.post(url, data=monitor, headers=headers))
     return grequests.map(reqs)
