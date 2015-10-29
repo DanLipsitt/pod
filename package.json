@@ -1,0 +1,24 @@
+{
+  "name": "pod",
+  "version": "0.1.0",
+  "description": "Type A Machines Pod interface.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": " "
+  },
+  "author": "Type A Machines",
+  "license": "UNLICENSED",
+  "dependencies": {
+    "bootstrap": "^3.3.5",
+    "react": "^0.14.1",
+    "react-dom": "^0.14.1"
+  },
+  "devDependencies": {
+    "babel": "^6.0.2",
+    "webpack": "^1.12.2"
+  }
+}
