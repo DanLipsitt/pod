@@ -2,9 +2,11 @@
 {% load static from staticfiles %}
 
 {% block body %}
-Hello, World!
+<div id="container">
+    Loading...
+</div>
 {% endblock %}
 
 {% block body_scripts %}
-<script src='{% static "js/main.js" %}'></script>
+<script src='{% static "js/bundle.js" %}'></script>
 {% endblock %}
