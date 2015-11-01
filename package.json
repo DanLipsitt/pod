@@ -6,7 +6,7 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "postinstall": "npm run build",
-    "clean": "rm -rf build/* && mkdir -p build/css && mkdir -p build/js",
+    "clean": "rm -rf build/*",
     "assets": "ln -s ./client/assets build/assets",
     "optimize:images": "echo 'TODO",
     "watch": "webpack --config webpack.config.js -d --progress --profile --colors --watch",
