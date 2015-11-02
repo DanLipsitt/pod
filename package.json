@@ -24,7 +24,6 @@
   "author": "Type A Machines",
   "license": "UNLICENSED",
   "dependencies": {
-    "bootstrap": "^3.3.5",
     "react": "^0.14.1",
     "react-dom": "^0.14.1"
   },
