@@ -31,10 +31,12 @@
     "babel": "^6.0.2",
     "babel-loader": "^5.3.3",
     "browser-sync": "^2.9.11",
+    "css-loader": "^0.21.0",
     "elemental": "^0.5.3",
     "less": "^2.5.3",
     "less-loader": "^2.2.1",
     "react-addons-css-transition-group": "^0.14.2",
+    "style-loader": "^0.13.0",
     "webpack": "^1.12.2"
   }
 }
