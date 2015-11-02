@@ -35,6 +35,7 @@
     "elemental": "^0.5.3",
     "less": "^2.5.3",
     "less-loader": "^2.2.1",
+    "react-addons-css-transition-group": "^0.14.2",
     "webpack": "^1.12.2"
   }
 }
