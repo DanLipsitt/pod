@@ -12,7 +12,7 @@ class App extends React.Component {
         <header><h1>Type A Machines Pod Manager</h1></header>
         <Row>
           <Col sm="1/4">
-            <FileList />
+            <FileList data={this.props.files}/>
           </Col>
           <Col sm="3/4">
           <PrinterGrid />
@@ -24,4 +24,6 @@ class App extends React.Component {
   }
 };
 
-ReactDOM.render(<App name="World!"/>, document.getElementById('container'));
+let FILES = ['1.gcode', '2.gcode'];
+
+ReactDOM.render(<App files={FILES}/>, document.getElementById('container'));
