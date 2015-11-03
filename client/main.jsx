@@ -2,6 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import {Row, Col, Card, Button, Glyph} from 'elemental';
 import './style/style.less';
+import {PrinterCard} from './components/printercard';
 
 class App extends  React.Component {
   render() {
@@ -31,7 +32,7 @@ class App extends  React.Component {
                 </Row>
               </Card>
               </Col>
-              <Col sm='1/3'><Card><h3>series1-2000</h3></Card></Col>
+              <Col sm='1/3'><PrinterCard name="series1-2000"></PrinterCard></Col>
               <Col sm='1/3'><Card><h3>series1-2000</h3></Card></Col>
             </Row>
             <Row>
