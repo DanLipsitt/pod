@@ -2,7 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import {Row, Col, Card, Button, Glyph} from 'elemental';
 import './style/style.less';
-import {PrinterCard} from './components/printercard';
+import {PrinterCard} from './components/printer-card';
 
 class App extends  React.Component {
   render() {
