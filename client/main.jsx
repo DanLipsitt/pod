@@ -3,6 +3,7 @@ import ReactDOM from 'react-dom';
 import {Row, Col, Card, Button, Glyph} from 'elemental';
 import './style/style.less';
 import {PrinterGrid} from './components/printer-grid';
+import {FileList} from './components/file-list';
 
 class App extends React.Component {
   render() {
@@ -11,9 +12,8 @@ class App extends React.Component {
         <header><h1>Type A Machines Pod Manager</h1></header>
         <Row>
           <Col sm="1/4">
-          <h2>Jobs</h2>
-          <Button><Glyph icon="plus"></Glyph>Add Job</Button>
-</Col>
+            <FileList />
+          </Col>
           <Col sm="3/4">
           <PrinterGrid />
           </Col>
