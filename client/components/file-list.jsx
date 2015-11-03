@@ -10,7 +10,6 @@ export function FileList(props) {
     let items = props.data.map(
       item => <FileItem filename={item} />
     );
-    console.log(items);
     content = <ul>{items}</ul>;
   }
 
