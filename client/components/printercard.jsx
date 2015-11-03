@@ -12,9 +12,9 @@ export class PrinterCard extends Card {
         </Row>
         <Row>No file loaded.</Row>
         <Row>
-          <Button><Glyph icon="triangle-right"></Glyph></Button>
-          <Button><Glyph icon="primitive-square"></Glyph></Button>
-          <Button><Glyph icon="database"></Glyph>Filament</Button>
+          <Button><Glyph icon="triangle-right" /></Button>
+          <Button><Glyph icon="primitive-square" /></Button>
+          <Button><Glyph icon="database" />Filament</Button>
         </Row>
       </Card>
     );
