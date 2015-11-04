@@ -4,7 +4,10 @@ import {Row, Col, Card, Button, Glyph} from 'elemental';
 import './style/style.less';
 import {PrinterGrid} from './components/printer-grid';
 import {FileList} from './components/file-list';
+import HTML5Backend from 'react-dnd-html5-backend';
+import {DragDropContext} from 'react-dnd';
 
+@DragDropContext(HTML5Backend)
 class App extends React.Component {
   render() {
     return (

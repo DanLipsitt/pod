@@ -1,4 +1,44 @@
-import React from 'react';
+import React, {Component, PropTypes} from 'react';
+import {DragSource} from 'react-dnd';
 
-export var FileItem = props =>
-  <li>{props.filename}</li>;
+const dragSource = {
+  beginDrag(props) {
+    return {filename: props.filename};
+  },
+
+  endDrag(props, monitor) {
+    const item = monitor.getItem();
+    const dropResult = monitor.getDropResult();
+
+    if (dropResult) {
+      window.alert(
+        `You dropped ${item.name} into ${dropResult.name}!`
+      );
+    }
+  },
+
+};
+
+@DragSource('FileItem', dragSource, (connect, monitor) => ({
+  connectDragSource: connect.dragSource(),
+  isDragging: monitor.isDragging()
+}))
+export class FileItem extends Component {
+  static propTypes = {
+    connectDragSource: PropTypes.func.isRequired,
+    isDragging: PropTypes.bool.isRequired,
+    filename: PropTypes.string.isRequired,
+  };
+
+  render() {
+    const { isDragging, connectDragSource } = this.props;
+    const { name } = this.props;
+    const opacity = isDragging ? 0.4 : 1;
+
+    return (
+      connectDragSource(
+        <li>{this.props.filename}</li>
+      )
+    );
+  }
+}
