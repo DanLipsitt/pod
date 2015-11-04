@@ -1,6 +1,23 @@
 import React from 'react';
 import {Row, Col, Card, Button, Glyph} from 'elemental';
+import {DropTarget} from 'react-dnd';
 
+const printerCardTarget = {
+  canDrop(props, monitor) {
+    return true;
+  },
+};
+
+@DropTarget('FileItem', printerCardTarget, (connect, monitor) => ({
+  // Call this function inside render()
+  // to let React DnD handle the drag events:
+  connectDropTarget: connect.dropTarget(),
+  // You can ask the monitor about the current drag state:
+  isOver: monitor.isOver(),
+  isOverCurrent: monitor.isOver({ shallow: true }),
+  canDrop: monitor.canDrop(),
+  itemType: monitor.getItemType()
+}))
 export class PrinterCard extends React.Component {
   constructor(props) {
     super(props);
@@ -9,7 +26,9 @@ export class PrinterCard extends React.Component {
 
   render() {
     const filename = this.state.filename;
-    return (
+    const {isOver, canDrop, connectDropTarget } = this.props;
+    return connectDropTarget(
+      <div>
       <Card>
         <h3>{this.props.name}</h3>
         <Row>
@@ -25,6 +44,7 @@ export class PrinterCard extends React.Component {
           <Button><Glyph icon="database" />Filament</Button>
         </Row>
       </Card>
+      </div>
     );
   }
 };

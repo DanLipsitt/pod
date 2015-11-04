@@ -12,8 +12,9 @@ const dragSource = {
 
     if (dropResult) {
       window.alert(
-        `You dropped ${item.name} into ${dropResult.name}!`
+        `You dropped ${item.filename} into ${dropResult}!`
       );
+      console.debug(dropResult);
     }
   },
 
