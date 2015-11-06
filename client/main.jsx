@@ -6,6 +6,7 @@ import {PrinterGrid} from './components/PrinterGrid';
 import {FileList} from './components/FileList';
 import HTML5Backend from 'react-dnd-html5-backend';
 import {DragDropContext} from 'react-dnd';
+import 'bootstrap-webpack';
 
 @DragDropContext(HTML5Backend)
 class App extends React.Component {
