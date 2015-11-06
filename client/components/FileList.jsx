@@ -1,6 +1,6 @@
 import React from 'react';
 import {Button, Glyph, Table, Alert} from 'elemental';
-import {FileItem} from './file-item';
+import {FileItem} from './FileItem';
 
 export function FileList(props) {
   return (

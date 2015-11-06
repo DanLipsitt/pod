@@ -1,6 +1,6 @@
 import React from 'react';
 import {Row, Col} from 'elemental';
-import {PrinterCard} from './printer-card';
+import {PrinterCard} from './PrinterCard';
 
 export var PrinterGrid = (props) =>
   <div>

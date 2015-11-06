@@ -2,8 +2,8 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import {Row, Col, Card, Button, Glyph} from 'elemental';
 import './style/style.less';
-import {PrinterGrid} from './components/printer-grid';
-import {FileList} from './components/file-list';
+import {PrinterGrid} from './components/PrinterGrid';
+import {FileList} from './components/FileList';
 import HTML5Backend from 'react-dnd-html5-backend';
 import {DragDropContext} from 'react-dnd';
 
