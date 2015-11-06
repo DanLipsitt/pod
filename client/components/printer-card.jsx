@@ -1,3 +1,4 @@
+import './printer-card.less';
 import React from 'react';
 import {Row, Col, Card, Button, Glyph} from 'elemental';
 import {DropTarget} from 'react-dnd';
