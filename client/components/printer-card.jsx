@@ -7,6 +7,7 @@ import classNames from 'classnames';
 
 const printerCardTarget = {
   drop(props, monitor, component) {
+    props.onDrop(monitor.getItem());
     return {name: props.name};
   },
 
