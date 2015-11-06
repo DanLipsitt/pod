@@ -1,5 +1,5 @@
 import './printer-card.less';
-import React from 'react';
+import React, {PropTypes} from 'react';
 import {Row, Col, Card, Button, Glyph} from 'elemental';
 import {DropTarget} from 'react-dnd';
 import {FILE_ITEM} from './DragItemTypes';
@@ -18,19 +18,19 @@ const printerCardTarget = {
 @DropTarget(FILE_ITEM, printerCardTarget, (connect, monitor) => ({
   connectDropTarget: connect.dropTarget(),
   isOver: monitor.isOver(),
-  isOverCurrent: monitor.isOver({ shallow: true }),
   canDrop: monitor.canDrop(),
-  itemType: monitor.getItemType()
 }))
 export class PrinterCard extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {filename: null};
-  }
+  static propTypes = {
+    filename: PropTypes.string,
+    /* drag and drop */
+    connectDropTarget: PropTypes.func.isRequired,
+    canDrop: PropTypes.bool.isRequired,
+    onDrop: PropTypes.func,
+  };
 
   render() {
-    const filename = this.state.filename;
-    const {isOver, canDrop, connectDropTarget } = this.props;
+    const {filename, isOver, canDrop, connectDropTarget} = this.props;
     return connectDropTarget(
       <div className={classNames('PrinterCard', {
         'is-drag-hovered': this.props.isOver,
