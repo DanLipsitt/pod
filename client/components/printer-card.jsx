@@ -5,6 +5,10 @@ import {FILE_ITEM} from './DragItemTypes';
 import classNames from 'classnames';
 
 const printerCardTarget = {
+  drop(props, monitor, component) {
+    return {name: props.name};
+  },
+
   canDrop(props, monitor) {
     return true;
   },
