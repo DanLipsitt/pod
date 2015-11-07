@@ -1,4 +1,5 @@
 var path = require('path');
+var webpack = require('webpack');
 
 module.exports = {
   entry: [
@@ -9,6 +10,12 @@ module.exports = {
     path: './build',
     filename: 'bundle.js',
   },
+  plugins: [
+    new webpack.ProvidePlugin({
+      $: "jquery",
+      jQuery: "jquery"
+    })
+  ],
   module: {
     loaders: [
       {test: /\.less$/, loader: 'style!css!less'},
