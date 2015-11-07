@@ -1,7 +1,10 @@
 var path = require('path');
 
 module.exports = {
-  entry: './client/main.jsx',
+  entry: [
+    'bootstrap-webpack!./bootstrap.config.js',
+    './client/main.jsx',
+  ],
   output: {
     path: './build',
     filename: 'bundle.js',
