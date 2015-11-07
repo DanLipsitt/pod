@@ -1,6 +1,7 @@
 import './PrinterCard.less';
 import React, {PropTypes} from 'react';
-import {Row, Col, Card, Button, Glyph} from 'elemental';
+import 'bootstrap-webpack';
+import {Row, Col, Panel, Button, Glyphicon} from 'react-bootstrap';
 import {DropTarget} from 'react-dnd';
 import {FILE_ITEM} from './DragItemTypes';
 import classNames from 'classnames';
@@ -38,16 +39,18 @@ export class PrinterCard extends React.Component {
       })}>
         <h3>{this.props.name}</h3>
         <Row>
-          <Col sm="2/3" gutter={5}><Card><Glyph icon="device-camera-video"></Glyph></Card></Col>
-          <Col sm="1/3" gutter={5}><Card>Ready</Card></Col>
+          <Col sm={9}><Panel>
+            <Glyphicon glyph="device-camera-video" />
+          </Panel></Col>
+          <Col sm={3}><Panel>Ready</Panel></Col>
         </Row>
         <Row>
           {filename ? filename : "No file loaded."}
         </Row>
         <Row>
-          <Button><Glyph icon="triangle-right" /></Button>
-          <Button><Glyph icon="primitive-square" /></Button>
-          <Button><Glyph icon="database" />Filament</Button>
+          <Button><Glyphicon glyph="triangle-right" /></Button>
+          <Button><Glyphicon glyph="primitive-square" /></Button>
+          <Button><Glyphicon glyph="database" />Filament</Button>
         </Row>
       </div>
     );

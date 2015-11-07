@@ -3,7 +3,6 @@ var webpack = require('webpack');
 
 module.exports = {
   entry: [
-    'bootstrap-webpack!./bootstrap.config.js',
     './client/main.jsx',
   ],
   output: {
