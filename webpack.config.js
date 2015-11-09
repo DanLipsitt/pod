@@ -1,5 +1,4 @@
 var path = require('path');
-var webpack = require('webpack');
 
 module.exports = {
   entry: [
@@ -10,17 +9,15 @@ module.exports = {
     publicPath: '/static/',
     filename: 'bundle.js',
   },
-  plugins: [
-    new webpack.ProvidePlugin({
-      $: "jquery",
-      jQuery: "jquery"
-    })
-  ],
   module: {
     loaders: [
       {test: /\.less$/, loader: 'style!css!less'},
       {test: /\.js$/,  exclude: /node_modules/, loader: 'babel-loader'},
       {test: /\.jsx$/, exclude: /node_modules/, loader: 'babel-loader'},
+
+      // Give bootstrap-webpack js access to the jQuery object.
+      {test: /bootstrap\/js\//, loader: 'imports?jQuery=jquery'},
+
       {
         test: /\.(woff|woff2)(\?v=\d+\.\d+\.\d+)?$/,
         loader: 'url?limit=10000&mimetype=application/font-woff'
