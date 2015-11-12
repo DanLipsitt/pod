@@ -5,13 +5,14 @@ module.exports = {
     './client/main.jsx',
   ],
   output: {
-    path: './build',
+    path: path.join(__dirname, 'build'),
     publicPath: '/static/',
     filename: 'bundle.js',
   },
   module: {
     loaders: [
       {test: /\.less$/, loader: 'style!css!less'},
+      {test: /\.css$/, loader: 'style-loader!css-loader!postcss-loader'},
       {test: /\.js$/,  exclude: /node_modules/, loader: 'babel-loader'},
       {test: /\.jsx$/, exclude: /node_modules/, loader: 'babel-loader'},
 
