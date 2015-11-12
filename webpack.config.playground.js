@@ -4,6 +4,7 @@ var path = require('path'),
     webpack = require('webpack');
 
 module.exports = _.extend(devConfig, {
+  devtool: 'eval',
   entry: [
     'webpack-hot-middleware/client',
     './client/playground/index'
