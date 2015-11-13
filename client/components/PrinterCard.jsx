@@ -44,7 +44,7 @@ export class PrinterCard extends React.Component {
       >
         <Row>
           <Col sm={9}><Panel>
-            <Glyphicon glyph="device-camera-video" />
+            <Glyphicon glyph="facetime-video" />
           </Panel></Col>
           <Col sm={3}><Panel>Ready</Panel></Col>
         </Row>
