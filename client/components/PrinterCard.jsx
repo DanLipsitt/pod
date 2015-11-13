@@ -2,7 +2,8 @@ import './PrinterCard.less';
 import React, {PropTypes} from 'react';
 import {findDOMNode} from 'react-dom';
 import 'bootstrap-webpack';
-import {Row, Col, Panel, Button, Glyphicon} from 'react-bootstrap';
+import {Row, Col, Panel, Button, ButtonToolbar, ButtonGroup, Glyphicon}
+from 'react-bootstrap';
 import {DropTarget} from 'react-dnd';
 import {FILE_ITEM} from './DragItemTypes';
 import classNames from 'classnames';
@@ -47,14 +48,16 @@ export class PrinterCard extends React.Component {
           </Panel></Col>
           <Col sm={3}><Panel>Ready</Panel></Col>
         </Row>
-        <Row>
-          {filename ? filename : "No file loaded."}
-        </Row>
-        <Row>
-          <Button><Glyphicon glyph="triangle-right" /></Button>
-          <Button><Glyphicon glyph="primitive-square" /></Button>
-          <Button><Glyphicon glyph="database" />Filament</Button>
-        </Row>
+        <p>{filename ? filename : "No file loaded."}</p>
+        <ButtonToolbar>
+          <ButtonGroup>
+            <Button><Glyphicon glyph="play" /></Button>
+            <Button><Glyphicon glyph="stop" /></Button>
+          </ButtonGroup>
+          <ButtonGroup>
+            <Button><Glyphicon glyph="cd" /> Filament</Button>
+          </ButtonGroup>
+        </ButtonToolbar>
       </Panel>
     );
   }
