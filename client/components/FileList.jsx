@@ -8,7 +8,7 @@ export var FileList = ({files}) => (
     <h2><Glyphicon glyph="folder-open"/> Files</h2>
     <Button><Glyphicon glyph="plus" /> Add File</Button>
     {!files.length ?
-     <Alert type="warning">No files yet...</Alert>
+     <Alert bsStyle="warning">No files yet...</Alert>
      :
      <ul>
        {files.map(item =>
