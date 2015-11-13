@@ -1,12 +1,13 @@
 import React from 'react';
-import {Button, Glyph, Table, Alert} from 'elemental';
+import {Button, Glyphicon, Table, Alert} from 'react-bootstrap';
+
 import {FileItem} from './FileItem';
 
 export function FileList(props) {
   return (
     <div>
-      <h2><Glyph icon="file-directory"/> Files</h2>
-      <Button><Glyph icon="plus" />Add File</Button>
+      <h2><Glyphicon glyph="folder-open"/> Files</h2>
+      <Button><Glyphicon glyph="plus" /> Add File</Button>
       {!props.data ?
        <Alert type="warning">No files yet...</Alert> :
        <ul>
