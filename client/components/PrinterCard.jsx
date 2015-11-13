@@ -1,5 +1,6 @@
 import './PrinterCard.less';
 import React, {PropTypes} from 'react';
+import {findDOMNode} from 'react-dom';
 import 'bootstrap-webpack';
 import {Row, Col, Panel, Button, Glyphicon} from 'react-bootstrap';
 import {DropTarget} from 'react-dnd';
@@ -33,11 +34,13 @@ export class PrinterCard extends React.Component {
 
   render() {
     const {filename, isOver, canDrop, connectDropTarget} = this.props;
-    return connectDropTarget(
-      <div className={classNames('PrinterCard', {
-        'is-drag-hovered': this.props.isOver,
-      })}>
-        <h3>{this.props.name}</h3>
+    return (
+      <Panel
+          className={classNames('PrinterCard',
+                     {'is-drag-hovered': this.props.isOver})}
+          header={<h3>{this.props.name}</h3>}
+          ref={instance => connectDropTarget(findDOMNode(instance))}
+      >
         <Row>
           <Col sm={9}><Panel>
             <Glyphicon glyph="device-camera-video" />
@@ -52,7 +55,7 @@ export class PrinterCard extends React.Component {
           <Button><Glyphicon glyph="primitive-square" /></Button>
           <Button><Glyphicon glyph="database" />Filament</Button>
         </Row>
-      </div>
+      </Panel>
     );
   }
 };
