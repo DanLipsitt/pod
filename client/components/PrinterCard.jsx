@@ -5,7 +5,7 @@ import 'bootstrap-webpack';
 import {Row, Col, Panel, Button, ButtonToolbar, ButtonGroup, Glyphicon}
 from 'react-bootstrap';
 import {DropTarget} from 'react-dnd';
-import {FILE_ITEM} from './DragItemTypes';
+import {FILE_ITEM} from '../constants/DragItemTypes';
 import classNames from 'classnames';
 
 const printerCardTarget = {
