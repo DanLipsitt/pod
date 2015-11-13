@@ -11,8 +11,8 @@ module.exports = _.extend(devConfig, {
   ],
   loaders: [{
     test: /\.jsx?$/,
-    loader: 'babel',
-    include: path.join(__dirname, 'src'),
+    loader: 'babel-loader',
+    include: path.join(__dirname, 'client/components'),
     query: {
       plugins: ['react-transform'],
       extra: {
