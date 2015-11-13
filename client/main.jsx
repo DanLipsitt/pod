@@ -16,7 +16,7 @@ class App extends React.Component {
         <header><h1>Type A Machines Pod Manager</h1></header>
         <Row>
           <Col sm={3}>
-            <FileList data={this.props.files}/>
+            <FileList files={this.props.files}/>
             <div>
               <h2><Glyphicon glyph="hourglass"/> History</h2>
               <p><b>file5.gcode</b> completed on <b>series1-2003</b> last Wed.</p>
