@@ -17,3 +17,5 @@ export var PrinterGrid = (props) =>
       <Col sm={4}><PrinterCard name="series1-2006"></PrinterCard></Col>
     </Row>
   </div>;
+
+export default PrinterGrid;

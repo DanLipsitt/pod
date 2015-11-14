@@ -21,3 +21,5 @@ export var FileList = ({files}) => (
 FileList.propTypes = {
   files: PropTypes.arrayOf(PropTypes.string).isRequired,
 };
+
+export default FileList;
