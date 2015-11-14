@@ -1,3 +1,3 @@
 module.exports = {
-  name: "file1.gcode"
+  filename: "file1.gcode"
 };
