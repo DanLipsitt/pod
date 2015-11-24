@@ -3,7 +3,7 @@ import 'bootstrap-webpack';
 import {Row, Col} from 'react-bootstrap';
 import {PrinterCard} from './PrinterCard';
 
-var PrinterGrid = (props) =>
+export var PrinterGrid = (props) =>
   <div>
     <h2>Printers</h2>
     <Row>

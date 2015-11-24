@@ -24,7 +24,7 @@ const printerCardTarget = {
   isOver: monitor.isOver(),
   canDrop: monitor.canDrop(),
 }))
-export default class PrinterCard extends React.Component {
+export class PrinterCard extends React.Component {
   static propTypes = {
     filename: PropTypes.string,
     /* drag and drop */
@@ -62,3 +62,5 @@ export default class PrinterCard extends React.Component {
     );
   }
 };
+
+export default PrinterCard;
