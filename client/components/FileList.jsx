@@ -1,9 +1,9 @@
 import React, {PropTypes} from 'react';
 import {Button, Glyphicon, Table, Alert} from 'react-bootstrap';
 
-import {FileItem} from './FileItem';
+import FileItem from './FileItem';
 
-export var FileList = ({files}) => (
+var FileList = ({files}) => (
   <div>
     <h2><Glyphicon glyph="folder-open"/> Files</h2>
     <Button><Glyphicon glyph="plus" /> Add File</Button>

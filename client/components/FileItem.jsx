@@ -21,7 +21,7 @@ const dragSource = {
   connectDragSource: connect.dragSource(),
   isDragging: monitor.isDragging()
 }))
-export class FileItem extends Component {
+class FileItem extends Component {
   static propTypes = {
     connectDragSource: PropTypes.func.isRequired,
     isDragging: PropTypes.bool.isRequired,
@@ -39,6 +39,6 @@ export class FileItem extends Component {
       )
     );
   }
-}
+};
 
 export default FileItem;

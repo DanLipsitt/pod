@@ -3,8 +3,8 @@ import ReactDOM from 'react-dom';
 import 'bootstrap-webpack';
 import {Row, Col, Button, Glyphicon} from 'react-bootstrap';
 import './style/style.less';
-import {PrinterGrid} from './components/PrinterGrid';
-import {FileList} from './components/FileList';
+import PrinterGrid from './components/PrinterGrid';
+import FileList from './components/FileList';
 import HTML5Backend from 'react-dnd-html5-backend';
 import {DragDropContext} from 'react-dnd';
 
