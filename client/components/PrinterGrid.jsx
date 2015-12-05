@@ -1,7 +1,7 @@
 import React from 'react';
 import 'bootstrap-webpack';
 import {Row, Col} from 'react-bootstrap';
-import PrinterCard from './PrinterCard';
+import {default as PrinterCard} from './DroppablePrinterCard';
 
 var PrinterGrid = (props) =>
   <div>

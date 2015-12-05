@@ -1,29 +1,10 @@
 import './PrinterCard.less';
 import React, {PropTypes} from 'react';
 import {findDOMNode} from 'react-dom';
-import 'bootstrap-webpack';
 import {Row, Col, Panel, Button, ButtonToolbar, ButtonGroup, Glyphicon}
 from 'react-bootstrap';
-import {DropTarget} from 'react-dnd';
-import {FILE_ITEM} from '../constants/DragItemTypes';
 import classNames from 'classnames';
 
-const printerCardTarget = {
-  drop(props, monitor, component) {
-    props.onDrop(monitor.getItem());
-    return {name: props.name};
-  },
-
-  canDrop(props, monitor) {
-    return true;
-  },
-};
-
-@DropTarget(FILE_ITEM, printerCardTarget, (connect, monitor) => ({
-  connectDropTarget: connect.dropTarget(),
-  isOver: monitor.isOver(),
-  canDrop: monitor.canDrop(),
-}))
 class PrinterCard extends React.Component {
   static propTypes = {
     filename: PropTypes.string,
@@ -31,6 +12,10 @@ class PrinterCard extends React.Component {
     connectDropTarget: PropTypes.func.isRequired,
     canDrop: PropTypes.bool.isRequired,
     onDrop: PropTypes.func,
+  };
+
+  static defaultProps = {
+    canDrop: true,
   };
 
   render() {
@@ -61,6 +46,6 @@ class PrinterCard extends React.Component {
       </Panel>
     );
   }
-};
+}
 
 export default PrinterCard;
