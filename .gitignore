@@ -1,3 +1,7 @@
 *.sqlite3
 *.pyc
 *~
+
+/build
+/node_modules
+/npm-debug.log
