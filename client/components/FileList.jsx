@@ -1,12 +1,13 @@
 import React, {PropTypes} from 'react';
 import {Button, Glyphicon, Table, Alert} from 'react-bootstrap';
+import UploadDropzone from './UploadDropzone';
 
 import FileItem from './FileItem';
 
 var FileList = ({files}) => (
   <div>
     <h2><Glyphicon glyph="folder-open"/> Files</h2>
-    <Button><Glyphicon glyph="plus" /> Add File</Button>
+    <UploadDropzone/>
     {!files.length ?
      <Alert bsStyle="warning">No files yet...</Alert>
      :
