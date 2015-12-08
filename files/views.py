@@ -19,3 +19,7 @@ def index(request):
 class PrintFileViewSet(viewsets.ModelViewSet):
     queryset = PrintFile.objects.all()
     serializer_class = PrintFileSerializer
+
+    def create(self, request):
+        request.POST['filename'] = request.FILES['file'].name
+        return super().create(request)
