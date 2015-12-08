@@ -52,6 +52,7 @@
     "react-addons-css-transition-group": "^0.14.2",
     "react-bootstrap": "^0.27.3",
     "react-component-playground": "^0.4",
+    "react-cookie": "^0.4.2",
     "react-dnd": "^2.0.2",
     "react-dnd-html5-backend": "^2.0.0",
     "react-dropzone-component": "^0.8.1",
