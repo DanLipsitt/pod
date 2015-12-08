@@ -5,7 +5,7 @@ import 'react-dropzone-component/styles/filepicker.css';
 
 const UploadDropzone = (props) => {
   let config = {
-    postUrl: "/upload",
+    postUrl: "/api/files/",
   };
   return <DropzoneComponent config={config} />
 }

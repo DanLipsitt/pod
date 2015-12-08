@@ -1,6 +1,8 @@
 from django.shortcuts import render
+from rest_framework import viewsets
 
-from .models import distribute_file
+from .models import distribute_file, PrintFile
+from .serializers import PrintFileSerializer
 
 
 def index(request):
@@ -12,3 +14,8 @@ def index(request):
         'printers': printers
     }
     return render(request, 'files/index.htm', context)
+
+
+class PrintFileViewSet(viewsets.ModelViewSet):
+    queryset = PrintFile.objects.all()
+    serializer_class = PrintFileSerializer

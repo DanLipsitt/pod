@@ -1,1 +1,2 @@
 PyYaml==3.11
+djangorestframework==3.3
