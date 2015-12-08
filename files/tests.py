@@ -17,3 +17,10 @@ class TestPrintFileViewSet(APITestCase):
         self.assertEqual(resp.data['filename'], data['file'].name)
         obj = PrintFile.objects.get()
         self.assertEqual(obj.filename, data['file'].name)
+
+    def test_missing_file(self):
+        """Fail if no file is uploaded."""
+        url = reverse('printfile-list')
+        data = {'dummy': 1}
+        resp = self.client.post(url, data)
+        self.assertEqual(resp.status_code, 400)
