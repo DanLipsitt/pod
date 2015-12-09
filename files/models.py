@@ -3,7 +3,7 @@ from django.db import models
 
 class PrintFile(models.Model):
 
-    f = models.FileField()
+    file = models.FileField()
     filename = models.CharField(max_length=256)
 
 
