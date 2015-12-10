@@ -11,6 +11,8 @@
 -   [React](https://facebook.github.io/react/)
     -   [Thinking in React](https://facebook.github.io/react/docs/thinking-in-react.html)
 -   [Redux](http://redux.js.org/)
+    - redux-api-middleware for HTTP calls
+    - redux-actions for simplifying and standardizing Redux actions and reducers
 -   [React DnD](http://gaearon.github.io/react-dnd/) (drag and drop)
 
 ## Components and styles

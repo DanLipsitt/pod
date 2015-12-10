@@ -1,8 +1,12 @@
 import {combineReducers} from 'redux';
+import {handleActions} from 'redux-actions';
 
-function files(state=['file1.gcode', 'file2.gcode'], action) {
-  return state;
-};
+const files = handleActions({
+  FILES_SUCCESS: (state, action) => (
+    action.payload
+  ),
+}, ['file1.gcode', 'file2.gcode'] );
+
 
 export default combineReducers({
   files,
