@@ -1,4 +1,5 @@
 import React from 'react';
+import {connect} from 'react-redux';
 import 'bootstrap-webpack';
 import {Row, Col, Button, Glyphicon} from 'react-bootstrap';
 import PrinterGrid from '../components/PrinterGrid';
@@ -6,6 +7,7 @@ import FileList from '../components/FileList';
 import HTML5Backend from 'react-dnd-html5-backend';
 import {DragDropContext} from 'react-dnd';
 
+@connect(mapStateToProps)
 @DragDropContext(HTML5Backend)
 class App extends React.Component {
   render() {
@@ -30,6 +32,10 @@ class App extends React.Component {
       </div>
     );
   }
-};
+}
+
+function mapStateToProps(state) {
+  return {files: state.files};
+}
 
 export default App;

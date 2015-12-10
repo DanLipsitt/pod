@@ -1,7 +1,15 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import {createStore} from 'redux';
+import {Provider} from 'react-redux';
 import App from './containers/App';
+import reducer from './reducers';
 
-let FILES = ['1.gcode', '2.gcode'];
+let store = createStore(reducer);
 
-ReactDOM.render(<App files={FILES}/>, document.getElementById('container'));
+ReactDOM.render(
+  <Provider store={store}>
+    <App/>
+  </Provider>,
+  document.getElementById('container')
+);
