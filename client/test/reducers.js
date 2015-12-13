@@ -4,7 +4,7 @@ chai.should();
 import reducer from '../reducers';
 import * as a from '../actions';
 
-const filesData = ['file1', 'file2'];
+const filesData = [{filename:'file1'}, {filename:'file2'}];
 
 describe('files reducer', function() {
 

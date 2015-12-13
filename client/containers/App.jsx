@@ -6,17 +6,23 @@ import PrinterGrid from '../components/PrinterGrid';
 import FileList from '../components/FileList';
 import HTML5Backend from 'react-dnd-html5-backend';
 import {DragDropContext} from 'react-dnd';
+import {filesFetch} from '../actions';
 
 @connect(mapStateToProps)
 @DragDropContext(HTML5Backend)
 class App extends React.Component {
+  componentDidMount() {
+    const {dispatch} = this.props;
+    dispatch(filesFetch());
+  }
+
   render() {
     return (
       <div>
         <header><h1>Type A Machines Pod Manager</h1></header>
         <Row>
           <Col sm={3}>
-            <FileList files={this.props.files}/>
+            <FileList files={this.props.files.map(o => o.filename)}/>
             <div>
               <h2><Glyphicon glyph="hourglass"/> History</h2>
               <p><b>file5.gcode</b> completed on <b>series1-2003</b> last Wed.</p>

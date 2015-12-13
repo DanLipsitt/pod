@@ -24,6 +24,8 @@
 -   [Webpack](https://webpack.github.io/) Module Bundler
 -   [NPM](https://www.npmjs.com/) for package managment and script running
     -   see [package.json](file:package.json)
+-   Mocha
+-   Nock
 
 #   Backend
 
