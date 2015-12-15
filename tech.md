@@ -24,6 +24,7 @@
 -   [Webpack](https://webpack.github.io/) Module Bundler
 -   [NPM](https://www.npmjs.com/) for package managment and script running
     -   see [package.json](file:package.json)
+-   [Cosmos](https://github.com/skidding/cosmos) playground
 -   Mocha
 -   Nock
 
@@ -36,3 +37,4 @@
 ## Frameworks
 
 -   [Django](https://www.djangoproject.com/)
+-   Django REST Framework
