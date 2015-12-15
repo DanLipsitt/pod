@@ -1,4 +1,11 @@
 var path = require('path');
+var webpack = require('webpack');
+
+// string substitutions
+const substitutions = new webpack.DefinePlugin({
+  // Pull in NODE_ENV from the environment or default to production.
+  'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV || 'production'),
+});
 
 module.exports = {
   entry: [
@@ -37,4 +44,5 @@ module.exports = {
   resolve: {
     extensions: ['', '.js', '.jsx'],
   },
+  plugins: [substitutions],
 };

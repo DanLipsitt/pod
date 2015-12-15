@@ -14,7 +14,7 @@
     "build-js": "webpack --config webpack.config.js -p --progress --profile --colors",
     "build-js-dev": "webpack --config webpack.config.js -d --progress --profile --colors",
     "browser-sync": "browser-sync start --config browsersync.config.js",
-    "start": "npm run clean && npm run watch & npm run browser-sync",
+    "start": "npm run clean && NODE_ENV='development' npm run watch & npm run browser-sync",
     "build": "npm run clean && npm run build-js ",
     "build-dev": "npm run clean && npm run build-js-dev"
   },
