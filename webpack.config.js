@@ -9,6 +9,7 @@ const substitutions = new webpack.DefinePlugin({
 
 module.exports = {
   entry: [
+    'bootstrap-webpack!./bootstrap.config.js',
     './client/main.jsx',
   ],
   output: {
