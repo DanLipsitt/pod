@@ -5,6 +5,6 @@ from .models import PrintFile
 
 
 class PrintFileAdmin(admin.ModelAdmin):
-    list_display = ('id', 'file', 'filename')
+    list_display = ('id', 'file', 'filename', 'createdAt')
 
 admin.site.register(PrintFile, PrintFileAdmin)
