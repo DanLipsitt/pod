@@ -4,10 +4,10 @@ import UploadDropzone from './UploadDropzone';
 
 import FileItem from './FileItem';
 
-var FileList = ({files}) => (
+var FileList = ({files, uploadHandlers}) => (
   <div>
     <h2><Glyphicon glyph="folder-open"/> Files</h2>
-    <UploadDropzone/>
+    <UploadDropzone handlers={uploadHandlers}/>
     {!files.length ?
      <Alert bsStyle="warning">No files yet...</Alert>
      :
@@ -21,6 +21,7 @@ var FileList = ({files}) => (
 
 FileList.propTypes = {
   files: PropTypes.arrayOf(PropTypes.string).isRequired,
+  uploadHandlers: PropTypes.object.isRequired,
 };
 
 export default FileList;
