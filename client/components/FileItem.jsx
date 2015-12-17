@@ -28,19 +28,18 @@ class FileItem extends Component {
     connectDragSource: PropTypes.func.isRequired,
     isDragging: PropTypes.bool.isRequired,
     filename: PropTypes.string.isRequired,
-    id: PropTypes.string.isRequired,
     createdAt: Time.propTypes.value,
   };
 
   render() {
     const { isDragging, connectDragSource } = this.props;
     const opacity = isDragging ? 0.4 : 1;
-    const {filename, id, createdAt} = this.props;
+    const {filename, createdAt} = this.props;
 
     return (
       connectDragSource(
         <div>
-          <ListGroupItem key={id} header={filename}>
+          <ListGroupItem header={filename}>
             <b>uploaded</b> <Time value={createdAt} relative />
           </ListGroupItem>
         </div>
