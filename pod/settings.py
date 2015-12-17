@@ -119,16 +119,5 @@ REST_FRAMEWORK = {
     # or allow read-only access for unauthenticated users.
     'DEFAULT_PERMISSION_CLASSES': [
         'rest_framework.permissions.AllowAny' # FIXME
-    ],
-    # automatically translate between camelcase and underscore
-    # separated identifiers.
-   'DEFAULT_RENDERER_CLASSES': [
-       'djangorestframework_camel_case.render.CamelCaseJSONRenderer',
-       'rest_framework.renderers.BrowsableAPIRenderer',
-   ],
-    'DEFAULT_PARSER_CLASSES': [
-        'djangorestframework_camel_case.parser.CamelCaseJSONParser',
-        'rest_framework.parsers.FormParser',
-        'rest_framework.parsers.MultiPartParser'
-    ],
+    ]
 }
