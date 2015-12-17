@@ -26,8 +26,10 @@
   "license": "UNLICENSED",
   "dependencies": {
     "bootstrap": "^3.3.6",
+    "moment": "^2.10.6",
     "react": "^0.14.1",
-    "react-dom": "^0.14.1"
+    "react-dom": "^0.14.1",
+    "react-time": "^4.0.0"
   },
   "devDependencies": {
     "babel": "^5.8.34",

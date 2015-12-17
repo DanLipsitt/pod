@@ -1,3 +1,5 @@
 module.exports = {
-  filename: "file1.gcode"
+  id: '1',
+  filename: "file1.gcode",
+  createdAt: new Date(),
 };

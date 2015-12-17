@@ -1,3 +1,4 @@
 module.exports = {
-  files: ['file1.gcode']
+  files: [{id: 1, filename: 'file1.gcode', createdAt: Date()}],
+  uploadHandlers: {},
 };

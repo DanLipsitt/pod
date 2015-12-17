@@ -1,5 +1,5 @@
 import React, {PropTypes} from 'react';
-import {Button, Glyphicon, Table, Alert} from 'react-bootstrap';
+import {Glyphicon, Alert, ListGroup} from 'react-bootstrap';
 import UploadDropzone from './UploadDropzone';
 
 import FileItem from './FileItem';
@@ -11,16 +11,16 @@ var FileList = ({files, uploadHandlers}) => (
     {!files.length ?
      <Alert bsStyle="warning">No files yet...</Alert>
      :
-     <ul>
-       {files.map(item =>
-         <FileItem filename={item} key={item} />
+     <ListGroup>
+       {files.map(({filename, id, createdAt}) =>
+         <FileItem filename={filename} key={id} createdAt={createdAt} />
         )}
-     </ul>}
+     </ListGroup>}
   </div>
 );
 
 FileList.propTypes = {
-  files: PropTypes.arrayOf(PropTypes.string).isRequired,
+  files: PropTypes.arrayOf(PropTypes.object).isRequired,
   uploadHandlers: PropTypes.object.isRequired,
 };
 

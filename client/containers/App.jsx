@@ -28,7 +28,7 @@ class App extends React.Component {
         <header><h1>Type A Machines Pod Manager</h1></header>
         <Row>
           <Col sm={3}>
-            <FileList files={files.map(o => o.filename)}
+            <FileList files={files}
                       uploadHandlers={uploadHandlers}
             />
             <div>

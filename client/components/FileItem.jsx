@@ -1,5 +1,7 @@
 import React, {Component, PropTypes} from 'react';
 import {DragSource} from 'react-dnd';
+import {ListGroupItem} from 'react-bootstrap';
+import Time from 'react-time';
 
 const dragSource = {
   beginDrag(props) {
@@ -26,16 +28,22 @@ class FileItem extends Component {
     connectDragSource: PropTypes.func.isRequired,
     isDragging: PropTypes.bool.isRequired,
     filename: PropTypes.string.isRequired,
+    id: PropTypes.string.isRequired,
+    createdAt: Time.propTypes.value,
   };
 
   render() {
     const { isDragging, connectDragSource } = this.props;
-    const { name } = this.props;
     const opacity = isDragging ? 0.4 : 1;
+    const {filename, id, createdAt} = this.props;
 
     return (
       connectDragSource(
-        <li>{this.props.filename}</li>
+        <div>
+          <ListGroupItem key={id} header={filename}>
+            <b>uploaded</b> <Time value={createdAt} relative />
+          </ListGroupItem>
+        </div>
       )
     );
   }
