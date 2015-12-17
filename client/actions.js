@@ -7,6 +7,8 @@ export const filesRequest = createAction('FILES_REQUEST');
 
 export const filesSuccess = createAction('FILES_SUCCESS');
 
+export const filesAdd = createAction('FILES_ADD');
+
 export const filesFetch = () => ({
   [CALL_API]: {
     endpoint: API_URL + 'files/',

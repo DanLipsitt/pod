@@ -5,6 +5,9 @@ const files = handleActions({
   FILES_SUCCESS: (state, action) => (
     action.payload
   ),
+  FILES_ADD: (state, action) => [
+    ...state, action.payload
+  ],
 }, []);
 
 

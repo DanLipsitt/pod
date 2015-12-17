@@ -6,7 +6,7 @@ import PrinterGrid from '../components/PrinterGrid';
 import FileList from '../components/FileList';
 import HTML5Backend from 'react-dnd-html5-backend';
 import {DragDropContext} from 'react-dnd';
-import {filesFetch, filesRequest} from '../actions';
+import {filesFetch, filesAdd} from '../actions';
 
 @connect(mapStateToProps)
 @DragDropContext(HTML5Backend)
@@ -20,7 +20,7 @@ class App extends React.Component {
     const {files, dispatch} = this.props;
 
     const uploadHandlers = {
-      success: () => dispatch(filesRequest()),
+      success: (event, response) => dispatch(filesAdd(response)),
     };
 
     return (
