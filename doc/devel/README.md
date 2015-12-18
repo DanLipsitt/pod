@@ -2,6 +2,18 @@
 
 ## Quickstart
 
+It is strongly recommended that you work in a python virtualenv. The easiest way to do that is with [virtualenvwrapper](https://virtualenvwrapper.readthedocs.org/en/latest/).
+
+### Install
+
+```
+mkvirtualenv pod
+pip install -r requirements.txt
+npm install
+```
+
+### Run
+
 ```
 ./manage.py runserver & npm start
 ```
