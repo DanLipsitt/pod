@@ -39,6 +39,7 @@ INSTALLED_APPS = (
     'django.contrib.staticfiles',
     'django_extensions',
     'rest_framework',
+    'channels',
     'printers',
     'jobs',
     'files',
@@ -120,4 +121,11 @@ REST_FRAMEWORK = {
     'DEFAULT_PERMISSION_CLASSES': [
         'rest_framework.permissions.AllowAny' # FIXME
     ]
+}
+
+CHANNEL_BACKENDS = {
+    "default": {
+        "BACKEND": "channels.backends.database.DatabaseChannelBackend",
+        "ROUTING": "pod.routing.channel_routing",
+    },
 }

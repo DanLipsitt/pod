@@ -5,3 +5,5 @@ PyYaml==3.11
 djangorestframework==3.3.2
 model-mommy==1.2.6
 nosy==1.2
+channels==0.8
+aiohttp==0.19.0
