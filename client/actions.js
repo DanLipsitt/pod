@@ -1,7 +1,7 @@
 import {CALL_API} from 'redux-api-middleware';
 import {createAction} from 'redux-actions';
 
-export const API_URL = 'http://localhost:3000/api/';
+export const API_URL = '/api/';
 
 export const filesRequest = createAction('FILES_REQUEST');
 
