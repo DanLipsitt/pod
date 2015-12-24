@@ -52,3 +52,18 @@ describe('fetchFiles', function() {
   });
 
 });
+
+describe('fileTransfer', function() {
+
+  it('should construct the correct api url', () => {
+    const file = '/files/1';
+    const printers = ['//printer1.local/', '//printer2.local'];
+    const action = a.fileTransfer(file, printers);
+    action[CALL_API].endpoint.should.equal(
+      'http://example.com/api/files/transfer?file=' + encodeURIComponent(file) +
+      '&printers=' + encodeURIComponent(printers[0]) +
+      '&printers=' + encodeURIComponent(printers[1])
+    );
+  });
+
+});

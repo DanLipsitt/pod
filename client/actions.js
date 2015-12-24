@@ -23,3 +23,15 @@ export const filesFetch = () => ({
     types: ['FILES_REQUEST', 'FILES_SUCCESS', 'FILES_FAILURE'],
   },
 });
+
+export const fileTransfer = (file, printers) => ({
+  [CALL_API]: {
+    endpoint: API_URI.clone()
+                     .segment('files/transfer')
+                     .search({file, printers})
+                     .toString(),
+    method: 'POST',
+    types: ['FILE_TRANSFER_REQUEST', 'FILE_TRANSFER_SUCCESS',
+            'FILE_TRANSFER_FAILURE']
+  },
+});
