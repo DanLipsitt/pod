@@ -37,11 +37,11 @@ describe('fetchFiles', function() {
 
   it('action should have the right endpoint', () => {
     action.should.have.ownProperty(CALL_API);
-    action[CALL_API].endpoint.should.equal(a.API_PATH + 'files/');
+    action[CALL_API].endpoint.should.equal(a.API_URL + '/files');
   });
 
   it('should call the success action creator with the right data', (done) => {
-    nock(a.API_URL).get('/files/').reply(200, filesData);
+    nock(a.API_URL).get('/files').reply(200, filesData);
     const initState = {};
     const expectedActions = [
       {type: 'FILES_REQUEST'},
