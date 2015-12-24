@@ -1,6 +1,6 @@
 import chai from 'chai';
 chai.should();
-import {apiMiddleware} from 'redux-api-middleware';
+import {apiMiddleware, CALL_API} from 'redux-api-middleware';
 import configureStore from 'redux-mock-store';
 import nock from 'nock';
 import createLogger from 'redux-logger';
@@ -33,6 +33,12 @@ describe('filesSuccess', function() {
 });
 
 describe('fetchFiles', function() {
+  const action = a.filesFetch();
+
+  it('action should have the right endpoint', () => {
+    action.should.have.ownProperty(CALL_API);
+    action[CALL_API].endpoint.should.equal(a.API_PATH + 'files/');
+  });
 
   it('should call the success action creator with the right data', (done) => {
     nock(a.API_URL).get('/files/').reply(200, filesData);
