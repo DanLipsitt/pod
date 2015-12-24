@@ -49,6 +49,7 @@ describe('fetchFiles', function() {
     ];
     const store = mockStore(initState, expectedActions, done);
     store.dispatch(a.filesFetch());
+    done();
   });
 
 });
