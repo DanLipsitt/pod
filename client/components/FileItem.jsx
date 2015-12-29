@@ -1,4 +1,5 @@
 import React, {Component, PropTypes} from 'react';
+import {findDOMNode} from 'react-dom';
 import {DragSource} from 'react-dnd';
 import {ListGroupItem} from 'react-bootstrap';
 import Time from 'react-time';
@@ -32,18 +33,19 @@ class FileItem extends Component {
   };
 
   render() {
-    const { isDragging, connectDragSource } = this.props;
+    const {isDragging, connectDragSource,
+           filename, createdAt,
+           ...rest} = this.props;
     const opacity = isDragging ? 0.4 : 1;
-    const {filename, createdAt} = this.props;
 
     return (
-      connectDragSource(
-        <div>
-          <ListGroupItem header={filename}>
-            <b>uploaded</b> <Time value={createdAt} relative />
-          </ListGroupItem>
-        </div>
-      )
+      <ListGroupItem
+          header={filename}
+          ref={el => connectDragSource(findDOMNode(el))}
+          {...rest}
+      >
+        <b>uploaded</b> <Time value={createdAt} relative />
+      </ListGroupItem>
     );
   }
 };
