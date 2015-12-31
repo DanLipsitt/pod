@@ -3,6 +3,7 @@ import asyncio
 import aiohttp
 import math
 import os
+from io import IOBase
 
 
 def ws_add(message):
