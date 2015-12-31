@@ -54,7 +54,7 @@ class TestMakeProgressCallback(TestCase):
                 }
             }
         (arg,), _ = group.send.call_args
-        self.assertDictEqual(json.loads(arg), expected)
+        self.assertDictEqual(arg, expected)
 
 
 # aiohttp.post looks for a name attribute on the data object. The mock

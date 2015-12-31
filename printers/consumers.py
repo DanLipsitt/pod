@@ -2,7 +2,6 @@ from channels import Group
 import asyncio
 import aiohttp
 import math
-import json
 import os
 
 
@@ -21,16 +20,14 @@ def ws_disconnect(message):
 def make_progress_callback(path, printer_url, channel_group):
     def callback(percent):
         channel_group.send(
-            json.dumps(
-                {
-                    'action': 'TRANSFER_PROGRESS',
-                    'payload': {
-                        'path': path,
-                        'printer': printer_url,
-                        'progress': percent,
-                    }
+            {
+                'action': 'TRANSFER_PROGRESS',
+                'payload': {
+                    'path': path,
+                    'printer': printer_url,
+                    'progress': percent,
                 }
-            )
+            }
         )
     return callback
 
