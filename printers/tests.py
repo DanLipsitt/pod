@@ -11,6 +11,14 @@ from .consumers import (
 
 class TestConsumers(TestCase):
 
+    def setUp(self):
+        self.callback = MagicMock(name='callback')
+        self.size = 1024 * 1024
+        self.data = '.' * self.size
+        self.stream = MagicMock(wraps=io.StringIO(self.data))
+        # so it can be used as a context manager
+        self.stream.__enter__ = lambda self: self
+
     def test_make_progress_callback(self):
         group = Mock(spec=Group)
         cb = make_progress_callback('/tmp/file.txt',
@@ -28,17 +36,22 @@ class TestConsumers(TestCase):
         (arg,), _ = group.send.call_args
         self.assertDictEqual(json.loads(arg), expected)
 
-    def test_transfer_monitor(self):
-        callback = MagicMock()
-        size = 1024 * 1024
-        data = '.' * size
-        stream = MagicMock(wraps=io.StringIO(data))
-        monitor = TransferMonitor(stream, size, callback)
+    def check_monitor(self, monitor, data, stream, size, callback):
         result = monitor.read(size//2)
+        self.assertEqual(size//2, len(result))
         self.assertEqual(data[:size//2], result)
         self.assertEqual(stream.read.call_count, 1)
         callback.assert_called_once_with(50.0)
 
+    def test_transfer_monitor(self):
+        monitor = TransferMonitor(self.stream, self.size, self.callback)
+        self.check_monitor(monitor, self.data, self.stream, self.size,
+                           self.callback)
+
+    def test_transfer_monitor_context_manager(self):
+        with TransferMonitor(self.stream, self.size, self.callback) as monitor:
+            self.check_monitor(monitor, self.data, self.stream, self.size,
+                               self.callback)
 
 class TestTransfer(TestCase):
 
