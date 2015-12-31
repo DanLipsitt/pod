@@ -1,9 +1,12 @@
 import json
 import io
+import builtins
 from django.test import TestCase
-from unittest.mock import Mock, MagicMock, mock_open
+from unittest.mock import Mock, MagicMock, mock_open, patch
 from channels import Group
-from .consumers import make_progress_callback, TransferMonitor
+from .consumers import (
+    make_progress_callback, TransferMonitor, transfer_file_to_printers
+)
 
 
 class TestConsumers(TestCase):
@@ -35,3 +38,11 @@ class TestConsumers(TestCase):
         self.assertEqual(data[:size//2], result)
         self.assertEqual(stream.read.call_count, 1)
         callback.assert_called_once_with(50.0)
+
+
+class TestTransfer(TestCase):
+
+    def test_transfer_one(self):
+        with patch.object(builtins, 'open', mock_open(read_data='...')):
+            transfer_file_to_printers('file.gcode',
+                                      ['http://example.com/octoprint'])

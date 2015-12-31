@@ -3,6 +3,7 @@ import asyncio
 import aiohttp
 import math
 import json
+import os
 
 
 def ws_add(message):
@@ -52,16 +53,24 @@ class TransferMonitor(object):
         return getattr(self._stream, attr)
 
 
-def transfer_file_to_printers(message):
-    path = message.content['file_path']
-    urls = message.content['printer_urls']
+    def __enter__(self): return self
+    def __exit__(self, *args): pass
+
+
+def do_transfer(message):
+    transfer_file_to_printers(message.content['file_path'],
+                              message.content['printer_urls'])
+
+
+def transfer_file_to_printers(path, urls):
     group = Group('all')
 
     tasks = []
+    size = os.path.getsize(path)
 
     for printer_url in urls:
-        progress_callback = make_progress_callback(path, printer_url, group)
-        with TransferMonitor(open(path, 'rb'), progress_callback) as monitor:
+        progress = make_progress_callback(path, printer_url, group)
+        with TransferMonitor(open(path, 'rb'), size, progress) as monitor:
             tasks.append(aiohttp.post(printer_url, data=monitor))
 
     loop = asyncio.get_event_loop()
