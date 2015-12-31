@@ -57,6 +57,14 @@ class TestMakeProgressCallback(TestCase):
         self.assertDictEqual(json.loads(arg), expected)
 
 
+# aiohttp.post looks for a name attribute on the data object. The mock
+# file object's automatic name attribute causes problems so we replace
+# it.
+_mock_open = mock_open(read_data='')
+_mock_open.return_value.name = 'file.gcode'
+
+
+@patch.object(builtins, 'open', _mock_open)
 class TestTransfer(TestCase):
 
     def test_transfer_one(self):
