@@ -35,7 +35,7 @@ def make_progress_callback(path, printer_url, channel_group):
     return callback
 
 
-class TransferMonitor(object):
+class TransferMonitor(IOBase):
 
     def __init__(self, stream, size, callback):
         self._stream = stream
@@ -74,4 +74,4 @@ def transfer_file_to_printers(path, urls):
             tasks.append(aiohttp.post(printer_url, data=monitor))
 
     loop = asyncio.get_event_loop()
-    loop.run_until_complete(tasks)
+    loop.run_until_complete(asyncio.wait(tasks))
