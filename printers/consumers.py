@@ -51,10 +51,6 @@ class TransferMonitor(IOBase):
         return getattr(self._stream, attr)
 
 
-    def __enter__(self): return self
-    def __exit__(self, *args): pass
-
-
 def do_transfer(message):
     transfer_file_to_printers(message.content['file_path'],
                               message.content['printer_urls'])
