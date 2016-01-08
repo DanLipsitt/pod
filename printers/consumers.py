@@ -52,20 +52,34 @@ class TransferMonitor(IOBase):
 
 
 def do_transfer(message):
-    transfer_file_to_printers(message.content['file_path'],
-                              message.content['printer_urls'])
+    loop = asyncio.get_event_loop()
+    loop.run_until_complete(
+        transfer_file_to_printers(message.content['file_path'],
+                                  message.content['printer_urls'])
+    )
 
 
-def transfer_file_to_printers(path, urls):
+async def transfer_file_to_printers(path, urls, client=None):
+    if client is None:
+        client = aiohttp
     group = Group('all')
 
+    # size = os.path.getsize(path)
+    size = 3
     tasks = []
-    size = os.path.getsize(path)
 
     for printer_url in urls:
         progress = make_progress_callback(path, printer_url, group)
         with TransferMonitor(open(path, 'rb'), size, progress) as monitor:
-            tasks.append(aiohttp.post(printer_url, data=monitor))
+            tasks.append(client.post(printer_url, data=monitor))
 
-    loop = asyncio.get_event_loop()
-    loop.run_until_complete(asyncio.wait(tasks))
+    results = []
+    for task in asyncio.as_completed(tasks):
+        try:
+            response = await task
+            logging.debug('%s' % response)
+            results.append(response)
+        except Exception as e:
+            raise e
+
+    return results

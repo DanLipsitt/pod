@@ -1,12 +1,30 @@
 import json
 import io
 import builtins
+import aiohttp
+import asyncio.test_utils
 from django.test import TestCase
 from unittest.mock import Mock, MagicMock, mock_open, patch
+from asynctest.mock import CoroutineMock
 from channels import Group
 from .consumers import (
     make_progress_callback, TransferMonitor, transfer_file_to_printers
 )
+
+import logging
+logging.basicConfig(level=logging.DEBUG)
+
+
+class AsyncTestCase(asyncio.test_utils.TestCase):
+    # Based on
+    # https://github.com/python/cpython/blob/2f2289887e5f/Lib/test/test_asyncio/test_pep492.py#L17
+    def setUp(self):
+        self.loop = asyncio.BaseEventLoop()
+        self.loop._process_events = Mock()
+        self.loop._selector = Mock()
+        self.loop._selector.select.return_value = ()
+        self.set_event_loop(self.loop)
+        asyncio.set_event_loop(self.loop)
 
 
 class TestTransferMonitor(TestCase):
@@ -65,9 +83,21 @@ _mock_open.return_value.name = 'file.gcode'
 
 
 @patch.object(builtins, 'open', _mock_open)
-class TestTransfer(TestCase):
+class TestTransfer(AsyncTestCase):
 
     def test_transfer_one(self):
-        with patch.object(builtins, 'open', mock_open(read_data='...')):
-            transfer_file_to_printers('file.gcode',
-                                      ['http://example.com/octoprint'])
+        client = Mock()
+        client.post = CoroutineMock(spec=aiohttp.post)
+
+        result = self.loop.run_until_complete(
+            transfer_file_to_printers(
+                'file.gcode',
+                [
+                    'http://localhost:5000/post',
+                    # 'http://octoprint.test/'
+                ],
+                client=client)
+        )
+        self.assertEqual(client.post.call_count, 1)
+        args, kwargs = client.post.call_args
+        self.assertEqual(args[0], 'http://localhost:5000/post')
