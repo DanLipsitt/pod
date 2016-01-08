@@ -82,22 +82,25 @@ _mock_open = mock_open(read_data='')
 _mock_open.return_value.name = 'file.gcode'
 
 
-@patch.object(builtins, 'open', _mock_open)
-class TestTransfer(AsyncTestCase):
+class TestTransferSingle(AsyncTestCase):
 
-    def test_transfer_one(self):
-        client = Mock()
-        client.post = CoroutineMock(spec=aiohttp.post)
+    @patch.object(builtins, 'open', _mock_open)
+    def setUp(self):
+        super(TestTransferSingle, self).setUp()
+        self.client = Mock()
+        self.client.post = CoroutineMock(spec=aiohttp.post)
 
-        result = self.loop.run_until_complete(
+        self.result = self.loop.run_until_complete(
             transfer_file_to_printers(
                 'file.gcode',
                 [
                     'http://localhost:5000/post',
                     # 'http://octoprint.test/'
                 ],
-                client=client)
+                client=self.client)
         )
-        self.assertEqual(client.post.call_count, 1)
-        args, kwargs = client.post.call_args
+
+    def test_should_post_once(self):
+        self.assertEqual(self.client.post.call_count, 1)
+        args, kwargs = self.client.post.call_args
         self.assertEqual(args[0], 'http://localhost:5000/post')
