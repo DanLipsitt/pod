@@ -1,8 +1,6 @@
 from channels import Group
 import asyncio
 import aiohttp
-import math
-import os
 from io import IOBase
 
 
