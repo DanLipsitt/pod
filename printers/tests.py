@@ -78,13 +78,15 @@ class TestMakeProgressCallback(TestCase):
 # aiohttp.post looks for a name attribute on the data object. The mock
 # file object's automatic name attribute causes problems so we replace
 # it.
-_mock_open = mock_open(read_data='')
+_mock_data = '.' * 1000
+_mock_open = mock_open(read_data=_mock_data)
 _mock_open.return_value.name = 'file.gcode'
 
 
 class TestTransferSingle(AsyncTestCase):
 
     @patch.object(builtins, 'open', _mock_open)
+    @patch('os.path.getsize', Mock(return_value=len(_mock_data)))
     def setUp(self):
         super(TestTransferSingle, self).setUp()
         self.client = Mock()

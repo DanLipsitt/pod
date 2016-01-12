@@ -1,6 +1,7 @@
 from channels import Group
 import asyncio
 import aiohttp
+import os
 from io import IOBase
 
 
@@ -86,8 +87,8 @@ async def transfer_file_to_printers(file_path, urls, completion_callback,
         client = aiohttp
     group = Group('all')
 
-    # size = os.path.getsize(file_path)
-    size = 3
+    size = os.path.getsize(file_path)
+
     tasks = []
 
     for printer_url in urls:
