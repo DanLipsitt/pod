@@ -31,6 +31,19 @@ def make_progress_callback(file_path, printer_url, channel_group):
     return callback
 
 
+def make_completion_callback(channel_group):
+    def callback(printer_url):
+        channel_group.send(
+            {
+                'action': 'TRANSFER_COMPLETE',
+                'payload': {
+                    'printer': printer_url,
+                }
+            }
+        )
+    return callback
+
+
 class TransferMonitor(IOBase):
 
     def __init__(self, stream, size, callback):
@@ -57,26 +70,40 @@ def do_transfer(message):
     )
 
 
-async def transfer_file_to_printers(path, urls, client=None):
+async def transfer_file_to_printer(client, stream, size, printer_url,
+                                   progress_callback, completion_callback):
+
+    with TransferMonitor(stream, size, progress_callback) as monitor:
+            response = await client.post(printer_url, data=monitor)
+    completion_callback(printer_url)
+
+    return printer_url, response
+
+
+async def transfer_file_to_printers(file_path, urls, completion_callback,
+                                    client=None):
     if client is None:
         client = aiohttp
     group = Group('all')
 
-    # size = os.path.getsize(path)
+    # size = os.path.getsize(file_path)
     size = 3
     tasks = []
 
     for printer_url in urls:
-        progress = make_progress_callback(path, printer_url, group)
-        with TransferMonitor(open(path, 'rb'), size, progress) as monitor:
-            tasks.append(client.post(printer_url, data=monitor))
+        progress = make_progress_callback(file_path, printer_url, group)
+        tasks.append(transfer_file_to_printer(
+            client, open(file_path, 'rb'), size, printer_url, progress,
+            completion_callback
+        ))
 
-    results = []
+    results = {}
     for task in asyncio.as_completed(tasks):
         try:
-            response = await task
-            logging.debug('%s' % response)
-            results.append(response)
+            url, response = await task
+            response
+            results[url] = response
+
         except Exception as e:
             raise e
 

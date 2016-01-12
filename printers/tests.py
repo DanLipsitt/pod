@@ -89,13 +89,15 @@ class TestTransferSingle(AsyncTestCase):
         super(TestTransferSingle, self).setUp()
         self.client = Mock()
         self.client.post = CoroutineMock(spec=aiohttp.post)
+        self.post_response = Mock(spec=aiohttp.Response)
         self.urls = ['http://localhost:5000/post']
 
+        self.complete_cb = Mock(name='completion_callback')
         self.result = self.loop.run_until_complete(
-            transfer_file_to_printers('file.gcode', self.urls,
-                                      client=self.client)
+            transfer_file_to_printers(
+                'file.gcode', self.urls, self.complete_cb, client=self.client
+            )
         )
-        self.complete_cb = Mock()
 
     def test_should_post_once(self):
         self.assertEqual(self.client.post.call_count, 1)
@@ -103,4 +105,4 @@ class TestTransferSingle(AsyncTestCase):
         self.assertEqual(args[0], 'http://localhost:5000/post')
 
     def test_should_call_completion_callback(self):
-        self.complete_cb.assert_called_once_with()
+        self.complete_cb.assert_called_once_with(self.urls[0])
