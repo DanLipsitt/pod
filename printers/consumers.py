@@ -65,9 +65,11 @@ class TransferMonitor(IOBase):
 
 def do_transfer(message):
     loop = asyncio.get_event_loop()
+    completion = make_completion_callback(Group('all'))
     loop.run_until_complete(
         transfer_file_to_printers(message.content['file_path'],
-                                  message.content['printer_urls'])
+                                  message.content['printer_urls'],
+                                  completion_callback=completion)
     )
 
 
