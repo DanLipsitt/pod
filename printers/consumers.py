@@ -16,13 +16,13 @@ def ws_disconnect(message):
     Group('clients').discard(message.reply_channel)
 
 
-def make_progress_callback(path, printer_url, channel_group):
+def make_progress_callback(file_path, printer_url, channel_group):
     def callback(percent):
         channel_group.send(
             {
                 'action': 'TRANSFER_PROGRESS',
                 'payload': {
-                    'path': path,
+                    'file_path': file_path,
                     'printer': printer_url,
                     'progress': percent,
                 }

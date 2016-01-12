@@ -67,7 +67,7 @@ class TestMakeProgressCallback(TestCase):
             "action": "TRANSFER_PROGRESS",
             "payload": {
                 "printer": "http://example.com/upload",
-                "path": "/tmp/file.txt",
+                "file_path": "/tmp/file.txt",
                 "progress": 100
                 }
             }
