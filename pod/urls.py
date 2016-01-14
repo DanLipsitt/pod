@@ -4,6 +4,7 @@ from django.contrib import admin
 from django.views.generic import TemplateView
 from rest_framework import routers
 import files.views
+import printers.views
 
 admin.site.site_header = 'Type A Print Pod'
 admin.site.site_title = 'Type A Print Pod'
@@ -19,6 +20,7 @@ urlpatterns = [
     url(r'^api-auth/',
         include('rest_framework.urls', namespace='rest_framework')),
     url(r'^files/', include('files.urls', namespace='files')),
+    url(r'^api/printers/transfer', printers.views.transfer_file),
 ]
 
 if settings.DEBUG:
