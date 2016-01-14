@@ -6,7 +6,6 @@ import asyncio.test_utils
 from django.test import TestCase
 from unittest.mock import Mock, MagicMock, mock_open, patch
 from asynctest.mock import CoroutineMock
-from channels import Group
 from .consumers import (
     make_progress_callback, TransferMonitor, transfer_file_to_printers
 )
