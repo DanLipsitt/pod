@@ -121,3 +121,5 @@ REST_FRAMEWORK = {
         'rest_framework.permissions.AllowAny' # FIXME
     ]
 }
+
+CELERY_ACCEPT_CONTENT = ['json']
