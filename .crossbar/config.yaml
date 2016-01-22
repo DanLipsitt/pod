@@ -15,10 +15,11 @@ workers:
       port: 8080
       type: tcp
     paths:
-      /:
-        directory: ..
-        type: static
-      ws:
-        type: websocket
+      publish:
+        type: publisher
+        realm: realm1
+        role: anonymous
+        options:
+          debug: true
     type: web
   type: router
