@@ -1,8 +1,10 @@
 from django.conf import settings
-from rest_framework import serializers
+from rest_framework import serializers, viewsets, status
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
-from rest_framework import status
+
+from.models import Printer
+from .serializers import PrinterSerializer
 
 
 class TransferSerializer(serializers.Serializer):
@@ -23,3 +25,8 @@ def transfer_file(request):
         printer_urls=request.data['printer_urls']
     )
     return Response(status=status.HTTP_202_ACCEPTED)
+
+
+class PrinterViewSet(viewsets.ModelViewSet):
+    queryset = Printer.objects.all()
+    serializer_class = PrinterSerializer
