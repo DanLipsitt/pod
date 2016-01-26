@@ -7,6 +7,7 @@ from django.conf import settings
 
 
 def send_action(action):
+    return                      # FIXME
     URL.post_async(
         settings.CROSSBAR_PUBLISH_URL,
         topic='typea.pod.action',
