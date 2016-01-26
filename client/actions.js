@@ -24,14 +24,27 @@ export const filesFetch = () => ({
   },
 });
 
-export const fileTransfer = (file, printers) => ({
+export const fileTransfer = (file, printerUrls) => ({
   [CALL_API]: {
     endpoint: API_URI.clone()
-                     .segment('files/transfer')
-                     .search({file, printers})
+                     .segment('printers/transfer')
                      .toString(),
+    body: JSON.stringify({file_path:file, printer_urls:printerUrls}),
     method: 'POST',
+    headers: {'Content-Type': 'application/json'},
     types: ['FILE_TRANSFER_REQUEST', 'FILE_TRANSFER_SUCCESS',
             'FILE_TRANSFER_FAILURE']
+  },
+});
+
+export const printersRequest = createAction('PRINTERS_REQUEST');
+export const printersSuccess = createAction('PRINTERS_SUCCESS');
+export const printersAdd = createAction('PRINTERS_ADD');
+
+export const printersFetch = () => ({
+  [CALL_API]: {
+    endpoint: API_URI.clone().segment('printers/').toString(),
+    method: 'GET',
+    types: ['PRINTERS_REQUEST', 'PRINTERS_SUCCESS', 'PRINTERS_FAILURE'],
   },
 });

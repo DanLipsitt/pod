@@ -7,6 +7,10 @@ import classNames from 'classnames';
 
 class PrinterCard extends React.Component {
   static propTypes = {
+    printer: PropTypes.shape({
+      id: PropTypes.string.isRequired,
+      name: PropTypes.string.isRequired,
+    }),
     filename: PropTypes.string,
     /* drag and drop */
     connectDropTarget: PropTypes.func.isRequired,
@@ -19,12 +23,12 @@ class PrinterCard extends React.Component {
   };
 
   render() {
-    const {filename, isOver, canDrop, connectDropTarget} = this.props;
+    const {printer, filename, connectDropTarget} = this.props;
     return (
       <Panel
           className={classNames('PrinterCard',
                      {'is-drag-hovered': this.props.isOver})}
-          header={<h3>{this.props.name}</h3>}
+          header={<h3>{printer.name}</h3>}
           ref={instance => connectDropTarget(findDOMNode(instance))}
       >
         <Row>
