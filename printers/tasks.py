@@ -1,27 +1,24 @@
-from channels import Group
 import asyncio
 import aiohttp
 import os
 from io import IOBase
+from celery.task.http import URL
+from django.conf import settings
 
 
-def ws_add(message):
-    Group('all').add(message.reply_channel)
+def send_action(action):
+    URL.post_async(
+        settings.CROSSBAR_PUBLISH_URL,
+        topic='typea.pod.action',
+        args=action
+    )
 
 
-def ws_receive(message):
-    pass
-
-
-def ws_disconnect(message):
-    Group('clients').discard(message.reply_channel)
-
-
-def make_progress_callback(file_path, printer_url, channel_group):
+def make_progress_callback(file_path, printer_url, send_action):
     def callback(percent):
-        channel_group.send(
+        send_action(
             {
-                'action': 'TRANSFER_PROGRESS',
+                'type': 'TRANSFER_PROGRESS',
                 'payload': {
                     'file_path': file_path,
                     'printer': printer_url,
@@ -32,11 +29,11 @@ def make_progress_callback(file_path, printer_url, channel_group):
     return callback
 
 
-def make_completion_callback(channel_group):
+def make_completion_callback(send_action):
     def callback(printer_url):
-        channel_group.send(
+        send_action(
             {
-                'action': 'TRANSFER_COMPLETE',
+                'type': 'TRANSFER_COMPLETE',
                 'payload': {
                     'printer': printer_url,
                 }
@@ -65,7 +62,7 @@ class TransferMonitor(IOBase):
 
 def do_transfer(message):
     loop = asyncio.get_event_loop()
-    completion = make_completion_callback(Group('all'))
+    completion = make_completion_callback(send_action)
     loop.run_until_complete(
         transfer_file_to_printers(message.content['file_path'],
                                   message.content['printer_urls'],
@@ -87,14 +84,13 @@ async def transfer_file_to_printers(file_path, urls, completion_callback,
                                     client=None):
     if client is None:
         client = aiohttp
-    group = Group('all')
 
     size = os.path.getsize(file_path)
 
     tasks = []
 
     for printer_url in urls:
-        progress = make_progress_callback(file_path, printer_url, group)
+        progress = make_progress_callback(file_path, printer_url, send_action)
         tasks.append(transfer_file_to_printer(
             client, open(file_path, 'rb'), size, printer_url, progress,
             completion_callback

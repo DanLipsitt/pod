@@ -6,8 +6,9 @@ import asyncio.test_utils
 from django.test import TestCase
 from unittest.mock import Mock, MagicMock, mock_open, patch
 from asynctest.mock import CoroutineMock
-from .consumers import (
-    make_progress_callback, TransferMonitor, transfer_file_to_printers
+from .tasks import (
+    make_progress_callback, TransferMonitor, transfer_file_to_printers,
+    send_action
 )
 
 import logging
@@ -57,10 +58,10 @@ class TestTransferMonitor(TestCase):
 class TestMakeProgressCallback(TestCase):
 
     def test_make_progress_callback(self):
-        group = Mock(spec=Group)
+        send = Mock()
         cb = make_progress_callback('/tmp/file.txt',
                                     'http://example.com/upload',
-                                    group)
+                                    send)
         cb(100)
         expected = {
             "type": "TRANSFER_PROGRESS",
@@ -70,7 +71,7 @@ class TestMakeProgressCallback(TestCase):
                 "progress": 100
                 }
             }
-        (arg,), _ = group.send.call_args
+        (arg,), _ = send.call_args
         self.assertDictEqual(arg, expected)
 
 
