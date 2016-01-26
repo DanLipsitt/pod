@@ -123,3 +123,5 @@ REST_FRAMEWORK = {
 }
 
 CELERY_ACCEPT_CONTENT = ['json']
+
+CROSSBAR_PUBLISH_URL = "http://localhost:8081/publish"
