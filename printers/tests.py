@@ -63,7 +63,7 @@ class TestMakeProgressCallback(TestCase):
                                     group)
         cb(100)
         expected = {
-            "action": "TRANSFER_PROGRESS",
+            "type": "TRANSFER_PROGRESS",
             "payload": {
                 "printer": "http://example.com/upload",
                 "file_path": "/tmp/file.txt",
