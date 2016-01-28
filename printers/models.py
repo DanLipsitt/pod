@@ -7,3 +7,8 @@ class Printer(models.Model):
 
     def __str__(self):
         return self.hostname
+
+    @property
+    def url(self):
+        """Base url for the printer's OctoPrint server."""
+        return '//{0.hostname}:{0.port}'.format(self)
