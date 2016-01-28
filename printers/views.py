@@ -5,6 +5,7 @@ from rest_framework.response import Response
 
 from.models import Printer
 from .serializers import PrinterSerializer
+from .tasks import transfer_file_to_printers
 
 
 class TransferSerializer(serializers.Serializer):
@@ -20,7 +21,7 @@ def transfer_file(request):
 
     serializer = TransferSerializer(data=request.data)
     serializer.is_valid(raise_exception=True)
-    Channel('printer.transfer').send(
+    transfer_file_to_printers.delay(
         file_path=request.data['file_path'],
         printer_urls=request.data['printer_urls']
     )
