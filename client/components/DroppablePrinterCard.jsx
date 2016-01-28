@@ -20,4 +20,6 @@ let DroppablePrinterCard = DropTarget(FILE_ITEM, printerCardTarget,
     canDrop: monitor.canDrop(),
   }))(PrinterCard);
 
+DroppablePrinterCard.proptypes = PrinterCard.proptypes;
+
 export default DroppablePrinterCard;
