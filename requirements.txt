@@ -10,6 +10,6 @@ autobahn==0.11.0
 honcho==0.6.6
 asynctest==0.5.0
 httpbin==0.4.0
-celery==3.1.19
+celery==3.1.20
 pylint-celery==0.3
 crossbar==0.11.2
