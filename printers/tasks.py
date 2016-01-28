@@ -1,9 +1,9 @@
-import asyncio
-import aiohttp
-import os
 from io import IOBase
 from celery.task.http import URL
 from django.conf import settings
+import celery
+import requests
+from pod.celery import app
 
 
 def send_action(action):
@@ -61,50 +61,19 @@ class TransferMonitor(IOBase):
         return getattr(self._stream, attr)
 
 
-def do_transfer(message):
-    loop = asyncio.get_event_loop()
-    completion = make_completion_callback(send_action)
-    loop.run_until_complete(
-        transfer_file_to_printers(message.content['file_path'],
-                                  message.content['printer_urls'],
-                                  completion_callback=completion)
-    )
+@app.task
+def transfer_file_to_printer(file_path, printer_url):
+    with open(file_path) as stream:
+        requests.post(printer_url, data=stream)
 
 
-async def transfer_file_to_printer(client, stream, size, printer_url,
-                                   progress_callback, completion_callback):
-
-    with TransferMonitor(stream, size, progress_callback) as monitor:
-            response = await client.post(printer_url, data=monitor)
-    completion_callback(printer_url)
-
-    return printer_url, response
-
-
-async def transfer_file_to_printers(file_path, urls, completion_callback,
-                                    client=None):
-    if client is None:
-        client = aiohttp
-
-    size = os.path.getsize(file_path)
-
+@app.task
+def transfer_file_to_printers(file_path, printer_urls):
     tasks = []
 
-    for printer_url in urls:
-        progress = make_progress_callback(file_path, printer_url, send_action)
-        tasks.append(transfer_file_to_printer(
-            client, open(file_path, 'rb'), size, printer_url, progress,
-            completion_callback
+    for printer_url in printer_urls:
+        tasks.append(transfer_file_to_printer.s(
+            file_path, printer_url,
         ))
 
-    results = {}
-    for task in asyncio.as_completed(tasks):
-        try:
-            url, response = await task
-            response
-            results[url] = response
-
-        except Exception as e:
-            raise e
-
-    return results
+    celery.group(*tasks)()
