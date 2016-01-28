@@ -123,6 +123,6 @@ REST_FRAMEWORK = {
     'URL_FIELD_NAME': 'restUrl'
 }
 
-CELERY_ACCEPT_CONTENT = ['json']
+CELERY_ACCEPT_CONTENT = ['pickle']
 
 CROSSBAR_PUBLISH_URL = "http://localhost:8081/publish"
