@@ -11,4 +11,4 @@ class Printer(models.Model):
     @property
     def url(self):
         """Base url for the printer's OctoPrint server."""
-        return '//{0.hostname}:{0.port}'.format(self)
+        return 'http://{0.hostname}:{0.port}'.format(self)
