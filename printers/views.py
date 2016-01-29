@@ -3,16 +3,17 @@ from rest_framework import serializers, viewsets, status
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
 
-from.models import Printer
+from  files.models import PrintFile
+from .models import Printer
 from .serializers import PrinterSerializer
 from .tasks import transfer_file_to_printers
 
 
 class TransferSerializer(serializers.Serializer):
-    file_path = serializers.FilePathField(path=settings.MEDIA_ROOT,
-                                          allow_files=True)
-    printer_urls = serializers.ListField(
-        child=serializers.URLField()
+    file = serializers.IntegerField(required=True)
+    printers = serializers.ListField(
+        child=serializers.IntegerField(required=True),
+        required=True
     )
 
 
@@ -21,9 +22,19 @@ def transfer_file(request):
 
     serializer = TransferSerializer(data=request.data)
     serializer.is_valid(raise_exception=True)
+
+    file_path = PrintFile.objects.get(
+        id=serializer.validated_data['file']
+    ).file.path
+
+    printer_urls = ['{}/api/files/local'.format(printer.url)
+                    for printer
+                    in Printer.objects.filter(
+                        id__in=serializer.validated_data['printers'])]
+
     transfer_file_to_printers.delay(
-        file_path=request.data['file_path'],
-        printer_urls=request.data['printer_urls']
+        file_path=file_path,
+        printer_urls=printer_urls
     )
     return Response(status=status.HTTP_202_ACCEPTED)
 
