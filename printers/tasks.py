@@ -1,9 +1,14 @@
 from io import IOBase
+from pathlib import Path
 from celery.task.http import URL
 from django.conf import settings
 import celery
 import requests
+from celery.utils.log import get_task_logger
 from pod.celery import app
+
+
+logger = get_task_logger(__name__)
 
 
 def send_action(action):
@@ -63,8 +68,13 @@ class TransferMonitor(IOBase):
 
 @app.task
 def transfer_file_to_printer(file_path, printer_url):
-    with open(file_path) as stream:
-        requests.post(printer_url, data=stream)
+    filename = Path(file_path).name
+    logger.debug((file_path, filename, printer_url))
+    result = requests.post(printer_url,
+                           files={'file': (filename, open(file_path, 'rb'),
+                                           'application/octet-stream')},
+                           headers={'X-Api-Key': 'pod'})
+    logger.info(result)
 
 
 @app.task
