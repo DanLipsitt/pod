@@ -24,12 +24,12 @@ export const filesFetch = () => ({
   },
 });
 
-export const fileTransfer = (file, printerUrls) => ({
+export const fileTransfer = (fileId, printerIds) => ({
   [CALL_API]: {
     endpoint: API_URI.clone()
                      .segment('printers/transfer')
                      .toString(),
-    body: JSON.stringify({file_path:file, printer_urls:printerUrls}),
+    body: JSON.stringify({file:fileId, printers:printerIds}),
     method: 'POST',
     headers: {'Content-Type': 'application/json'},
     types: ['FILE_TRANSFER_REQUEST', 'FILE_TRANSFER_SUCCESS',

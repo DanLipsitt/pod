@@ -8,6 +8,7 @@ import HTML5Backend from 'react-dnd-html5-backend';
 import {DragDropContext} from 'react-dnd';
 import {filesFetch, filesAdd} from '../actions';
 import {printersFetch, printersAdd} from '../actions';
+import {fileTransfer} from '../actions';
 
 @connect(mapStateToProps)
 @DragDropContext(HTML5Backend)
@@ -23,6 +24,10 @@ class App extends React.Component {
 
     const uploadHandlers = {
       success: (event, response) => dispatch(filesAdd(response)),
+    };
+
+    const doTransferFile = (file_id, printer_ids) => {
+      dispatch(fileTransfer(file_id, printer_ids));
     };
 
     return (
@@ -41,7 +46,7 @@ class App extends React.Component {
             </div>
           </Col>
           <Col sm={9}>
-            <PrinterGrid printers={printers}/>
+            <PrinterGrid printers={printers} doTransferFile={doTransferFile}/>
           </Col>
         </Row>
         <footer>Footer</footer>

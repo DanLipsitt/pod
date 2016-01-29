@@ -8,7 +8,7 @@ import classNames from 'classnames';
 class PrinterCard extends React.Component {
   static propTypes = {
     printer: PropTypes.shape({
-      id: PropTypes.string.isRequired,
+      id: PropTypes.number.isRequired,
       name: PropTypes.string.isRequired,
     }),
     filename: PropTypes.string,

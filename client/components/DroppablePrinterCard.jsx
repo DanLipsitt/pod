@@ -3,9 +3,9 @@ import {DropTarget} from 'react-dnd';
 import {FILE_ITEM} from '../constants/DragItemTypes';
 
 const printerCardTarget = {
-  drop(props, monitor, component) {
-    props.onDrop(monitor.getItem());
-    return {name: props.name};
+  drop(props, monitor) {
+    props.onDrop(monitor.getItem().id, [props.printer.id]);
+    return props.printer;
   },
 
   canDrop(props, monitor) {
