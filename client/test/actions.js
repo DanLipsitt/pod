@@ -61,9 +61,7 @@ describe('fileTransfer', function() {
     const printers = ['//printer1.local/', '//printer2.local'];
     const action = a.fileTransfer(file, printers);
     action[CALL_API].endpoint.should.equal(
-      'http://example.com/api/files/transfer?file=' + encodeURIComponent(file) +
-      '&printers=' + encodeURIComponent(printers[0]) +
-      '&printers=' + encodeURIComponent(printers[1])
+      'http://example.com/api/printers/transfer'
     );
   });
 
