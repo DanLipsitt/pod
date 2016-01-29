@@ -10,10 +10,10 @@ export const API_ORIGIN = typeof(window)!=='undefined'?
 const API_URI = URI(API_ORIGIN).segment(API_ROOT);
 export const API_URL = API_URI.toString();
 
+/* Files */
+
 export const filesRequest = createAction('FILES_REQUEST');
-
 export const filesSuccess = createAction('FILES_SUCCESS');
-
 export const filesAdd = createAction('FILES_ADD');
 
 export const filesFetch = () => ({
@@ -23,6 +23,8 @@ export const filesFetch = () => ({
     types: ['FILES_REQUEST', 'FILES_SUCCESS', 'FILES_FAILURE'],
   },
 });
+
+/* File Transfers */
 
 export const fileTransfer = (fileId, printerIds) => ({
   [CALL_API]: {
@@ -36,6 +38,8 @@ export const fileTransfer = (fileId, printerIds) => ({
             'FILE_TRANSFER_FAILURE']
   },
 });
+
+/* Printers */
 
 export const printersRequest = createAction('PRINTERS_REQUEST');
 export const printersSuccess = createAction('PRINTERS_SUCCESS');
