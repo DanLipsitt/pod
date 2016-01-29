@@ -2,6 +2,8 @@ from django.conf import settings
 from rest_framework import serializers, viewsets, status
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
+from revproxy.views import ProxyView
+from urllib.parse import urljoin
 
 from  files.models import PrintFile
 from .models import Printer
@@ -42,3 +44,13 @@ def transfer_file(request):
 class PrinterViewSet(viewsets.ModelViewSet):
     queryset = Printer.objects.all()
     serializer_class = PrinterSerializer
+
+
+class PrinterProxy(ProxyView):
+
+    def get_upstream(self, path):
+        return urljoin(self.printer_url, '/')
+
+    def dispatch(self, request, path, **kwargs):
+        self.printer_url = Printer.objects.get(id=kwargs['id']).url
+        return super().dispatch(request, path)
