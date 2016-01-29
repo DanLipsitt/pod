@@ -12,9 +12,9 @@ var FileList = ({files, uploadHandlers}) => (
      <Alert bsStyle="warning">No files yet...</Alert>
      :
      <ListGroup>
-       {files.map(({filename, createdAt, url}) =>
-         <FileItem filename={filename} key={url} createdAt={createdAt} />
-        )}
+       {files.map(file =>
+         <FileItem file={file} key={file.id} />
+       )}
      </ListGroup>}
   </div>
 );

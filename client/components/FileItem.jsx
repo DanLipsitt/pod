@@ -6,7 +6,7 @@ import Time from 'react-time';
 
 const dragSource = {
   beginDrag(props) {
-    return {filename: props.filename};
+    return {id: props.file.id};
   },
 
   endDrag(props, monitor) {
@@ -28,23 +28,23 @@ class FileItem extends Component {
   static propTypes = {
     connectDragSource: PropTypes.func.isRequired,
     isDragging: PropTypes.bool.isRequired,
-    filename: PropTypes.string.isRequired,
-    createdAt: Time.propTypes.value,
+    file: PropTypes.shape({
+      filename: PropTypes.string.isRequired,
+      createdAt: Time.propTypes.value
+    })
   };
 
   render() {
-    const {isDragging, connectDragSource,
-           filename, createdAt,
-           ...rest} = this.props;
+    const {isDragging, connectDragSource, file, ...rest} = this.props;
     const opacity = isDragging ? 0.4 : 1;
 
     return (
       <ListGroupItem
-          header={filename}
+          header={file.filename}
           ref={el => connectDragSource(findDOMNode(el))}
           {...rest}
       >
-        <b>uploaded</b> <Time value={createdAt} relative />
+        <b>uploaded</b> <Time value={file.createdAt} relative />
       </ListGroupItem>
     );
   }
