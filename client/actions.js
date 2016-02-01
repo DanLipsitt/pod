@@ -46,9 +46,28 @@ export const printersSuccess = createAction('PRINTERS_SUCCESS');
 export const printersAdd = createAction('PRINTERS_ADD');
 
 export const printersFetch = () => ({
+/* Printer Control */
+
+export const jobRequest = (printerId, command) => ({
   [CALL_API]: {
-    endpoint: API_URI.clone().segment('printers/').toString(),
-    method: 'GET',
-    types: ['PRINTERS_REQUEST', 'PRINTERS_SUCCESS', 'PRINTERS_FAILURE'],
+    endpoint: API_URI.clone()
+                     .segment(`printers/${printerId}/api/job/`).toString(),
+    body: JSON.stringify({command: command}),
+    method: 'POST',
+    headers: {'Content-Type': 'application/json', 'X-Api-Key': 'pod'},
+    types: ['JOB_REQUEST', 'JOB_SUCCESS', 'JOB_FAILURE'],
+  },
+});
+
+export const fileSelect = (printerId, filename) => ({
+  [CALL_API]: {
+    endpoint: API_URI.clone()
+                     .segment(`printers/${printerId}/api/files/local/${filename}`)
+                     .toString(),
+    body: JSON.stringify({command: 'select', print: true}),
+    method: 'POST',
+    headers: {'Content-Type': 'application/json', 'X-Api-Key': 'pod'},
+    types: ['FILE_SELECT_REQUEST', 'FILE_SELECT_SUCCESS',
+            'FILE_SELECT_FAILURE'],
   },
 });

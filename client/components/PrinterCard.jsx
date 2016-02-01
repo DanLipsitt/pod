@@ -11,6 +11,7 @@ class PrinterCard extends React.Component {
       id: PropTypes.number.isRequired,
       name: PropTypes.string.isRequired,
     }),
+    printerHandlers: PropTypes.object.isRequired,
     filename: PropTypes.string,
     /* drag and drop */
     connectDropTarget: PropTypes.func.isRequired,
@@ -23,7 +24,7 @@ class PrinterCard extends React.Component {
   };
 
   render() {
-    const {printer, filename, connectDropTarget} = this.props;
+    const {printer, filename, printerHandlers, connectDropTarget} = this.props;
     return (
       <Panel
           className={classNames('PrinterCard',
@@ -40,8 +41,12 @@ class PrinterCard extends React.Component {
         <p>{filename ? filename : "No file loaded."}</p>
         <ButtonToolbar>
           <ButtonGroup>
-            <Button><Glyphicon glyph="play" /></Button>
-            <Button><Glyphicon glyph="stop" /></Button>
+            <Button onClick={() => printerHandlers.start(printer.id)}>
+              <Glyphicon glyph="play" />
+            </Button>
+            <Button onClick={() => printerHandlers.stop(printer.id)}>
+              <Glyphicon glyph="stop" />
+            </Button>
           </ButtonGroup>
           <ButtonGroup>
             <Button><Glyphicon glyph="cd" /> Filament</Button>
