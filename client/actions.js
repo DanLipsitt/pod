@@ -1,5 +1,8 @@
 import {CALL_API} from 'redux-api-middleware';
 import {createAction} from 'redux-actions';
+import {addConnection} from './octoprint/socket';
+import {bind as composeEffects} from 'redux-effects';
+import {fetch} from 'redux-effects-fetch';
 import URI from 'urijs';
 
 export const API_ROOT = '/api/';
@@ -41,11 +44,31 @@ export const fileTransfer = (fileId, printerIds) => ({
 
 /* Printers */
 
-export const printersRequest = createAction('PRINTERS_REQUEST');
-export const printersSuccess = createAction('PRINTERS_SUCCESS');
-export const printersAdd = createAction('PRINTERS_ADD');
+export function printersFetch() {
+  return composeEffects(
+    fetch(API_URI.clone().segment('printers/').toString(), {
+      method: 'GET',
+    }),
+    ({value}) => value.map(printersAdd)
+  );
+}
 
-export const printersFetch = () => ({
+
+export const printersSuccess = createAction('PRINTERS_SUCCESS');
+
+export const _printersAdd = createAction('PRINTERS_ADD');
+
+export function printersAdd(printer) {
+  return function(dispatch) {
+
+    dispatch(_printersAdd(printer));
+
+    let url = URI(printer.url).segment('sockjs').toString();
+    addConnection(url, dispatch);
+    return Promise.resolve();
+  };
+}
+
 /* Printer Control */
 
 export const jobRequest = (printerId, command) => ({
