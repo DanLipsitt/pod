@@ -29,18 +29,17 @@ export const filesFetch = () => ({
 
 /* File Transfers */
 
-export const fileTransfer = (fileId, printerIds) => ({
-  [CALL_API]: {
-    endpoint: API_URI.clone()
-                     .segment('printers/transfer')
-                     .toString(),
-    body: JSON.stringify({file:fileId, printers:printerIds}),
-    method: 'POST',
-    headers: {'Content-Type': 'application/json'},
-    types: ['FILE_TRANSFER_REQUEST', 'FILE_TRANSFER_SUCCESS',
-            'FILE_TRANSFER_FAILURE']
-  },
-});
+export const fileTransfer = (fileId, printerIds) => composeEffects(
+  fetch(
+    API_URI.clone().segment('printers/transfer').toString(),
+    {
+      method: 'POST',
+      body: JSON.stringify({file:fileId, printers:printerIds}),
+      headers: {'Content-Type': 'application/json'},
+    }
+  ),
+  ({value}) => printerIds.map((printerId) => fileSelect(printerId, fileId))
+);
 
 /* Printers */
 
@@ -82,15 +81,28 @@ export const jobRequest = (printerId, command) => ({
   },
 });
 
-export const fileSelect = (printerId, filename) => ({
-  [CALL_API]: {
-    endpoint: API_URI.clone()
-                     .segment(`printers/${printerId}/api/files/local/${filename}`)
-                     .toString(),
-    body: JSON.stringify({command: 'select', print: true}),
-    method: 'POST',
-    headers: {'Content-Type': 'application/json', 'X-Api-Key': 'pod'},
-    types: ['FILE_SELECT_REQUEST', 'FILE_SELECT_SUCCESS',
-            'FILE_SELECT_FAILURE'],
-  },
-});
+export const fileSelect = (printerId, fileId, print=false) => {
+  return (dispatch, getState) => {
+    let fileName = fileById(getState(), fileId);
+    return dispatch({ [CALL_API]: {
+      endpoint: API_URI.clone()
+                       .segment(`printers/${printerId}/api`)
+                       .segment(`files/local/${fileName}`)
+                       .toString(),
+      body: JSON.stringify({command: 'select', print}),
+      method: 'POST',
+      headers: {'Content-Type': 'application/json', 'X-Api-Key': 'pod'},
+      types: ['FILE_SELECT_REQUEST', 'FILE_SELECT_SUCCESS',
+              'FILE_SELECT_FAILURE'],
+    }});
+  };
+};
+
+function fileById(state, fileId) {
+  // FIXME: what to do if file not found?
+
+  // filename is the original uploaded name, not the on-disk
+  // name. file is a url. We need to get just the filename part from that.
+  let fileUrl =  state.files.find(({id}) => id === fileId).file;
+  return URI(fileUrl).filename();
+}
