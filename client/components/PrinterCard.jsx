@@ -4,6 +4,7 @@ import {findDOMNode} from 'react-dom';
 import {Row, Col, Panel, Button, ButtonToolbar, ButtonGroup, Glyphicon}
 from 'react-bootstrap';
 import classNames from 'classnames';
+import StartStopButtons from './StartStopButtons';
 
 class PrinterCard extends React.Component {
   static propTypes = {
@@ -25,7 +26,7 @@ class PrinterCard extends React.Component {
   };
 
   render() {
-    const {printer, filename, printerHandlers, connectDropTarget} = this.props;
+    const {printer, printerHandlers, connectDropTarget} = this.props;
     return (
       <Panel
           className={classNames('PrinterCard',
@@ -45,14 +46,8 @@ class PrinterCard extends React.Component {
           {printer.job ? printer.job.file.name : 'No file loaded.'}
         </p>
         <ButtonToolbar>
-          <ButtonGroup>
-            <Button onClick={() => printerHandlers.start(printer.id)}>
-              <Glyphicon glyph="play" />
-            </Button>
-            <Button onClick={() => printerHandlers.stop(printer.id)}>
-              <Glyphicon glyph="stop" />
-            </Button>
-          </ButtonGroup>
+          <StartStopButtons printerHandlers={printerHandlers}
+                            printer={printer} />
           <ButtonGroup>
             <Button><Glyphicon glyph="cd" /> Filament</Button>
           </ButtonGroup>
