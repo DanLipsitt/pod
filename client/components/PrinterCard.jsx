@@ -9,10 +9,11 @@ class PrinterCard extends React.Component {
   static propTypes = {
     printer: PropTypes.shape({
       id: PropTypes.number.isRequired,
+      job: PropTypes.object.isRequired,
       name: PropTypes.string.isRequired,
+      state: PropTypes.object.isRequired,
     }),
     printerHandlers: PropTypes.object.isRequired,
-    filename: PropTypes.string,
     /* drag and drop */
     connectDropTarget: PropTypes.func.isRequired,
     canDrop: PropTypes.bool.isRequired,
@@ -36,9 +37,13 @@ class PrinterCard extends React.Component {
           <Col sm={9}><Panel>
             <Glyphicon glyph="facetime-video" />
           </Panel></Col>
-          <Col sm={3}><Panel>Ready</Panel></Col>
+          <Col sm={3}><Panel>
+            {printer.state ? printer.state.text : 'Disconnected'}
+          </Panel></Col>
         </Row>
-        <p>{filename ? filename : "No file loaded."}</p>
+        <p>
+          {printer.job ? printer.job.file.name : 'No file loaded.'}
+        </p>
         <ButtonToolbar>
           <ButtonGroup>
             <Button onClick={() => printerHandlers.start(printer.id)}>
