@@ -16,10 +16,13 @@ const printers = handleActions({
     action.payload
   ),
   PRINTERS_ADD: (state, action) => [
-    ...state, action.payload
+    ...state, printerWithDefaults(action.payload),
   ],
   ...printerReducers,
 }, []);
+
+const printerWithDefaults = (data) =>
+  Object.assign({state: {text: 'Offline'}}, data);
 
 export default combineReducers({
   files,
