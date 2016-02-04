@@ -1,5 +1,6 @@
 import {combineReducers} from 'redux';
 import {handleActions} from 'redux-actions';
+import {printerReducers} from './octoprint/reducers.js';
 
 const files = handleActions({
   FILES_SUCCESS: (state, action) => (
@@ -17,6 +18,7 @@ const printers = handleActions({
   PRINTERS_ADD: (state, action) => [
     ...state, action.payload
   ],
+  ...printerReducers,
 }, []);
 
 export default combineReducers({

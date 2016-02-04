@@ -63,7 +63,7 @@ export function printersAdd(printer) {
     dispatch(_printersAdd(printer));
 
     let url = URI(printer.url).segment('sockjs').toString();
-    addConnection(url, dispatch);
+    addConnection(printer.id, url, dispatch);
     return Promise.resolve();
   };
 }
