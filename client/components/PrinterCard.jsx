@@ -41,6 +41,9 @@ class PrinterCard extends React.Component {
         </Row>
         <Panel>
           {printer.state ? printer.state.text : 'Disconnected'}
+          {['Printing', 'Paused'].indexOf(printer.state.text) > -1 ?
+           <span> ({printer.progress.completion.toFixed(1)}%)</span> :
+           <span/>}
         </Panel>
         <p>
           {printer.job && printer.job.file.name ? printer.job.file.name : 'No file loaded.'}
