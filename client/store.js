@@ -7,8 +7,16 @@ import multi from 'redux-multi';
 import createLogger from 'redux-logger';
 import reducer from './reducers';
 
+const isLoggerExcludedAction = type => {
+  const excludes = new Set([
+    'OCTO_CURRENT',
+  ]);
+  return excludes.has(type);
+};
+
 const logger = createLogger({
-  predicate: (getState, action) => process.env.NODE_ENV === 'development',
+  predicate: (getState, action) => process.env.NODE_ENV === 'development'
+                             && !isLoggerExcludedAction(action.type),
 });
 
 const createStoreWithMiddleware = applyMiddleware(
