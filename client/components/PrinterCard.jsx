@@ -43,7 +43,7 @@ class PrinterCard extends React.Component {
           {printer.state ? printer.state.text : 'Disconnected'}
         </Panel>
         <p>
-          {printer.job ? printer.job.file.name : 'No file loaded.'}
+          {printer.job && printer.job.file.name ? printer.job.file.name : 'No file loaded.'}
         </p>
         <ButtonToolbar>
           <StartStopButtons printerHandlers={printerHandlers}
