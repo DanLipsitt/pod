@@ -44,9 +44,13 @@ const StartStopButtons = ({printer, printerHandlers}) => {
       case 'Paused':
         return <ButtonGroup><ResumeButton/><StopButton/></ButtonGroup>;
       case 'Operational':
-        return <ButtonGroup><StartButton/><Placeholder/></ButtonGroup>;
+        if(printer.job && printer.job.file.name) {
+          return <ButtonGroup><StartButton/><Placeholder/></ButtonGroup>;
+        } else {
+          return <ButtonGroup><StartButton disabled/><Placeholder/></ButtonGroup>;
+        }
       default:
-        return <ButtonGroup><StartButton disabled/><Placeholder/></ButtonGroup>;
+          return <ButtonGroup><StartButton disabled/><Placeholder/></ButtonGroup>;
     }
   };
 
