@@ -4,7 +4,7 @@ import {Button, ButtonGroup, Glyphicon} from 'react-bootstrap';
 const StartStopButtons = ({printer, printerHandlers}) => {
 
   const start = () => printerHandlers.start(printer.id);
-  const stop  = () => printerHandlers.stop(printer.id);
+  const cancel  = () => printerHandlers.cancel(printer.id);
   const pause = () => printerHandlers.pause(printer.id);
   const restart = () => printerHandlers.restart(printer.id);
 
@@ -19,8 +19,13 @@ const StartStopButtons = ({printer, printerHandlers}) => {
   const StartButton = (props) =>
     <GlyphButton {...props} onClick={start} glyph="play" />;
 
+  // The resume button looks just like start, but sends the 'pause'
+  // command, which is actually a pause/unpause toggle.
+  const ResumeButton = (props) =>
+    <GlyphButton {...props} onClick={pause} glyph="play" />;
+
   const StopButton = (props) =>
-    <GlyphButton {...props} onClick={stop} glyph="stop" />;
+    <GlyphButton {...props} onClick={cancel} glyph="stop" />;
 
   const PauseButton = (props) =>
     <GlyphButton {...props} onClick={pause} glyph="pause" />;
@@ -37,7 +42,7 @@ const StartStopButtons = ({printer, printerHandlers}) => {
       case 'Printing':
         return <ButtonGroup><PauseButton/><Placeholder/></ButtonGroup>;
       case 'Paused':
-        return <ButtonGroup><StartButton/><StopButton/></ButtonGroup>;
+        return <ButtonGroup><ResumeButton/><StopButton/></ButtonGroup>;
       case 'Operational':
         return <ButtonGroup><StartButton/><Placeholder/></ButtonGroup>;
       default:

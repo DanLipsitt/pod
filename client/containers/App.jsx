@@ -27,7 +27,7 @@ class App extends React.Component {
     };
 
     let printerHandlers = {};
-    for (let command of ['start', 'pause', 'resume', 'stop']) {
+    for (let command of ['start', 'pause', 'resume', 'cancel']) {
       printerHandlers[command] = (printerId) => {
         dispatch(jobRequest(printerId, command));
       };
