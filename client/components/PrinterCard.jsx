@@ -38,10 +38,10 @@ class PrinterCard extends React.Component {
           <Col sm={9}><Panel>
             <Glyphicon glyph="facetime-video" />
           </Panel></Col>
-          <Col sm={3}><Panel>
-            {printer.state ? printer.state.text : 'Disconnected'}
-          </Panel></Col>
         </Row>
+        <Panel>
+          {printer.state ? printer.state.text : 'Disconnected'}
+        </Panel>
         <p>
           {printer.job ? printer.job.file.name : 'No file loaded.'}
         </p>
