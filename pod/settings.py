@@ -126,3 +126,18 @@ REST_FRAMEWORK = {
 CELERY_ACCEPT_CONTENT = ['pickle']
 
 CROSSBAR_PUBLISH_URL = "http://localhost:8081/publish"
+
+LOGGING = {
+    'version': 1,
+    'handlers': {
+        'console': {
+            'class': 'logging.StreamHandler',
+        },
+    },
+    'loggers': {
+        'revproxy.view': {
+            'handlers': ['console'],
+            'level': 'DEBUG',
+        },
+    }
+}
