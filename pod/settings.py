@@ -37,12 +37,22 @@ INSTALLED_APPS = (
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'django_extensions',
     'rest_framework',
     'printers',
     'jobs',
     'files',
 )
+
+
+def _enable_conditional(application):
+    global INSTALLED_APPS
+    try:
+        __import__(application)
+        INSTALLED_APPS += (application,)
+    except ImportError:
+        pass
+
+_enable_conditional('django_extensions')
 
 MIDDLEWARE_CLASSES = (
     'django.contrib.sessions.middleware.SessionMiddleware',
