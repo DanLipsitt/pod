@@ -5,12 +5,8 @@ PyYaml==3.11
 djangorestframework==3.3.2
 model-mommy==1.2.6
 nosy==1.2
-aiohttp==0.19.0
-autobahn==0.11.0
 honcho==0.6.6
-asynctest==0.5.0
 httpbin==0.4.0
 celery==3.1.20
 pylint-celery==0.3
-crossbar==0.11.2
 https://github.com/typeamachines/django-revproxy/archive/55be24bc0e191e37f3.zip
