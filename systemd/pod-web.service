@@ -5,8 +5,8 @@ After=network.target
 
 [Service]
 PIDFile=/run/gunicorn/pid
-WorkingDirectory=/home/vagrant/
-ExecStart=/home/vagrant/pod-venv/bin/gunicorn --pid /run/gunicorn/pid pod.wsgi
+WorkingDirectory=/tmp
+ExecStart=/opt/pod/virtualenv/bin/gunicorn --pid /run/gunicorn/pid pod.wsgi
 ExecReload=/bin/kill -s HUP $MAINPID
 ExecStop=/bin/kill -s TERM $MAINPID
 PrivateTmp=true

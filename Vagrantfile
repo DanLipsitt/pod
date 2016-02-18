@@ -68,14 +68,10 @@ Vagrant.configure(2) do |config|
   config.vm.provision "shell", inline: <<-SHELL
     sudo apt-get update
     sudo apt-get install -y \
-        npm \
-        python3-pex
         python3-pip \
-        python3-django \
-        python3-celery \
-        python3-django-extensions \
-        python3-sqlite \
-        gunicorn3
-
+        python3-venv
   SHELL
+
+  config.vm.provision "shell", name: "app", path: "scripts/provision-app.bash"
+
 end
