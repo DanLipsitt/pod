@@ -72,6 +72,14 @@ Vagrant.configure(2) do |config|
         python3-venv
   SHELL
 
+  # This is a temporary workaround for
+  # https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=812252
+  config.vm.provision "shell", name: "set default pager", inline: <<-SHELL
+    update-alternatives --quiet --install /usr/bin/pager pager \
+        /bin/less 77 --slave /usr/share/man/man1/pager.1.gz \
+        pager.1.gz /usr/share/man/man1/less.1.gz
+  SHELL
+
   config.vm.provision "shell", name: "app", path: "scripts/provision-app.bash"
 
 end
