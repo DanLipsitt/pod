@@ -118,6 +118,8 @@ STATIC_URL = '/static/'
 STATICFILES_DIRS = (
     os.path.join(BASE_DIR, "build"),
 )
+STATIC_ROOT = './static'
+STATICFILES_STORAGE = 'whitenoise.django.GzipManifestStaticFilesStorage'
 
 # storage for uploaded files
 MEDIA_ROOT = './uploads'        # FIXME: devel only
