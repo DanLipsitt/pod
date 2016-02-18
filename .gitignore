@@ -8,3 +8,5 @@
 /uploads
 /.env
 /.vagrant/
+*.egg-info/
+dist/
