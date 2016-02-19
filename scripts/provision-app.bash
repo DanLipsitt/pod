@@ -10,3 +10,4 @@ pip install gunicorn
 pip install -r /vagrant/requirements.txt
 cp ${SOURCE}/systemd/pod-*.{service,socket} /etc/systemd/system
 systemctl enable pod-web
+systemctl restart pod-web
