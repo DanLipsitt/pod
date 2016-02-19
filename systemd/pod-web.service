@@ -4,9 +4,8 @@ Requires=pod-web.socket
 After=network.target
 
 [Service]
-PIDFile=/run/gunicorn/pid
 WorkingDirectory=/tmp
-ExecStart=/opt/pod/virtualenv/bin/gunicorn --pid /run/gunicorn/pid pod.wsgi
+ExecStart=/opt/pod/virtualenv/bin/gunicorn pod.wsgi
 ExecReload=/bin/kill -s HUP $MAINPID
 ExecStop=/bin/kill -s TERM $MAINPID
 PrivateTmp=true
