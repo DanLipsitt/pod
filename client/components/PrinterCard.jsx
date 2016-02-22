@@ -31,7 +31,16 @@ class PrinterCard extends React.Component {
       <Panel
           className={classNames('PrinterCard',
                      {'is-drag-hovered': this.props.isOver})}
-          header={<h3><a href={printer.url}>{printer.name}</a></h3>}
+          header={
+            <h3>
+            {printer.name}
+            <small>
+              <a href={printer.url} className="pull-right">
+                <Glyphicon glyph="new-window"/>
+              </a>
+            </small>
+            </h3>
+          }
           ref={instance => connectDropTarget(findDOMNode(instance))}
       >
         <Row>
