@@ -11,3 +11,4 @@
 /static/
 *.egg-info/
 dist/
+/pod/static

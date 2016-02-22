@@ -15,6 +15,7 @@ setup(
         # include template html from any package
         '': [
             'templates/*/*.html',
+            'static/*/*',
         ]
     },
     license='Proprietary',
