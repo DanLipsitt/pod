@@ -8,5 +8,8 @@
 {% endblock %}
 
 {% block body_scripts %}
+<script>
+ var version = '{{ version }}';
+</script>
 <script src='{% static "pod/bundle.js" %}'></script>
 {% endblock %}

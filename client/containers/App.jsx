@@ -57,7 +57,7 @@ class App extends React.Component {
                          doTransferFile={doTransferFile}/>
           </Col>
         </Row>
-        <footer>Footer</footer>
+        <footer><small className="text-muted pull-right">version: {version}</small></footer>
       </div>
     );
   }

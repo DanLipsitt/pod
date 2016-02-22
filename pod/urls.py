@@ -3,6 +3,7 @@ from django.conf.urls import include, patterns, url
 from django.contrib import admin
 from django.views.generic import TemplateView
 from rest_framework import routers
+import pod.views
 import files.views
 import printers.views
 
@@ -14,8 +15,7 @@ api_router.register(r'files', files.views.PrintFileViewSet)
 api_router.register(r'printers', printers.views.PrinterViewSet)
 
 urlpatterns = [
-    url(r'^$', TemplateView.as_view(template_name='pod/index.html'),
-        name='pod-index'),
+    url(r'^$', pod.views.index, name='index'),
     url(r'^admin/', include(admin.site.urls)),
     url(r'^api/', include(api_router.urls)),
     url(r'^api-auth/',
