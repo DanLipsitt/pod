@@ -10,5 +10,6 @@
 /.vagrant/
 /static/
 *.egg-info/
+/.eggs/
 dist/
 /pod/static
