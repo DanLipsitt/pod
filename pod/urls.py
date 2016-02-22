@@ -14,7 +14,7 @@ api_router.register(r'files', files.views.PrintFileViewSet)
 api_router.register(r'printers', printers.views.PrinterViewSet)
 
 urlpatterns = [
-    url(r'^$', TemplateView.as_view(template_name='index.html'),
+    url(r'^$', TemplateView.as_view(template_name='pod/index.html'),
         name='pod-index'),
     url(r'^admin/', include(admin.site.urls)),
     url(r'^api/', include(api_router.urls)),
