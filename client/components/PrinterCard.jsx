@@ -1,8 +1,8 @@
 import './PrinterCard.less';
 import React, {PropTypes} from 'react';
 import {findDOMNode} from 'react-dom';
-import {Row, Col, Panel, Button, ButtonToolbar, ButtonGroup, Glyphicon}
-from 'react-bootstrap';
+import {Row, Col, Panel, Button, ButtonToolbar, ButtonGroup, Glyphicon,
+        Input} from 'react-bootstrap';
 import classNames from 'classnames';
 import StartStopButtons from './StartStopButtons';
 
@@ -32,14 +32,17 @@ class PrinterCard extends React.Component {
           className={classNames('PrinterCard',
                      {'is-drag-hovered': this.props.isOver})}
           header={
-            <h3>
-            {printer.name}
-            <small>
-              <a href={printer.url} className="pull-right">
-                <Glyphicon glyph="new-window"/>
-              </a>
-            </small>
-            </h3>
+            <label style={{display: 'block'}}>
+              <input type="checkbox"/>
+              <h3 style={{display: 'inline', marginLeft: '0.5em'}}>
+                {printer.name}
+              </h3>
+              <small className="pull-right">
+                <a href={printer.url}>
+                  <Glyphicon glyph="new-window"/>
+                </a>
+              </small>
+            </label>
           }
           ref={instance => connectDropTarget(findDOMNode(instance))}
       >
