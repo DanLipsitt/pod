@@ -1,6 +1,35 @@
 import React, {PropTypes} from 'react';
 import {Button, ButtonGroup, Glyphicon} from 'react-bootstrap';
 
+const GlyphButton = (props) =>
+  <Button {...props}>
+    <Glyphicon glyph={props.glyph} />
+  </Button>;
+GlyphButton.defaultProps = {
+  disabled: false,
+};
+
+const StartButton = (props) =>
+  <GlyphButton {...props} onClick={props.start} glyph="play" />;
+
+// The resume button looks just like start, but sends the 'pause'
+// command, which is actually a pause/unpause toggle.
+const ResumeButton = (props) =>
+  <GlyphButton {...props} onClick={props.pause} glyph="play" />;
+
+const StopButton = (props) =>
+  <GlyphButton {...props} onClick={props.cancel} glyph="stop" />;
+
+const PauseButton = (props) =>
+  <GlyphButton {...props} onClick={props.pause} glyph="pause" />;
+
+const RestartButton = (props) =>
+  <GlyphButton {...props} onClick={props.restart} glyph="repeat" />;
+
+const Placeholder = () =>
+  <GlyphButton disabled glyph="stop"
+               style={{color: 'transparent !important'}}/>;
+
 const StartStopButtons = ({printer, printerHandlers}) => {
 
   const start = () => printerHandlers.start(printer.id);
@@ -8,49 +37,25 @@ const StartStopButtons = ({printer, printerHandlers}) => {
   const pause = () => printerHandlers.pause(printer.id);
   const restart = () => printerHandlers.restart(printer.id);
 
-  const GlyphButton = (props) =>
-    <Button {...props}>
-      <Glyphicon glyph={props.glyph} />
-    </Button>;
-  GlyphButton.defaultProps = {
-    disabled: false,
-  };
-
-  const StartButton = (props) =>
-    <GlyphButton {...props} onClick={start} glyph="play" />;
-
-  // The resume button looks just like start, but sends the 'pause'
-  // command, which is actually a pause/unpause toggle.
-  const ResumeButton = (props) =>
-    <GlyphButton {...props} onClick={pause} glyph="play" />;
-
-  const StopButton = (props) =>
-    <GlyphButton {...props} onClick={cancel} glyph="stop" />;
-
-  const PauseButton = (props) =>
-    <GlyphButton {...props} onClick={pause} glyph="pause" />;
-
-  const RestartButton = (props) =>
-    <GlyphButton {...props} onClick={restart} glyph="repeat" />;
-
-  const Placeholder = () =>
-    <GlyphButton disabled glyph="stop"
-                 style={{color: 'transparent !important'}}/>;
+  let Start = (props) => <StartButton {...props} onclick={start}/>;
+  let Resume = (props) => <ResumeButton {...props} onClick={pause}/>;
+  let Stop = (props) => <StopButton {...props} onClick={cancel}/>;
+  let Pause = (props) =>  <PauseButton {...props} onClick={pause}/>;
 
   const buttons = (state) => {
     switch (state.text) {
       case 'Printing':
-        return <ButtonGroup><PauseButton/><Placeholder/></ButtonGroup>;
+        return <ButtonGroup><Pause/><Placeholder/></ButtonGroup>;
       case 'Paused':
-        return <ButtonGroup><ResumeButton/><StopButton/></ButtonGroup>;
+        return <ButtonGroup><Resume/><Stop/></ButtonGroup>;
       case 'Operational':
         if(printer.job && printer.job.file.name) {
-          return <ButtonGroup><StartButton/><Placeholder/></ButtonGroup>;
+          return <ButtonGroup><Start/><Placeholder/></ButtonGroup>;
         } else {
-          return <ButtonGroup><StartButton disabled/><Placeholder/></ButtonGroup>;
+          return <ButtonGroup><Start disabled/><Placeholder/></ButtonGroup>;
         }
       default:
-          return <ButtonGroup><StartButton disabled/><Placeholder/></ButtonGroup>;
+          return <ButtonGroup><Start disabled/><Placeholder/></ButtonGroup>;
     }
   };
 
@@ -67,4 +72,6 @@ StartStopButtons.propTypes = {
   }).isRequired,
 };
 
+export {StartButton, ResumeButton, StopButton, PauseButton, RestartButton,
+        Placeholder};
 export default StartStopButtons;
