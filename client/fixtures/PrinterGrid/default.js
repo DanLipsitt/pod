@@ -10,6 +10,7 @@ module.exports = {
     state: {
       text: ['Operational', 'Printing', 'Paused', 'Offline', 'Closed'][i],
     },
+    progress: {completion: 50},
   })
   ),
   printerHandlers: {},
