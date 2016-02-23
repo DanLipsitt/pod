@@ -3,11 +3,13 @@ import 'bootstrap-webpack';
 import _ from 'lodash';
 import {Row, Col} from 'react-bootstrap';
 import {default as PrinterCard} from './DroppablePrinterCard';
+import PrinterGroupControl from './PrinterGroupControl';
 
 var PrinterGrid = ({printers, printerHandlers, doTransferFile}) => {
   let rows = _.chunk(printers, 3);
   return (<div>
-    <h2>Printers</h2>
+    <h2 style={{display: 'inline-block'}}>Printers</h2>
+    <PrinterGroupControl/>
     {rows.map((row, i) =>
       <Row key={i}>
         {row.map(printer => {
