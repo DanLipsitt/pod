@@ -33,8 +33,13 @@ class PrinterCard extends React.Component {
                      {'is-drag-hovered': this.props.isOver})}
           header={
             <label style={{display: 'block'}}>
-              <input type="checkbox"/>
-              <h3 style={{display: 'inline', marginLeft: '0.5em'}}>
+              <Input type="checkbox" standalone ref="selected"
+                     onChange={() => printerHandlers.select(
+                         printer.id,
+                         this.refs.selected.getChecked()
+                       )}
+              />
+            <h3 style={{display: 'inline', marginLeft: '0.5em'}}>
                 {printer.name}
               </h3>
               <small className="pull-right">

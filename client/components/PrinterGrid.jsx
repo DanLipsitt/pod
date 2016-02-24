@@ -7,9 +7,11 @@ import PrinterGroupControl from './PrinterGroupControl';
 
 var PrinterGrid = ({printers, printerHandlers, doTransferFile}) => {
   let rows = _.chunk(printers, 3);
+  const selected = _.filter(printers, x => x.selected);
   return (<div>
     <h2 style={{display: 'inline-block'}}>Printers</h2>
-    <PrinterGroupControl/>
+    <PrinterGroupControl printers={selected}
+                         printerHandlers={printerHandlers}/>
     {rows.map((row, i) =>
       <Row key={i}>
         {row.map(printer => {

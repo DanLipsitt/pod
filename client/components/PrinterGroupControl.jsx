@@ -4,11 +4,11 @@ import {Row, Col, Panel, Button, ButtonGroup,
 import {StartButton, PauseButton, StopButton,
         ResumeButton} from './StartStopButtons';
 
-const PrinterGroupControl = () => (
-  <Panel style={{display:'inline-block', marginLeft:'2em',
+const PrinterGroupControl = ({printers}) => {
+  return <Panel style={{display:'inline-block', marginLeft:'2em',
                  marginBottom: '0em'}}>
     <Col lg={3}>
-      <Row>5 selected</Row>
+      <Row>{printers.length} selected</Row>
       <Row>
         <ButtonToolbar>
           <Button bsSize="xsmall">All</Button> {' '}
@@ -26,7 +26,7 @@ const PrinterGroupControl = () => (
         <StopButton>1</StopButton>
       </ButtonToolbar>
     </Col>
-  </Panel>
-);
+  </Panel>;
+};
 
 export default PrinterGroupControl;

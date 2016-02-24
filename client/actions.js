@@ -43,6 +43,8 @@ export const fileTransfer = (fileId, printerIds) => composeEffects(
 
 /* Printers */
 
+export const printerSelect = createAction('PRINTER_SELECT');
+
 export function printersFetch() {
   return composeEffects(
     fetch(API_URI.clone().segment('printers/').toString(), {

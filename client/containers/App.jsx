@@ -7,7 +7,7 @@ import FileList from '../components/FileList';
 import HTML5Backend from 'react-dnd-html5-backend';
 import {DragDropContext} from 'react-dnd';
 import {filesFetch, filesAdd} from '../actions';
-import {printersFetch, jobRequest, printersSuccess} from '../actions';
+import {printersFetch, jobRequest, printersSuccess, printerSelect} from '../actions';
 import {fileTransfer} from '../actions';
 
 @connect(mapStateToProps)
@@ -32,6 +32,9 @@ class App extends React.Component {
         dispatch(jobRequest(printerId, command));
       };
     }
+    printerHandlers.select = (id, selected) => dispatch(
+      printerSelect({id, selected})
+    );
 
     const doTransferFile = (file_id, printer_ids) => {
       dispatch(fileTransfer(file_id, printer_ids));

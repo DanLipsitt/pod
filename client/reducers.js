@@ -18,6 +18,13 @@ const printers = handleActions({
   PRINTERS_ADD: (state, action) => [
     ...state, printerWithDefaults(action.payload),
   ],
+  PRINTER_SELECT: (state, action) => (
+    state.map(printer => (
+      printer.id == action.payload.id ?
+      Object.assign({}, printer, {selected: action.payload.selected}) :
+      printer
+    ))
+  ),
   ...printerReducers,
 }, []);
 
