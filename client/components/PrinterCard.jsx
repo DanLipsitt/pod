@@ -1,8 +1,8 @@
 import './PrinterCard.less';
 import React, {PropTypes} from 'react';
 import {findDOMNode} from 'react-dom';
-import {Row, Col, Panel, Button, ButtonToolbar, ButtonGroup, Glyphicon,
-        Input} from 'react-bootstrap';
+import {Row, Col, Panel, Button, ButtonToolbar, ButtonGroup,
+        Glyphicon} from 'react-bootstrap';
 import classNames from 'classnames';
 import StartStopButtons from './StartStopButtons';
 
@@ -33,10 +33,10 @@ class PrinterCard extends React.Component {
                      {'is-drag-hovered': this.props.isOver})}
           header={
             <label style={{display: 'block'}}>
-              <Input type="checkbox" standalone ref="selected"
+              <input type="checkbox" ref="selected"
                      onChange={() => printerHandlers.select(
                          printer.id,
-                         this.refs.selected.getChecked()
+                         this.refs.selected.checked
                        )}
               />
             <h3 style={{display: 'inline', marginLeft: '0.5em'}}>
