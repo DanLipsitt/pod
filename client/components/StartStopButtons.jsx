@@ -13,11 +13,13 @@ GlyphButton.defaultProps = {
 const StartButton = (props) =>
   <GlyphButton {...props} onClick={props.start} glyph="play" />;
 
-// The resume button looks just like start, but sends the 'pause'
-// command, which is actually a pause/unpause toggle.
+// The resume sends the 'pause'command, which is actually a
+// pause/unpause toggle.
 const ResumeButton = (props) =>
-  <GlyphButton {...props} onClick={props.pause} glyph="play" />;
+  <Button {...props} onClick={props.pause}>
+    <Glyphicon glyph="pause"/><Glyphicon glyph="play"/>
     {' '} {props.children}
+  </Button>;
 
 const StopButton = (props) =>
   <GlyphButton {...props} onClick={props.cancel} glyph="stop" />;
