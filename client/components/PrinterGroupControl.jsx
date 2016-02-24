@@ -5,6 +5,26 @@ import {StartButton, PauseButton, StopButton,
         ResumeButton} from './StartStopButtons';
 
 const PrinterGroupControl = ({printers}) => {
+
+  let printerUrlsByButton = {start:[], pause:[], resume:[], stop:[]};
+  printers.forEach(printer => {
+    if(! printer.selected) return;
+    switch (printer.state.text) {
+      case 'Printing':
+        printerUrlsByButton.pause.push(printer.url);
+        break;
+      case 'Paused':
+        printerUrlsByButton.resume.push(printer.url);
+        printerUrlsByButton.stop.push(printer.url);
+        break;
+      case 'Operational':
+        if(printer.job && printer.job.file.name) {
+          printerUrlsByButton.start.push(printer.url);
+        }
+        break;
+    }
+  });
+
   return <Panel style={{display:'inline-block', marginLeft:'2em',
                  marginBottom: '0em'}}>
     <Col lg={3}>
@@ -19,11 +39,11 @@ const PrinterGroupControl = ({printers}) => {
     <Col lg={9}>
       <ButtonToolbar>
         <ButtonGroup>
-          <StartButton>2</StartButton>
-          <PauseButton>1</PauseButton>
-          <ResumeButton>1</ResumeButton>
+          <StartButton>{printerUrlsByButton.start.length}</StartButton>
+          <PauseButton>{printerUrlsByButton.pause.length}</PauseButton>
+          <ResumeButton>{printerUrlsByButton.resume.length}</ResumeButton>
         </ButtonGroup>
-        <StopButton>1</StopButton>
+        <StopButton>{printerUrlsByButton.stop.length}</StopButton>
       </ButtonToolbar>
     </Col>
   </Panel>;
