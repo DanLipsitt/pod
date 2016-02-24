@@ -4,6 +4,7 @@ import {Button, ButtonGroup, Glyphicon} from 'react-bootstrap';
 const GlyphButton = (props) =>
   <Button {...props}>
     <Glyphicon glyph={props.glyph} />
+    {' '} {props.children}
   </Button>;
 GlyphButton.defaultProps = {
   disabled: false,
@@ -16,6 +17,7 @@ const StartButton = (props) =>
 // command, which is actually a pause/unpause toggle.
 const ResumeButton = (props) =>
   <GlyphButton {...props} onClick={props.pause} glyph="play" />;
+    {' '} {props.children}
 
 const StopButton = (props) =>
   <GlyphButton {...props} onClick={props.cancel} glyph="stop" />;
