@@ -39,11 +39,15 @@ const PrinterGroupControl = ({printers}) => {
     <Col lg={9}>
       <ButtonToolbar>
         <ButtonGroup>
-          <StartButton>{printerUrlsByButton.start.length}</StartButton>
-          <PauseButton>{printerUrlsByButton.pause.length}</PauseButton>
-          <ResumeButton>{printerUrlsByButton.resume.length}</ResumeButton>
+          <StartButton disabled={printerUrlsByButton.start.length < 1}>
+            {printerUrlsByButton.start.length}</StartButton>
+          <PauseButton disabled={printerUrlsByButton.pause.length < 1}>
+            {printerUrlsByButton.pause.length}</PauseButton>
+          <ResumeButton disabled={printerUrlsByButton.resume.length < 1}>
+            {printerUrlsByButton.resume.length}</ResumeButton>
         </ButtonGroup>
-        <StopButton>{printerUrlsByButton.stop.length}</StopButton>
+        <StopButton disabled={printerUrlsByButton.stop.length < 1}>
+          {printerUrlsByButton.stop.length}</StopButton>
       </ButtonToolbar>
     </Col>
   </Panel>;
