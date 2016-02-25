@@ -4,7 +4,12 @@ import {Row, Col, Panel, Button, ButtonGroup,
 import {StartButton, PauseButton, StopButton,
         ResumeButton} from './StartStopButtons';
 
-const PrinterGroupControl = ({printers}) => {
+function runCommand(command, printers) {
+  // Send the given command to each printer.
+  printers.forEach(printer => command(printer.id));
+}
+
+const PrinterGroupControl = ({printers, printerHandlers}) => {
 
   let printerUrlsByButton = {start:[], pause:[], resume:[], stop:[]};
   printers.forEach(printer => {
@@ -39,14 +44,22 @@ const PrinterGroupControl = ({printers}) => {
     <Col lg={9}>
       <ButtonToolbar>
         <ButtonGroup>
-          <StartButton disabled={printerUrlsByButton.start.length < 1}>
+          <StartButton
+              onClick={runCommand.bind(this, printerHandlers.start, printers)}
+              disabled={printerUrlsByButton.start.length < 1}>
             {printerUrlsByButton.start.length}</StartButton>
-          <PauseButton disabled={printerUrlsByButton.pause.length < 1}>
+          <PauseButton
+              onClick={runCommand.bind(this, printerHandlers.pause, printers)}
+              disabled={printerUrlsByButton.pause.length < 1}>
             {printerUrlsByButton.pause.length}</PauseButton>
-          <ResumeButton disabled={printerUrlsByButton.resume.length < 1}>
+          <ResumeButton
+              onClick={runCommand.bind(this, printerHandlers.pause, printers)}
+              disabled={printerUrlsByButton.resume.length < 1}>
             {printerUrlsByButton.resume.length}</ResumeButton>
         </ButtonGroup>
-        <StopButton disabled={printerUrlsByButton.stop.length < 1}>
+        <StopButton
+            onClick={runCommand.bind(this, printerHandlers.cancel, printers)}
+            disabled={printerUrlsByButton.stop.length < 1}>
           {printerUrlsByButton.stop.length}</StopButton>
       </ButtonToolbar>
     </Col>
