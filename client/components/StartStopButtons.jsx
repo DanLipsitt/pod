@@ -11,24 +11,24 @@ GlyphButton.defaultProps = {
 };
 
 const StartButton = (props) =>
-  <GlyphButton {...props} onClick={props.start} glyph="play" />;
+  <GlyphButton {...props} glyph="play" />;
 
 // The resume sends the 'pause'command, which is actually a
 // pause/unpause toggle.
 const ResumeButton = (props) =>
-  <Button {...props} onClick={props.pause}>
+  <Button {...props}>
     <Glyphicon glyph="pause"/><Glyphicon glyph="play"/>
     {' '} {props.children}
   </Button>;
 
 const StopButton = (props) =>
-  <GlyphButton {...props} onClick={props.cancel} glyph="stop" />;
+  <GlyphButton {...props} glyph="stop" />;
 
 const PauseButton = (props) =>
-  <GlyphButton {...props} onClick={props.pause} glyph="pause" />;
+  <GlyphButton {...props} glyph="pause" />;
 
 const RestartButton = (props) =>
-  <GlyphButton {...props} onClick={props.restart} glyph="repeat" />;
+  <GlyphButton {...props} glyph="repeat" />;
 
 const Placeholder = () =>
   <GlyphButton disabled glyph="stop"
@@ -41,7 +41,7 @@ const StartStopButtons = ({printer, printerHandlers}) => {
   const pause = () => printerHandlers.pause(printer.id);
   const restart = () => printerHandlers.restart(printer.id);
 
-  let Start = (props) => <StartButton {...props} onclick={start}/>;
+  let Start = (props) => <StartButton {...props} onClick={start}/>;
   let Resume = (props) => <ResumeButton {...props} onClick={pause}/>;
   let Stop = (props) => <StopButton {...props} onClick={cancel}/>;
   let Pause = (props) =>  <PauseButton {...props} onClick={pause}/>;
