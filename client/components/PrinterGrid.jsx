@@ -1,17 +1,15 @@
 import React, {PropTypes} from 'react';
 import 'bootstrap-webpack';
-import _ from 'lodash';
 import {Row, Col} from 'react-bootstrap';
 import {default as PrinterCard} from './DroppablePrinterCard';
 import PrinterGroupControl from './PrinterGroupControl';
 
 var PrinterGrid = ({printers, printerHandlers, doTransferFile}) => {
   let rows = _.chunk(printers, 3);
-  const selected = _.filter(printers, x => x.selected);
   return (<div>
     <h2 style={{display: 'inline-block'}}>Printers</h2>
-    <PrinterGroupControl printers={selected}
-                         printerHandlers={printerHandlers}/>
+    <PrinterGroupControl printers={printers}
+        printerHandlers={printerHandlers}/>
     {rows.map((row, i) =>
       <Row key={i}>
         {row.map(printer => {
