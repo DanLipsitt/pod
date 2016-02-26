@@ -25,6 +25,11 @@ class PrinterCard extends React.Component {
     canDrop: true,
   };
 
+  handleSelect(event) {
+    const {printer, printerHandlers} = this.props;
+    printerHandlers.select(printer.id, event.target.checked);
+  }
+
   render() {
     const {printer, printerHandlers, connectDropTarget} = this.props;
     return (
@@ -33,11 +38,8 @@ class PrinterCard extends React.Component {
                      {'is-drag-hovered': this.props.isOver})}
           header={
             <label style={{display: 'block'}}>
-              <input type="checkbox" ref="selected"
-                     onChange={() => printerHandlers.select(
-                         printer.id,
-                         this.refs.selected.checked
-                       )}
+              <input type="checkbox" checked={printer.selected}
+                     onChange={this.handleSelect.bind(this)}
               />
             <h3 style={{display: 'inline', marginLeft: '0.5em'}}>
                 {printer.name}

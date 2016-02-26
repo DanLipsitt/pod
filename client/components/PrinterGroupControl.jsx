@@ -46,7 +46,7 @@ const PrinterGroupControl = ({printers, printerHandlers}) => {
           <Button onClick={() => setSelectAll(printers, printerHandlers.select, true)}
                   bsSize="xsmall">All</Button>
           {' '}
-          <Button onClick={setSelectAll.bind(this, printers, printerHandlers.select, false)}
+          <Button onClick={setSelectAll.bind(this, selected, printerHandlers.select, false)}
                   bsSize="xsmall">None</Button>
         </ButtonToolbar>
       </Row>
