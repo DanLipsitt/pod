@@ -54,9 +54,6 @@ export function printersFetch() {
   );
 }
 
-
-export const printersSuccess = createAction('PRINTERS_SUCCESS');
-
 export const _printersAdd = createAction('PRINTERS_ADD');
 
 export function printersAdd(printer) {

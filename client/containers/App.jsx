@@ -7,7 +7,7 @@ import FileList from '../components/FileList';
 import HTML5Backend from 'react-dnd-html5-backend';
 import {DragDropContext} from 'react-dnd';
 import {filesFetch, filesAdd} from '../actions';
-import {printersFetch, jobRequest, printersSuccess, printerSelect} from '../actions';
+import {printersFetch, jobRequest, printerSelect} from '../actions';
 import {fileTransfer} from '../actions';
 
 @connect(mapStateToProps)

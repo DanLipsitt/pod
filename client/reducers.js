@@ -12,9 +12,6 @@ const files = handleActions({
 }, []);
 
 const printers = handleActions({
-  PRINTERS_SUCCESS: (state, action) => (
-    action.payload
-  ),
   PRINTERS_ADD: (state, action) => [
     ...state, printerWithDefaults(action.payload),
   ],
