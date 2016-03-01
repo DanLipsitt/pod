@@ -9,7 +9,7 @@ os.chdir(os.path.normpath(os.path.join(os.path.abspath(__file__), os.pardir)))
 
 setup(
     name='pod',
-    use_scm_version=True,
+    use_scm_version={'write_to': 'pod/__version__.py'},
     setup_requires=['setuptools_scm'],
     packages=find_packages(),
     package_data={

@@ -13,3 +13,4 @@
 /.eggs/
 dist/
 /pod/static
+/pod/__version__.py
