@@ -1,5 +1,6 @@
 import os
 from setuptools import find_packages, setup
+from pkg_resources import parse_requirements
 
 with open(os.path.join(os.path.dirname(__file__), 'README.md')) as readme:
     README = readme.read()
@@ -11,6 +12,8 @@ setup(
     name='pod',
     use_scm_version={'write_to': 'pod/__version__.py'},
     setup_requires=['setuptools_scm'],
+    install_requires=[str(req) for req in
+                      parse_requirements(open('requirements.txt'))],
     packages=find_packages(),
     package_data={
         # include template html from any package
