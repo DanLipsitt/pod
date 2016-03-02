@@ -67,7 +67,7 @@ Vagrant.configure(2) do |config|
   # Enable provisioning with a shell script. Additional provisioners such as
   # Puppet, Chef, Ansible, Salt, and Docker are also available. Please see the
   # documentation for more information about their specific syntax and use.
-  config.vm.provision "shell", name: "base system", inline: <<-SHELL
+  config.vm.provision "base", type: "shell", inline: <<-SHELL
     sudo apt-get update
     sudo apt-get install -y \
         python3-pip \
@@ -76,12 +76,12 @@ Vagrant.configure(2) do |config|
 
   # This is a temporary workaround for
   # https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=812252
-  config.vm.provision "shell", name: "set default pager", inline: <<-SHELL
+  config.vm.provision "set default pager", type: "shell", inline: <<-SHELL
     update-alternatives --quiet --install /usr/bin/pager pager \
         /bin/less 77 --slave /usr/share/man/man1/pager.1.gz \
         pager.1.gz /usr/share/man/man1/less.1.gz
   SHELL
 
-  config.vm.provision "shell", name: "app", path: "scripts/provision-app.bash"
+  config.vm.provision "app", type: "shell", path: "scripts/provision-app.bash"
 
 end
