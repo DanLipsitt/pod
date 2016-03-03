@@ -70,6 +70,7 @@ Vagrant.configure(2) do |config|
   config.vm.provision "base", type: "shell", inline: <<-SHELL
     sudo apt-get update
     sudo apt-get install -y \
+        rabbitmq-server \
         python3-pip \
         python3-venv
   SHELL

@@ -18,5 +18,6 @@ pip install pod
 pip install gunicorn
 pip install -r "${SOURCE}/requirements.txt"
 cp ${SOURCE}/systemd/pod-*.{service,socket} /etc/systemd/system
-systemctl enable pod-web
+systemctl enable pod-web pod-celery
+systemctl daemon-reload
 systemctl restart pod-web

@@ -1,6 +1,7 @@
 [Unit]
 Description=Pod http server
 Requires=pod-web.socket
+Wants=pod-celery.service
 After=network.target
 
 [Service]
