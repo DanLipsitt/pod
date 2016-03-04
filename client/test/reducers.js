@@ -43,3 +43,19 @@ describe('printer select reducer', () => {
   });
 
 });
+
+describe('fatal error reducer', () => {
+
+  it('should store the error', () => {
+    let init = {errors: {fatal: null}};
+    reducer(init, a.fatalError('err')).errors.fatal
+      .should.deep.equal('err');
+  });
+
+  it('should retain any other props', () => {
+    let init = {errors: {recent: ['...']}};
+    reducer(init, a.fatalError('err')).errors.recent[0]
+                   .should.equal('...');
+  });
+
+});

@@ -1,7 +1,7 @@
 import React from 'react';
 import {connect} from 'react-redux';
 import 'bootstrap-webpack';
-import {Row, Col, Button, Glyphicon} from 'react-bootstrap';
+import {Row, Col, Button, Glyphicon, Modal} from 'react-bootstrap';
 import PrinterGrid from '../components/PrinterGrid';
 import FileList from '../components/FileList';
 import HTML5Backend from 'react-dnd-html5-backend';
@@ -20,7 +20,7 @@ class App extends React.Component {
   }
 
   render() {
-    const {files, printers, dispatch} = this.props;
+    const {files, printers, dispatch, errors} = this.props;
 
     const uploadHandlers = {
       success: (event, response) => dispatch(filesAdd(response)),
@@ -61,6 +61,15 @@ class App extends React.Component {
           </Col>
         </Row>
         <footer><small className="text-muted pull-right">version: {version}</small></footer>
+        {errors.fatal ?
+         <Modal.Dialog backdrop={true}>
+           <Modal.Header>
+             <Modal.Title>Server Error</Modal.Title>
+           </Modal.Header>
+           <Modal.Body>{errors.fatal}</Modal.Body>
+           <Modal.Footer>Please try reloading the page.</Modal.Footer>
+         </Modal.Dialog>
+         : null}
       </div>
     );
   }
@@ -70,6 +79,7 @@ function mapStateToProps(state) {
   return {
     files: state.files,
     printers: state.printers,
+    errors: state.errors,
   };
 }
 

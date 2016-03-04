@@ -28,7 +28,14 @@ const printers = handleActions({
 const printerWithDefaults = (data) =>
   Object.assign({state: {text: 'Offline'}}, data);
 
+const errors = handleActions({
+  FATAL_ERROR: (state, action) => (
+    Object.assign({}, state, {fatal: action.payload})
+  ),
+}, []);
+
 export default combineReducers({
   files,
   printers,
+  errors,
 });

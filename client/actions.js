@@ -13,6 +13,27 @@ export const API_ORIGIN = typeof(window)!=='undefined'?
 const API_URI = URI(API_ORIGIN).segment(API_ROOT);
 export const API_URL = API_URI.toString();
 
+/* Errors */
+
+export const handleFetchError = (response) => {
+  let action;
+  if(response.status === 500 &&
+     response.headers.get('Content-Type') === 'text/html') {
+       const parser = new DOMParser();
+       const content = parser.parseFromString(response.value, 'text/html');
+       const el = content.querySelector('#summary pre.exception_value');
+       if(! el) return;
+       const reason = el.innerText;
+       if(reason.startsWith('no such table:')) {
+         action = fatalError(`Database error: ${reason}`);
+       }
+  }
+  return action;
+};
+
+// An error (probably server-side) that makes the UI unusable.
+export const fatalError = createAction('FATAL_ERROR');
+
 /* Files */
 
 export const filesRequest = createAction('FILES_REQUEST');
@@ -50,7 +71,8 @@ export function printersFetch() {
     fetch(API_URI.clone().segment('printers/').toString(), {
       method: 'GET',
     }),
-    ({value}) => value.map(printersAdd)
+    ({value}) => value.map(printersAdd),
+    (response) => handleFetchError(response)
   );
 }
 
