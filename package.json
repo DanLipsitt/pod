@@ -8,7 +8,7 @@
     "test:watch": "npm test -- --watch",
     "sockjs-log": "babel-node sockjs-logger.js -- ",
     "playground": "node devServer.js --env playground",
-    "clean": "rm -rf build/*",
+    "clean": "rm -rf pod/static/pod/bundle.js*",
     "assets": "ln -s ./client/assets build/assets",
     "optimize:images": "echo 'TODO",
     "watch": "webpack --config webpack.config.js -d --progress --profile --colors --watch",
