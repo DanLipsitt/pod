@@ -1,4 +1,4 @@
-import {createStore, applyMiddleware} from 'redux';
+import {createStore, compose, applyMiddleware} from 'redux';
 import {apiMiddleware} from 'redux-api-middleware';
 import thunk from 'redux-thunk';
 import effects from 'redux-effects';
@@ -21,13 +21,16 @@ const logger = createLogger({
 
 const store = createStore(
   reducer,
-  applyMiddleware(
-    apiMiddleware,
-    thunk,
-    multi,
-    effects,
-    fetch,
-    logger,
+  compose(
+    applyMiddleware(
+      apiMiddleware,
+      thunk,
+      multi,
+      effects,
+      fetch,
+      logger,
+    ),
+    window.devToolsExtension ? window.devToolsExtension() : f => f
   )
 );
 
