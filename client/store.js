@@ -19,14 +19,16 @@ const logger = createLogger({
                              && !isLoggerExcludedAction(action.type),
 });
 
-const createStoreWithMiddleware = applyMiddleware(
-  apiMiddleware,
-  thunk,
-  multi,
-  effects,
-  fetch,
-  logger,
-)(createStore);
+const store = createStore(
+  reducer,
+  applyMiddleware(
+    apiMiddleware,
+    thunk,
+    multi,
+    effects,
+    fetch,
+    logger,
+  )
+);
 
-const store = createStoreWithMiddleware(reducer);
 export default store;
