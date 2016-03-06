@@ -1,6 +1,6 @@
 {
   "name": "pod",
-  "version": "0.1.0",
+  "version": "0.5.0",
   "description": "Type A Machines Pod interface.",
   "main": "index.js",
   "scripts": {
