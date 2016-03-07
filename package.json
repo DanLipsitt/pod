@@ -6,6 +6,7 @@
   "scripts": {
     "test": "mocha --compilers js:babel/register --recursive client/test/",
     "test:watch": "npm test -- --watch",
+    "lint": "eslint client/",
     "sockjs-log": "babel-node sockjs-logger.js -- ",
     "playground": "node devServer.js --env playground",
     "clean": "rm -rf pod/static/pod/bundle.js*",
