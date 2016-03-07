@@ -26,5 +26,6 @@ module.exports = {
     indent: ['warn', 2],
     'comma-dangle': ['warn', 'always-multiline'],
     'no-console': ['warn'],
+    'react/jsx-no-bind': ['warn'],
   },
 };
