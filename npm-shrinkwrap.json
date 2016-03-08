@@ -3176,10 +3176,10 @@
       "from": "react-dnd@>=2.0.2 <3.0.0",
       "resolved": "https://registry.npmjs.org/react-dnd/-/react-dnd-2.1.2.tgz"
     },
-    "react-dnd-html5-backend": {
-      "version": "2.1.2",
-      "from": "react-dnd-html5-backend@>=2.0.0 <3.0.0",
-      "resolved": "https://registry.npmjs.org/react-dnd-html5-backend/-/react-dnd-html5-backend-2.1.2.tgz"
+    "react-dnd-touch-backend": {
+      "version": "0.2.4",
+      "from": "react-dnd-touch-backend@latest",
+      "resolved": "https://registry.npmjs.org/react-dnd-touch-backend/-/react-dnd-touch-backend-0.2.4.tgz"
     },
     "react-dom": {
       "version": "0.14.7",

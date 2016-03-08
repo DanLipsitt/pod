@@ -37,7 +37,7 @@
     "react-bootstrap": "^0.27.3",
     "react-cookie": "^0.4.2",
     "react-dnd": "^2.0.2",
-    "react-dnd-html5-backend": "^2.0.0",
+    "react-dnd-touch-backend": "^0.2.4",
     "react-dom": "^0.14.1",
     "react-dropzone-component": "^0.8.1",
     "react-querystring-router": "^0.3.0",

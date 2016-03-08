@@ -4,14 +4,14 @@ import 'bootstrap-webpack';
 import {Row, Col, Button, Glyphicon, Modal} from 'react-bootstrap';
 import PrinterGrid from '../components/PrinterGrid';
 import FileList from '../components/FileList';
-import HTML5Backend from 'react-dnd-html5-backend';
+import {default as TouchBackend} from 'react-dnd-touch-backend';
 import {DragDropContext} from 'react-dnd';
 import {filesFetch, filesAdd} from '../actions';
 import {printersFetch, jobRequest, printerSelect} from '../actions';
 import {fileTransfer} from '../actions';
 
 @connect(mapStateToProps)
-@DragDropContext(HTML5Backend)
+@DragDropContext(TouchBackend({enableMouseEvents: true}))
 class App extends React.Component {
   componentDidMount() {
     const {dispatch} = this.props;
