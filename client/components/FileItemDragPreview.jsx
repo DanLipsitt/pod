@@ -35,7 +35,7 @@ class FileItemDragPreview extends React.Component {
       return null;
     }
 
-    return <div style={getItemStyles(this.props.currentOffset)}>
+    return <div className="col-sm-3" style={getItemStyles(this.props.currentOffset)}>
       <FileItem file={this.props.item}/>
     </div>;
   }
