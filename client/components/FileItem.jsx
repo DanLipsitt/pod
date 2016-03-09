@@ -6,7 +6,7 @@ import Time from 'react-time';
 
 const dragSource = {
   beginDrag(props) {
-    return {id: props.file.id};
+    return props.file;
   },
 
   endDrag(props, monitor) {
