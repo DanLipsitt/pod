@@ -3,7 +3,7 @@ import {Glyphicon, Alert, ListGroup} from 'react-bootstrap';
 import UploadDropzone from './UploadDropzone';
 import FileItemDragPreview from './FileItemDragPreview';
 
-import FileItem from './FileItem';
+import DraggableFileItem from './DraggableFileItem';
 
 var FileList = ({files, uploadHandlers}) => (
   <div>
@@ -15,7 +15,7 @@ var FileList = ({files, uploadHandlers}) => (
      :
      <ListGroup>
        {files.map(file =>
-         <FileItem file={file} key={file.id} />
+         <DraggableFileItem file={file} key={file.id} />
        )}
      </ListGroup>}
   </div>
