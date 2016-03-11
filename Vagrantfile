@@ -63,16 +63,10 @@ Vagrant.configure(2) do |config|
   #   push.app = "YOUR_ATLAS_USERNAME/YOUR_APPLICATION_NAME"
   # end
 
-  # Enable provisioning with a shell script. Additional provisioners such as
-  # Puppet, Chef, Ansible, Salt, and Docker are also available. Please see the
-  # documentation for more information about their specific syntax and use.
-  config.vm.provision "base", type: "shell", inline: <<-SHELL
-    sudo apt-get update
-    sudo apt-get install -y \
-        rabbitmq-server \
-        python3-pip \
-        python3-venv
-  SHELL
+  config.vm.provision "base", type: "ansible" do |ansible|
+    ansible.verbose = "v"
+    ansible.playbook = "provision/ansible/base.yml"
+  end
 
   # This is a temporary workaround for
   # https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=812252
