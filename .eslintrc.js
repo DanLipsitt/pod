@@ -27,5 +27,6 @@ module.exports = {
     'comma-dangle': ['warn', 'always-multiline'],
     'no-console': ['warn'],
     'react/jsx-no-bind': ['warn'],
+    'react/prop-types': ['warn'],
   },
 };
