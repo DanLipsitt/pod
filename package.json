@@ -79,7 +79,6 @@
     "postcss-nested": "^1.0.0",
     "react-component-playground": "^0.4",
     "react-tools": "^0.13.3",
-    "react-transform": "0.0.3",
     "react-transform-catch-errors": "^1.0.0",
     "react-transform-hmr": "^1.0.1",
     "redbox-react": "^1.1.1",
