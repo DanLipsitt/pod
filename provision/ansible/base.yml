@@ -26,3 +26,15 @@
         state: present
         validate: 'echo "checking %s"; sshd -t'
       become: true
+    - name: transfer user certificate authority public key
+      copy:
+        src: files/typea-user-ca.pub
+        dest: /etc/ssh/typea-user-ca.pub
+      become: true
+    - name: authorize user certificate authorize public key
+      lineinfile:
+        dest: /etc/ssh/sshd_config
+        regexp: '^TrustedUserCAKeys '
+        line: 'TrustedUserCAKeys /etc/ssh/typea-user-ca.pub'
+        state: present
+      become: true
