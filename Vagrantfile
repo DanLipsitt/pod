@@ -65,7 +65,7 @@ Vagrant.configure(2) do |config|
 
   config.vm.provision "base", type: "ansible" do |ansible|
     ansible.verbose = "v"
-    ansible.playbook = "provision/ansible/base.yml"
+    ansible.playbook = "provision/ansible/vagrant.yml"
   end
 
   # This is a temporary workaround for
