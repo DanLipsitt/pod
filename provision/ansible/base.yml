@@ -26,6 +26,7 @@
         state: present
         validate: 'echo "checking %s"; sshd -t'
       become: true
+      notify: [reload sshd]
     - name: transfer user certificate authority public key
       copy:
         src: files/typea-user-ca.pub
@@ -37,4 +38,9 @@
         regexp: '^TrustedUserCAKeys '
         line: 'TrustedUserCAKeys /etc/ssh/typea-user-ca.pub'
         state: present
+      become: true
+      notify: [reload sshd]
+  handlers:
+    - name: reload sshd
+      service: name=sshd state=reloaded
       become: true
