@@ -18,3 +18,11 @@
         mode: 'u=r,g=r,o-rwx'
         validate: 'visudo -cf %s'
       become: true
+    - name: disable root ssh access
+      lineinfile:
+        dest: /etc/ssh/sshd_config
+        regexp: "^PermitRootLogin"
+        line: "PermitRootLogin no"
+        state: present
+        validate: 'echo "checking %s"; sshd -t'
+      become: true
