@@ -1,4 +1,10 @@
 ---
 - hosts: default
+  vars_prompt:
+    - name: user_typea_pass
+      prompt: "password for user 'typea'"
+      confirm: true
+      private: true
+      encrypt: 'sha512_crypt'
   tasks:
     - include: tasks/base.yml

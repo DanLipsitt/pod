@@ -66,6 +66,9 @@ Vagrant.configure(2) do |config|
   config.vm.provision "base", type: "ansible" do |ansible|
     ansible.verbose = "v"
     ansible.playbook = "provision/ansible/vagrant.yml"
+    ansible.host_vars = {
+      "default" => {"user_typea_pass" => "$6$rounds=656000$FfexuthG17UiVAWK$itZBMtPk6/fSACMd87VAAcGs0s.1RP0MpjbznyumEtPLVooZQIicTLAoyWwtSLLSNJqIlJuQxTJVFKLBI.R27/"}
+    }
   end
 
   # This is a temporary workaround for

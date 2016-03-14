@@ -9,6 +9,14 @@
       - sudo
       - unattended-upgrades
     become: true
+  - name: configure typea admin user
+    user:
+      name: typea
+      state: present
+      groups: sudo
+      append: true
+      password: "{{user_typea_pass}}"
+    become: true
   - name: configure sudo
     copy:
       dest: /etc/sudoers.d/nopass
