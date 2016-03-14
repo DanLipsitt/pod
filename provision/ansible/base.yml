@@ -9,6 +9,7 @@
         - rabbitmq-server
         - avahi-daemon
         - sudo
+        - unattended-upgrades
       become: true
     - name: configure sudo
       copy:
