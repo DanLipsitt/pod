@@ -8,4 +8,12 @@
         - python3-venv
         - rabbitmq-server
         - avahi-daemon
+        - sudo
+      become: true
+    - name: configure sudo
+      copy:
+        dest: /etc/sudoers.d/nopass
+        content: '%sudo ALL=(ALL) NOPASSWD: ALL'
+        mode: 'u=r,g=r,o-rwx'
+        validate: 'visudo -cf %s'
       become: true
