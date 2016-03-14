@@ -14,3 +14,4 @@
 dist/
 /pod/static
 /pod/__version__.py
+/provision/ansible/*.retry
