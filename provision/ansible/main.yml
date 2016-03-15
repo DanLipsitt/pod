@@ -1,5 +1,8 @@
 ---
 - hosts: default
+  vars:
+    - pod_package: git+ssh://git@bitbucket.org/typeamachines/pod.git
+    - pod_package_dir: /dev/null
   vars_prompt:
     - name: user_typea_pass
       prompt: "password for user 'typea'"
@@ -7,4 +10,4 @@
       private: true
       encrypt: 'sha512_crypt'
   tasks:
-    - include: tasks/base.yml
+    - include: tasks/main.yml

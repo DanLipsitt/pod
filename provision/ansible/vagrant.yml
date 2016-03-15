@@ -1,4 +1,7 @@
 ---
 - hosts: default
+  vars:
+    - pod_package: pod
+    - pod_package_dir: /vagrant/dist/
   tasks:
-    - include: tasks/base.yml
+    - include: tasks/main.yml

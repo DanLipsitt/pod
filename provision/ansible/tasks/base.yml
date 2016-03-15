@@ -8,6 +8,7 @@
       - avahi-daemon
       - sudo
       - unattended-upgrades
+      - git
     become: true
   - name: configure typea admin user
     user:

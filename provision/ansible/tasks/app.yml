@@ -1,0 +1,48 @@
+- name: create .ssh dir
+  file:
+    path: ~/.ssh
+    state: directory
+    mode: "u=rwx,o-rwx,g-rwx"
+  become: true
+- name: add bitbucket as ssh known host
+  known_hosts:
+    name: bitbucket.org
+    key: "bitbucket.org,207.223.240.181 ssh-rsa AAAAB3NzaC1yc2EAAAABIwAAAQEAub\
+    iN81eDcafrgMeLzaFPsw2kNvEcqTKl/VqLat/MaB33pZy0y3rJZtnqwR2qOOvbwKZYKiEO1O6V\
+    qNEBxKvJJelCq0dTXWT5pbO2gDXC6h6QDXCaHo6pOHGPUy+YBaGQRGuSusMEASYiWunYN0vCAI\
+    8QaXnWMXNMdFP3jHAJH0eDsoiGnLPBlBp4TNm6rYI74nMzgz3B9IikW4WVK+dc8KZJZWYjAuOR\
+    U3jc1c/NPskD2ASinf8v3xnfXeukU0sJ5N6m5E8VLjObPEO+mN2t/FZTMZLiFqPWc/ALSqnMnn\
+    hwrNi2rbfg/rd/IpL8Le3pSBne8+seeFVBoGqzHM9yXw=="
+    state: present
+  become: true
+- name: copy pod deployment key
+  copy:
+    src: files/deployment_key
+    dest: ~/.ssh/id_rsa
+    mode: "u=r,g-rwx,o-rwx"
+  become: true
+- name: install latest pod app
+  # We don't want to download any project named "pod" from the
+  # internet, so we at first we turn off the index and install without
+  # deps. We can then install all deps from our package dir, but that
+  # means we have to build them all (and some need a platform specific
+  # build). So instead we install the deps in a second step from the
+  # internet.
+  pip:
+    name: "{{pod_package}}"
+    virtualenv: "{{pod_virtualenv}}"
+    virtualenv_command: pyvenv
+    state: latest
+    extra_args: "--no-index --find-links={{pod_package_dir}} --pre --no-deps"
+    editable: false
+  become: true
+- name: install pod app deps
+  # The app has already been installed, but without deps. This step
+  # installs the deps.
+  pip:
+    name: "{{pod_package}}"
+    virtualenv: "{{pod_virtualenv}}"
+    virtualenv_command: pyvenv
+    state: present
+    editable: false
+  become: true

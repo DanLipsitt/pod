@@ -79,6 +79,4 @@ Vagrant.configure(2) do |config|
         pager.1.gz /usr/share/man/man1/less.1.gz
   SHELL
 
-  config.vm.provision "app", type: "shell", path: "scripts/provision-app.bash"
-
 end

@@ -1,0 +1,3 @@
+- include_vars: ../vars/main.yml
+- include: base.yml
+- include: app.yml
