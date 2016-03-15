@@ -1,5 +1,5 @@
 import React from 'react';
-import HTML5Backend from 'react-dnd-html5-backend';
+import {default as TouchBackend} from 'react-dnd-touch-backend';
 import {DragDropContext} from 'react-dnd';
 
 var ReactQuerystringRouter = require('react-querystring-router'),
@@ -20,7 +20,7 @@ var getTitleForFixture = function(params) {
 /**
  * Wrapper to add context that enables drag and drop components.
  */
-@DragDropContext(HTML5Backend)
+@DragDropContext(TouchBackend({enableMouseEvents: true}))
 class ComponentPlaygroundDnD extends React.Component {
   render() { return(<ComponentPlayground {...this.props} />); }
 }

@@ -6,3 +6,11 @@
 /node_modules
 /npm-debug.log
 /uploads
+/.env
+/.vagrant/
+/static/
+*.egg-info/
+/.eggs/
+dist/
+/pod/static
+/pod/__version__.py
