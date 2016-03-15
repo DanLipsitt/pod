@@ -24,3 +24,38 @@ describe('files reducer', function() {
   });
 
 });
+
+describe('printer select reducer', () => {
+
+  it('should select a printer', () => {
+    let init = {printers: [
+      {id: 1},
+      {id: 2},
+      {id: 3},
+    ]};
+
+    reducer(init, a.printerSelect({id:2, selected:true})).printers
+                   .should.deep.equal([
+                     {id: 1},
+                     {id: 2, selected: true},
+                     {id: 3},
+                   ]);
+  });
+
+});
+
+describe('fatal error reducer', () => {
+
+  it('should store the error', () => {
+    let init = {errors: {fatal: null}};
+    reducer(init, a.fatalError('err')).errors.fatal
+      .should.deep.equal('err');
+  });
+
+  it('should retain any other props', () => {
+    let init = {errors: {recent: ['...']}};
+    reducer(init, a.fatalError('err')).errors.recent[0]
+                   .should.equal('...');
+  });
+
+});

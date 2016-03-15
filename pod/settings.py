@@ -37,12 +37,23 @@ INSTALLED_APPS = (
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'django_extensions',
     'rest_framework',
+    'pod',
     'printers',
     'jobs',
     'files',
 )
+
+
+def _enable_conditional(application):
+    global INSTALLED_APPS
+    try:
+        __import__(application)
+        INSTALLED_APPS += (application,)
+    except ImportError:
+        pass
+
+_enable_conditional('django_extensions')
 
 MIDDLEWARE_CLASSES = (
     'django.contrib.sessions.middleware.SessionMiddleware',
@@ -108,6 +119,8 @@ STATIC_URL = '/static/'
 STATICFILES_DIRS = (
     os.path.join(BASE_DIR, "build"),
 )
+STATIC_ROOT = './static'
+STATICFILES_STORAGE = 'whitenoise.django.GzipManifestStaticFilesStorage'
 
 # storage for uploaded files
 MEDIA_ROOT = './uploads'        # FIXME: devel only
@@ -119,5 +132,25 @@ REST_FRAMEWORK = {
     # or allow read-only access for unauthenticated users.
     'DEFAULT_PERMISSION_CLASSES': [
         'rest_framework.permissions.AllowAny' # FIXME
-    ]
+    ],
+    'URL_FIELD_NAME': 'restUrl'
+}
+
+CELERY_ACCEPT_CONTENT = ['pickle']
+
+CROSSBAR_PUBLISH_URL = "http://localhost:8081/publish"
+
+LOGGING = {
+    'version': 1,
+    'handlers': {
+        'console': {
+            'class': 'logging.StreamHandler',
+        },
+    },
+    'loggers': {
+        'revproxy.view': {
+            'handlers': ['console'],
+            'level': 'DEBUG',
+        },
+    }
 }

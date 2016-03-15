@@ -1,0 +1,13 @@
+[Unit]
+Description=Pod queue worker
+Wants=rabbitmq-server.service
+
+[Service]
+User=daemon
+Group=daemon
+WorkingDirectory=/opt/pod
+ExecStart=/opt/pod/virtualenv/bin/celery -A pod worker -l info
+StandardError=journal
+
+[Install]
+WantedBy=multi-user.target

@@ -7,8 +7,8 @@ module.exports = {
   logFileChanges: true,
   logLevel: "info",
   files: [
-    "build/**",
+    "pod/static/pod/**",
     // Exclude Map files
-    "!build/**.map"
+    "!pod/static/pod/**.map"
   ]
 };

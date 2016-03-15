@@ -1,0 +1,9 @@
+[Unit]
+Description=Pod http socket
+
+[Socket]
+ListenStream=/run/gunicorn/socket
+ListenStream=[::]:80
+
+[Install]
+WantedBy=sockets.target

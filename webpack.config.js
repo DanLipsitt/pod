@@ -13,8 +13,8 @@ module.exports = {
     './client/main.jsx',
   ],
   output: {
-    path: path.join(__dirname, 'build'),
-    publicPath: '/static/',
+    path: path.join(__dirname, 'pod/static/pod/'),
+    publicPath: '/static/pod/',
     filename: 'bundle.js',
   },
   module: {

@@ -1,0 +1,27 @@
+controller: {}
+workers:
+- realms:
+  - name: realm1
+    roles:
+    - name: anonymous
+      permissions:
+      - call: true
+        publish: true
+        register: true
+        subscribe: true
+        uri: '*'
+  transports:
+  - endpoint:
+      port: 8080
+      type: tcp
+    paths:
+      ws:
+        type: websocket
+      publish:
+        type: publisher
+        realm: realm1
+        role: anonymous
+        options:
+          debug: true
+    type: web
+  type: router

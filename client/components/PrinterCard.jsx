@@ -1,13 +1,20 @@
 import './PrinterCard.less';
 import React, {PropTypes} from 'react';
 import {findDOMNode} from 'react-dom';
-import {Row, Col, Panel, Button, ButtonToolbar, ButtonGroup, Glyphicon}
-from 'react-bootstrap';
+import {Row, Col, Panel, Button, ButtonToolbar, ButtonGroup,
+        Glyphicon} from 'react-bootstrap';
 import classNames from 'classnames';
+import StartStopButtons from './StartStopButtons';
 
 class PrinterCard extends React.Component {
   static propTypes = {
-    filename: PropTypes.string,
+    printer: PropTypes.shape({
+      id: PropTypes.number.isRequired,
+      job: PropTypes.object.isRequired,
+      name: PropTypes.string.isRequired,
+      state: PropTypes.object.isRequired,
+    }),
+    printerHandlers: PropTypes.object.isRequired,
     /* drag and drop */
     connectDropTarget: PropTypes.func.isRequired,
     canDrop: PropTypes.bool.isRequired,
@@ -18,27 +25,51 @@ class PrinterCard extends React.Component {
     canDrop: true,
   };
 
+  handleSelect(event) {
+    const {printer, printerHandlers} = this.props;
+    printerHandlers.select(printer.id, event.target.checked);
+  }
+
   render() {
-    const {filename, isOver, canDrop, connectDropTarget} = this.props;
+    const {printer, printerHandlers, connectDropTarget} = this.props;
     return (
       <Panel
           className={classNames('PrinterCard',
                      {'is-drag-hovered': this.props.isOver})}
-          header={<h3>{this.props.name}</h3>}
+          header={
+            <label style={{display: 'block'}}>
+              <input type="checkbox" checked={printer.selected}
+                     onChange={this.handleSelect.bind(this)}
+              />
+            <h3 style={{display: 'inline', marginLeft: '0.5em'}}>
+                {printer.name}
+              </h3>
+              <small className="pull-right">
+                <a href={printer.url}>
+                  <Glyphicon glyph="new-window"/>
+                </a>
+              </small>
+            </label>
+          }
           ref={instance => connectDropTarget(findDOMNode(instance))}
       >
         <Row>
           <Col sm={9}><Panel>
             <Glyphicon glyph="facetime-video" />
           </Panel></Col>
-          <Col sm={3}><Panel>Ready</Panel></Col>
         </Row>
-        <p>{filename ? filename : "No file loaded."}</p>
+        <Panel>
+          {printer.state ? printer.state.text : 'Disconnected'}
+          {['Printing', 'Paused'].indexOf(printer.state.text) > -1 ?
+           <span> ({printer.progress.completion.toFixed(1)}%)</span> :
+           <span/>}
+        </Panel>
+        <p>
+          {printer.job && printer.job.file.name ? printer.job.file.name : 'No file loaded.'}
+        </p>
         <ButtonToolbar>
-          <ButtonGroup>
-            <Button><Glyphicon glyph="play" /></Button>
-            <Button><Glyphicon glyph="stop" /></Button>
-          </ButtonGroup>
+          <StartStopButtons printerHandlers={printerHandlers}
+                            printer={printer} />
           <ButtonGroup>
             <Button><Glyphicon glyph="cd" /> Filament</Button>
           </ButtonGroup>
