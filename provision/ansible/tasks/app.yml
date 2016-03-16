@@ -48,3 +48,15 @@
     version: 19.4
     virtualenv_command: pyvenv
     state: present
+- name: install systemd config
+  copy:
+    src: "{{item}}"
+    dest: /etc/systemd/system
+    owner: root
+    mode: "u=rw,go=r"
+  with_fileglob:
+    - "files/systemd/pod-*.service"
+    - "files/systemd/pod-*.socket"
+  notify:
+    - reload systemd
+    - restart pod
