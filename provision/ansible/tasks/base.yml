@@ -9,7 +9,6 @@
       - sudo
       - unattended-upgrades
       - git
-    become: true
   - name: configure typea admin user
     user:
       name: typea
@@ -17,14 +16,12 @@
       groups: sudo
       append: true
       password: "{{user_typea_pass}}"
-    become: true
   - name: configure sudo
     copy:
       dest: /etc/sudoers.d/nopass
       content: '%sudo ALL=(ALL) NOPASSWD: ALL'
       mode: 'u=r,g=r,o-rwx'
       validate: 'visudo -cf %s'
-    become: true
   - name: disable root ssh access
     lineinfile:
       dest: /etc/ssh/sshd_config
@@ -32,18 +29,15 @@
       line: "PermitRootLogin no"
       state: present
       validate: 'echo "checking %s"; sshd -t'
-    become: true
     notify: [reload sshd]
   - name: transfer user certificate authority public key
     copy:
       src: files/typea-user-ca.pub
       dest: /etc/ssh/typea-user-ca.pub
-    become: true
   - name: authorize user certificate authorize public key
     lineinfile:
       dest: /etc/ssh/sshd_config
       regexp: '^TrustedUserCAKeys '
       line: 'TrustedUserCAKeys /etc/ssh/typea-user-ca.pub'
       state: present
-    become: true
     notify: [reload sshd]

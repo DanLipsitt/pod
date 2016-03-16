@@ -3,7 +3,6 @@
     path: ~/.ssh
     state: directory
     mode: "u=rwx,o-rwx,g-rwx"
-  become: true
 - name: add bitbucket as ssh known host
   known_hosts:
     name: bitbucket.org
@@ -14,13 +13,11 @@
     U3jc1c/NPskD2ASinf8v3xnfXeukU0sJ5N6m5E8VLjObPEO+mN2t/FZTMZLiFqPWc/ALSqnMnn\
     hwrNi2rbfg/rd/IpL8Le3pSBne8+seeFVBoGqzHM9yXw=="
     state: present
-  become: true
 - name: copy pod deployment key
   copy:
     src: files/deployment_key
     dest: ~/.ssh/id_rsa
     mode: "u=r,g-rwx,o-rwx"
-  become: true
 - name: install latest pod app
   # We don't want to download any project named "pod" from the
   # internet, so we at first we turn off the index and install without
@@ -35,7 +32,6 @@
     state: latest
     extra_args: "--no-index --find-links={{pod_package_dir}} --pre --no-deps"
     editable: false
-  become: true
 - name: install pod app deps
   # The app has already been installed, but without deps. This step
   # installs the deps.
@@ -45,4 +41,3 @@
     virtualenv_command: pyvenv
     state: present
     editable: false
-  become: true
