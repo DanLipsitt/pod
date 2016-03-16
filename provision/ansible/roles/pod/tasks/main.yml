@@ -19,27 +19,12 @@
     dest: ~/.ssh/id_rsa
     mode: "u=r,g-rwx,o-rwx"
 - name: install latest pod app
-  # We don't want to download any project named "pod" from the
-  # internet, so we at first we turn off the index and install without
-  # deps. We can then install all deps from our package dir, but that
-  # means we have to build them all (and some need a platform specific
-  # build). So instead we install the deps in a second step from the
-  # internet.
   pip:
     name: "{{pod_package}}"
     virtualenv: "{{pod_virtualenv}}"
     virtualenv_command: pyvenv
     state: latest
-    extra_args: "--no-index --find-links={{pod_package_dir}} --pre --no-deps"
-    editable: false
-- name: install pod app deps
-  # The app has already been installed, but without deps. This step
-  # installs the deps.
-  pip:
-    name: "{{pod_package}}"
-    virtualenv: "{{pod_virtualenv}}"
-    virtualenv_command: pyvenv
-    state: present
+    extra_args: "--find-links={{pod_package_dir}} --pre"
     editable: false
 - name: install gunicorn
   pip:

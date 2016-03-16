@@ -2,7 +2,7 @@
 - hosts: default
   become: true
   vars:
-    - pod_package: pod
+    - pod_package: type-a-pod
     - pod_package_dir: /vagrant/dist/
   roles:
     - base
