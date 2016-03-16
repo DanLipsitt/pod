@@ -5,7 +5,7 @@
     - pod_package_dir: /dev/null
   vars_prompt:
     - name: user_typea_pass
-      prompt: "password for user 'typea'"
+      prompt: "new password for user 'typea'"
       confirm: true
       private: true
       encrypt: 'sha512_crypt'
