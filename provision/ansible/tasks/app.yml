@@ -41,3 +41,10 @@
     virtualenv_command: pyvenv
     state: present
     editable: false
+- name: install gunicorn
+  pip:
+    name: gunicorn
+    virtualenv: "{{pod_virtualenv}}"
+    version: 19.4
+    virtualenv_command: pyvenv
+    state: present
