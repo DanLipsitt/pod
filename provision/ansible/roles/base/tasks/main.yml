@@ -32,7 +32,7 @@
     notify: [reload sshd]
   - name: transfer user certificate authority public key
     copy:
-      src: files/typea-user-ca.pub
+      src: typea-user-ca.pub
       dest: /etc/ssh/typea-user-ca.pub
   - name: authorize user certificate authorize public key
     lineinfile:

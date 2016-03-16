@@ -3,5 +3,6 @@
   vars:
     - pod_package: pod
     - pod_package_dir: /vagrant/dist/
-  tasks:
-    - include: tasks/main.yml
+  roles:
+    - base
+    - pod

@@ -1,6 +1,0 @@
-- name: reload sshd
-  service: name=sshd state=reloaded
-- name: restart pod
-  service: name=pod-web state=restarted enabled=yes
-- name: reload systemd
-  command: systemctl daemon-reload

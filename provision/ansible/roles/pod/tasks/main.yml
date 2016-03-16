@@ -15,7 +15,7 @@
     state: present
 - name: copy pod deployment key
   copy:
-    src: files/deployment_key
+    src: deployment_key
     dest: ~/.ssh/id_rsa
     mode: "u=r,g-rwx,o-rwx"
 - name: install latest pod app
@@ -55,8 +55,8 @@
     owner: root
     mode: "u=rw,go=r"
   with_fileglob:
-    - "files/systemd/pod-*.service"
-    - "files/systemd/pod-*.socket"
+    - "systemd/pod-*.service"
+    - "systemd/pod-*.socket"
   notify:
     - reload systemd
     - restart pod
