@@ -10,7 +10,11 @@ os.chdir(os.path.normpath(os.path.join(os.path.abspath(__file__), os.pardir)))
 
 setup(
     name='pod',
-    use_scm_version={'write_to': 'pod/__version__.py'},
+    use_scm_version={
+        'write_to': 'pod/__version__.py',
+        'version_scheme': 'post-release',
+        'local_scheme': 'node-and-date',
+    },
     setup_requires=['setuptools_scm'],
     install_requires=[str(req) for req in
                       parse_requirements(open('requirements.txt'))],
