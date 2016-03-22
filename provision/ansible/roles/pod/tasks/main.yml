@@ -26,8 +26,28 @@
     state: latest
     extra_args: "--find-links={{pod_package_dir}} --pre"
     editable: false
+- name: copy django manage.py
+  # This might not be the best way to do it but manage.py is not part
+  # of the packaged app so we copy it separately.
+  copy:
+    src: manage.py
+    dest: "{{pod_home}}"
+    mode: "ugo=rx"
+- name: create django db
+  include: db-sqlite.yml
   notify:
+    - create django superuser
     - restart pod
+- name: run django db migration
+  django_manage:
+    command: migrate
+    virtualenv: "{{pod_virtualenv}}"
+    app_path: "{{pod_home}}"
+- name: check django config
+  django_manage:
+    command: "check --deploy --no-color"
+    virtualenv: "{{pod_virtualenv}}"
+    app_path: "{{pod_home}}"
 - name: install gunicorn
   pip:
     name: gunicorn

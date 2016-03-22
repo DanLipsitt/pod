@@ -1,1 +1,3 @@
-pod_virtualenv: /opt/pod/virtualenv
+pod_home: /opt/pod
+pod_virtualenv: "{{pod_home}}/virtualenv"
+pod_web_user: daemon
