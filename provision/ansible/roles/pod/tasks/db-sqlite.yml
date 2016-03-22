@@ -10,3 +10,4 @@
     dest: "{{pod_virtualenv}}/lib/python3.4/site-packages/db.sqlite3"
     owner: "{{pod_web_user}}"
     mode: "u=rw,g=r,o-rwx"
+    force: no
