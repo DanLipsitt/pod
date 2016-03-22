@@ -26,6 +26,8 @@
     state: latest
     extra_args: "--find-links={{pod_package_dir}} --pre"
     editable: false
+  notify:
+    - restart pod
 - name: copy django manage.py
   # This might not be the best way to do it but manage.py is not part
   # of the packaged app so we copy it separately.
