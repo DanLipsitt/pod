@@ -1,6 +1,6 @@
 - name: create django superuser
   django_manage:
-    command: "createsuperuser --noinput --username=admin --email=support@typeamachines.com"
+    command: loaddata init_users
     virtualenv: "{{pod_virtualenv}}"
     app_path: "{{pod_home}}"
 - name: reload systemd

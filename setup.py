@@ -24,6 +24,7 @@ setup(
         '': [
             'templates/*/*.html',
             'static/*/*',
+            'fixtures/*.json',
         ]
     },
     license='Proprietary',
