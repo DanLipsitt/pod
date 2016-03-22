@@ -1,8 +1,3 @@
-- name: create django superuser
-  django_manage:
-    command: loaddata init_users
-    virtualenv: "{{pod_virtualenv}}"
-    app_path: "{{pod_home}}"
 - name: reload systemd
   command: systemctl daemon-reload
 - name: restart pod

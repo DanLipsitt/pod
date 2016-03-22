@@ -36,7 +36,6 @@
 - name: create django db
   include: db-sqlite.yml
   notify:
-    - create django superuser
     - restart pod
 - name: run django db migration
   django_manage:
