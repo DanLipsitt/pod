@@ -5,7 +5,7 @@ Wants=pod-celery.service
 After=network.target
 
 [Service]
-WorkingDirectory=/tmp
+WorkingDirectory=/opt/pod
 ExecStart=/opt/pod/virtualenv/bin/gunicorn pod.wsgi
 ExecReload=/bin/kill -s HUP $MAINPID
 ExecStop=/bin/kill -s TERM $MAINPID

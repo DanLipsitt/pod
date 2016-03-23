@@ -1,3 +1,4 @@
 pod_home: /opt/pod
 pod_virtualenv: "{{pod_home}}/virtualenv"
+pod_upload_dir: "{{pod_home}}/uploads"
 pod_web_user: daemon

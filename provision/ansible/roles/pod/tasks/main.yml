@@ -56,6 +56,12 @@
     version: 19.4
     virtualenv_command: pyvenv
     state: present
+- name: create uploads dir
+  file:
+    path: "{{pod_upload_dir}}"
+    state: directory
+    owner: "{{pod_web_user}}"
+    mode: "u=rwx,g=rx,o-rwx"
 - name: install systemd config
   copy:
     src: "{{item}}"
