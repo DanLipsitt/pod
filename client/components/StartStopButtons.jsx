@@ -1,5 +1,6 @@
 import React, {PropTypes} from 'react';
 import {Button, ButtonGroup, Glyphicon} from 'react-bootstrap';
+import {onlyUpdateForKeys} from 'recompose';
 
 const GlyphButton = (props) =>
   <Button {...props}>
@@ -34,37 +35,40 @@ const Placeholder = () =>
   <GlyphButton disabled glyph="stop"
                style={{color: 'transparent !important'}}/>;
 
-const StartStopButtons = ({printer, printerHandlers}) => {
+const StartStopButtons = onlyUpdateForKeys(
+  ['printer'], // printerHandlers should only change when printer ids do.
+  ({printer, printerHandlers}) => {
 
-  const start = () => printerHandlers.start(printer.id);
-  const cancel  = () => printerHandlers.cancel(printer.id);
-  const pause = () => printerHandlers.pause(printer.id);
-  const restart = () => printerHandlers.restart(printer.id);
+    const start = () => printerHandlers.start(printer.id);
+    const cancel  = () => printerHandlers.cancel(printer.id);
+    const pause = () => printerHandlers.pause(printer.id);
+    const restart = () => printerHandlers.restart(printer.id);
 
-  let Start = (props) => <StartButton {...props} onClick={start}/>;
-  let Resume = (props) => <ResumeButton {...props} onClick={pause}/>;
-  let Stop = (props) => <StopButton {...props} onClick={cancel}/>;
-  let Pause = (props) =>  <PauseButton {...props} onClick={pause}/>;
+    let Start = (props) => <StartButton {...props} onClick={start}/>;
+    let Resume = (props) => <ResumeButton {...props} onClick={pause}/>;
+    let Stop = (props) => <StopButton {...props} onClick={cancel}/>;
+    let Pause = (props) =>  <PauseButton {...props} onClick={pause}/>;
 
-  const buttons = (state) => {
-    switch (state.text) {
-      case 'Printing':
-        return <ButtonGroup><Pause/><Placeholder/></ButtonGroup>;
-      case 'Paused':
-        return <ButtonGroup><Resume/><Stop/></ButtonGroup>;
-      case 'Operational':
-        if(printer.job && printer.job.file.name) {
-          return <ButtonGroup><Start/><Placeholder/></ButtonGroup>;
-        } else {
+    const buttons = (state) => {
+      switch (state.text) {
+        case 'Printing':
+          return <ButtonGroup><Pause/><Placeholder/></ButtonGroup>;
+        case 'Paused':
+          return <ButtonGroup><Resume/><Stop/></ButtonGroup>;
+        case 'Operational':
+          if(printer.job && printer.job.file.name) {
+            return <ButtonGroup><Start/><Placeholder/></ButtonGroup>;
+          } else {
+            return <ButtonGroup><Start disabled/><Placeholder/></ButtonGroup>;
+          }
+        default:
           return <ButtonGroup><Start disabled/><Placeholder/></ButtonGroup>;
-        }
-      default:
-          return <ButtonGroup><Start disabled/><Placeholder/></ButtonGroup>;
-    }
-  };
+      }
+    };
 
-  return buttons(printer.state);
-};
+    return buttons(printer.state);
+  }
+);
 
 StartStopButtons.propTypes = {
   printerHandlers: PropTypes.objectOf(PropTypes.func).isRequired,
