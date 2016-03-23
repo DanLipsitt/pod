@@ -43,6 +43,7 @@
     "react-querystring-router": "^0.3.0",
     "react-redux": "^4.0.0",
     "react-time": "^4.0.0",
+    "recompose": "^0.15.1",
     "redux": "^3.3.1",
     "redux-actions": "^0.8.0",
     "redux-api-middleware": "^1.0.0-beta3",

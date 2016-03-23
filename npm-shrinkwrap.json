@@ -2944,6 +2944,11 @@
         }
       }
     },
+    "recompose": {
+      "version": "0.15.1",
+      "from": "recompose@latest",
+      "resolved": "https://registry.npmjs.org/recompose/-/recompose-0.15.1.tgz"
+    },
     "reduce-css-calc": {
       "version": "1.2.1",
       "from": "reduce-css-calc@>=1.2.0 <2.0.0",
