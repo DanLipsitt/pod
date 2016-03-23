@@ -68,8 +68,12 @@ class PrinterCard extends React.Component {
           {printer.job && printer.job.file.name ? printer.job.file.name : 'No file loaded.'}
         </p>
         <ButtonToolbar>
-          <StartStopButtons printerHandlers={printerHandlers}
-                            printer={printer} />
+          <StartStopButtons
+              printerHandlers={printerHandlers}
+              printerId={printer.id}
+              printerState={printer.state.text}
+              printerFile={printer.job ? printer.job.file.name : null}
+          />
           <ButtonGroup>
             <Button><Glyphicon glyph="cd" /> Filament</Button>
           </ButtonGroup>

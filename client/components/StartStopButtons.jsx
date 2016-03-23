@@ -36,27 +36,28 @@ const Placeholder = () =>
                style={{color: 'transparent !important'}}/>;
 
 const StartStopButtons = onlyUpdateForKeys(
-  ['printer'], // printerHandlers should only change when printer ids do.
-  ({printer, printerHandlers}) => {
+  // Ignore printerHandlers - they should only change when printer ids do.
+  ['printerId', 'printerState', 'printerFile'],
+  ({printerId, printerState, printerFile, printerHandlers}) => {
 
-    const start = () => printerHandlers.start(printer.id);
-    const cancel  = () => printerHandlers.cancel(printer.id);
-    const pause = () => printerHandlers.pause(printer.id);
-    const restart = () => printerHandlers.restart(printer.id);
+    const start = () => printerHandlers.start(printerId);
+    const cancel  = () => printerHandlers.cancel(printerId);
+    const pause = () => printerHandlers.pause(printerId);
+    const restart = () => printerHandlers.restart(printerId);
 
     let Start = (props) => <StartButton {...props} onClick={start}/>;
     let Resume = (props) => <ResumeButton {...props} onClick={pause}/>;
     let Stop = (props) => <StopButton {...props} onClick={cancel}/>;
     let Pause = (props) =>  <PauseButton {...props} onClick={pause}/>;
 
-    const buttons = (state) => {
-      switch (state.text) {
+    const buttons = (printerState, printerFile) => {
+      switch (printerState) {
         case 'Printing':
           return <ButtonGroup><Pause/><Placeholder/></ButtonGroup>;
         case 'Paused':
           return <ButtonGroup><Resume/><Stop/></ButtonGroup>;
         case 'Operational':
-          if(printer.job && printer.job.file.name) {
+          if(printerFile) {
             return <ButtonGroup><Start/><Placeholder/></ButtonGroup>;
           } else {
             return <ButtonGroup><Start disabled/><Placeholder/></ButtonGroup>;
@@ -66,7 +67,7 @@ const StartStopButtons = onlyUpdateForKeys(
       }
     };
 
-    return buttons(printer.state);
+    return buttons(printerState, printerFile);
   }
 );
 
