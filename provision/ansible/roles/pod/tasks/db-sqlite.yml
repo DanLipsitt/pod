@@ -1,3 +1,11 @@
+- name: create sqlite db dir
+  # SQLite writes temp files to the directory the db is in. We create
+  # a directory so we can control its permissions.
+  file:
+    path: "{{pod_virtualenv}}/lib/python3.4/site-packages/db"
+    state: directory
+    owner: "{{pod_web_user}}"
+    mode: "u=rwx,go=rx"
 - name: create sqlite db
   # Create an empty db with the proper permissions.
   # We use `copy` instead of `file` with the `touch` param because we
@@ -7,7 +15,7 @@
   # virtualenv and it's ok for now.
   copy:
     content: ""
-    dest: "{{pod_virtualenv}}/lib/python3.4/site-packages/db.sqlite3"
+    dest: "{{pod_virtualenv}}/lib/python3.4/site-packages/db/db.sqlite3"
     owner: "{{pod_web_user}}"
     mode: "u=rw,g=r,o-rwx"
     force: no

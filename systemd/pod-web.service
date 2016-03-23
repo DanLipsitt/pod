@@ -10,6 +10,7 @@ ExecStart=/opt/pod/virtualenv/bin/gunicorn pod.wsgi
 ExecReload=/bin/kill -s HUP $MAINPID
 ExecStop=/bin/kill -s TERM $MAINPID
 PrivateTmp=true
+User=daemon
 
 [Install]
 WantedBy=multi-user.target
