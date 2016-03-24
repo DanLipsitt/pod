@@ -19,11 +19,10 @@ module.exports = {
     'react',
   ],
   rules: {
-    indent: ['error', 4],
     'linebreak-style': ['error', 'unix'],
     quotes: ['error', 'single'],
     semi: ['error', 'always'],
-    indent: ['warn', 2],
+    indent: ['warn', 2, {SwitchCase: 1}],
     'comma-dangle': ['warn', 'always-multiline'],
     'no-console': ['warn'],
     'react/jsx-no-bind': ['warn'],
