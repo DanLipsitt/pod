@@ -13,6 +13,18 @@ https://docs.djangoproject.com/en/1.8/ref/settings/
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 import os
 
+
+def _enable_conditional(application, middleware=None, debug_only=False):
+    global INSTALLED_APPS, MIDDLEWARE_CLASSES
+    if debug_only and not DEBUG:
+        return
+    try:
+        __import__(application)
+        INSTALLED_APPS += (application,)
+        MIDDLEWARE_CLASSES += (middleware,) if middleware else ()
+    except ImportError:
+        pass
+
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 
@@ -44,17 +56,6 @@ INSTALLED_APPS = (
     'files',
 )
 
-
-def _enable_conditional(application):
-    global INSTALLED_APPS
-    try:
-        __import__(application)
-        INSTALLED_APPS += (application,)
-    except ImportError:
-        pass
-
-_enable_conditional('django_extensions')
-
 MIDDLEWARE_CLASSES = (
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -65,6 +66,14 @@ MIDDLEWARE_CLASSES = (
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'django.middleware.security.SecurityMiddleware',
 )
+
+OPTIONAL_APPS = (
+    # (app, middleware or none, debug-only?)
+    ('django_extensions',),
+)
+
+for app in OPTIONAL_APPS:
+    _enable_conditional(*app)
 
 ROOT_URLCONF = 'pod.urls'
 
