@@ -20,6 +20,13 @@ function fetch(url, options) {
   }, options));
 }
 
+function call_api(options) {
+  return {[CALL_API]: Object.assign({
+    method: 'GET',
+    credentials: 'same-origin',
+  }, options)};
+}
+
 /* Errors */
 
 export const handleFetchError = (response) => {
@@ -47,12 +54,10 @@ export const filesRequest = createAction('FILES_REQUEST');
 export const filesSuccess = createAction('FILES_SUCCESS');
 export const filesAdd = createAction('FILES_ADD');
 
-export const filesFetch = () => ({
-  [CALL_API]: {
-    endpoint: API_URI.clone().segment('files/').toString(),
-    method: 'GET',
-    types: ['FILES_REQUEST', 'FILES_SUCCESS', 'FILES_FAILURE'],
-  },
+export const filesFetch = () => call_api({
+  endpoint: API_URI.clone().segment('files/').toString(),
+  method: 'GET',
+  types: ['FILES_REQUEST', 'FILES_SUCCESS', 'FILES_FAILURE'],
 });
 
 /* File Transfers */
@@ -98,21 +103,19 @@ export function printersAdd(printer) {
 
 /* Printer Control */
 
-export const jobRequest = (printerId, command) => ({
-  [CALL_API]: {
-    endpoint: API_URI.clone()
-                     .segment(`printers/${printerId}/api/job/`).toString(),
-    body: JSON.stringify({command: command}),
-    method: 'POST',
-    headers: {'Content-Type': 'application/json', 'X-Api-Key': 'pod'},
-    types: ['JOB_REQUEST', 'JOB_SUCCESS', 'JOB_FAILURE'],
-  },
+export const jobRequest = (printerId, command) => call_api({
+  endpoint: API_URI.clone()
+                   .segment(`printers/${printerId}/api/job/`).toString(),
+  body: JSON.stringify({command: command}),
+  method: 'POST',
+  headers: {'Content-Type': 'application/json', 'X-Api-Key': 'pod'},
+  types: ['JOB_REQUEST', 'JOB_SUCCESS', 'JOB_FAILURE'],
 });
 
 export const fileSelect = (printerId, fileId, print=false) => {
   return (dispatch, getState) => {
     let fileName = fileById(getState(), fileId);
-    return dispatch({ [CALL_API]: {
+    return dispatch(call_api({
       endpoint: API_URI.clone()
                        .segment(`printers/${printerId}/api`)
                        .segment(`files/local/${fileName}`)
@@ -122,7 +125,7 @@ export const fileSelect = (printerId, fileId, print=false) => {
       headers: {'Content-Type': 'application/json', 'X-Api-Key': 'pod'},
       types: ['FILE_SELECT_REQUEST', 'FILE_SELECT_SUCCESS',
               'FILE_SELECT_FAILURE'],
-    }});
+    }));
   };
 };
 
