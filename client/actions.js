@@ -4,6 +4,7 @@ import {addConnection} from './octoprint/socket';
 import {bind as composeEffects} from 'redux-effects';
 import {fetch as effectsFetch} from 'redux-effects-fetch';
 import URI from 'urijs';
+import cookie from 'cookie';
 
 export const API_ROOT = '/api/';
 /* When we aren't in a browser (during testing), set the api host to a
@@ -13,13 +14,18 @@ export const API_ORIGIN = typeof(window)!=='undefined'?
 const API_URI = URI(API_ORIGIN).segment(API_ROOT);
 export const API_URL = API_URI.toString();
 
+/* stub document.cookie during testing (kludge) */
+if(typeof(document)==='undefined') var document = {cookie: ''};
+
 function fetchOptionDefaults(options) {
+  const cookies = cookie.parse(document.cookie);
   let result = Object.assign({
     method: 'GET',
     credentials: 'same-origin',
   }, options);
   result.headers = {
     'content-type': 'application/json',
+    'x-csrftoken':  cookies['csrftoken'],
   };
   for(var key in options.headers) {
     result.headers[key.toLowerCase()] = options.headers[key];
