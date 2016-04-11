@@ -70,6 +70,7 @@ MIDDLEWARE_CLASSES = (
 OPTIONAL_APPS = (
     # (app, middleware or none, debug-only?)
     ('django_extensions',),
+    ('debug_toolbar', None, True),
 )
 
 for app in OPTIONAL_APPS:
