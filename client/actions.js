@@ -13,18 +13,27 @@ export const API_ORIGIN = typeof(window)!=='undefined'?
 const API_URI = URI(API_ORIGIN).segment(API_ROOT);
 export const API_URL = API_URI.toString();
 
+function fetchOptionDefaults(options) {
+  let result = Object.assign({
+    method: 'GET',
+    credentials: 'same-origin',
+  }, options);
+  result.headers = {
+    'content-type': 'application/json',
+  };
+  for(var key in options.headers) {
+    result.headers[key.toLowerCase()] = options.headers[key];
+  }
+  return result;
+}
+
 function fetch(url, options) {
   // set defaults for fetch operations
-  return effectsFetch(url, Object.assign({
-    credentials: 'same-origin',
-  }, options));
+  return effectsFetch(url, fetchOptionDefaults(options));
 }
 
 function call_api(options) {
-  return {[CALL_API]: Object.assign({
-    method: 'GET',
-    credentials: 'same-origin',
-  }, options)};
+  return {[CALL_API]: fetchOptionDefaults(options)};
 }
 
 /* Errors */
@@ -68,7 +77,6 @@ export const fileTransfer = (fileId, printerIds) => composeEffects(
     {
       method: 'POST',
       body: JSON.stringify({file:fileId, printers:printerIds}),
-      headers: {'Content-Type': 'application/json'},
     }
   ),
   ({value}) => printerIds.map((printerId) => fileSelect(printerId, fileId))
@@ -108,7 +116,7 @@ export const jobRequest = (printerId, command) => call_api({
                    .segment(`printers/${printerId}/api/job/`).toString(),
   body: JSON.stringify({command: command}),
   method: 'POST',
-  headers: {'Content-Type': 'application/json', 'X-Api-Key': 'pod'},
+  headers: {'X-Api-Key': 'pod'},
   types: ['JOB_REQUEST', 'JOB_SUCCESS', 'JOB_FAILURE'],
 });
 
@@ -122,7 +130,7 @@ export const fileSelect = (printerId, fileId, print=false) => {
                        .toString(),
       body: JSON.stringify({command: 'select', print}),
       method: 'POST',
-      headers: {'Content-Type': 'application/json', 'X-Api-Key': 'pod'},
+      headers: {'X-Api-Key': 'pod'},
       types: ['FILE_SELECT_REQUEST', 'FILE_SELECT_SUCCESS',
               'FILE_SELECT_FAILURE'],
     }));
