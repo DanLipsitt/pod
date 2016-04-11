@@ -2,7 +2,7 @@ import {CALL_API} from 'redux-api-middleware';
 import {createAction} from 'redux-actions';
 import {addConnection} from './octoprint/socket';
 import {bind as composeEffects} from 'redux-effects';
-import {fetch} from 'redux-effects-fetch';
+import {fetch as effectsFetch} from 'redux-effects-fetch';
 import URI from 'urijs';
 
 export const API_ROOT = '/api/';
@@ -12,6 +12,13 @@ export const API_ORIGIN = typeof(window)!=='undefined'?
                           window.location.origin : 'http://example.com/';
 const API_URI = URI(API_ORIGIN).segment(API_ROOT);
 export const API_URL = API_URI.toString();
+
+function fetch(url, options) {
+  // set defaults for fetch operations
+  return effectsFetch(url, Object.assign({
+    credentials: 'same-origin',
+  }, options));
+}
 
 /* Errors */
 
