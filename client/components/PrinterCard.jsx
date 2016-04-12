@@ -45,7 +45,7 @@ class PrinterCard extends React.Component {
                 {printer.name}
               </h3>
               <small className="pull-right">
-                <a href={printer.url}>
+                <a href={printer.url} target="_blank">
                   <Glyphicon glyph="new-window"/>
                 </a>
               </small>
