@@ -9,8 +9,7 @@ import cookie from 'cookie';
 export const API_ROOT = '/api/';
 /* When we aren't in a browser (during testing), set the api host to a
  * dummy value */
-export const API_ORIGIN = typeof(window)!=='undefined'?
-                          window.location.origin : 'http://example.com/';
+export const API_ORIGIN = '//'; // current host
 const API_URI = URI(API_ORIGIN).segment(API_ROOT);
 export const API_URL = API_URI.toString();
 
