@@ -61,7 +61,7 @@ describe('fileTransfer', function() {
     const printers = ['//printer1.local/', '//printer2.local'];
     const action = a.fileTransfer(file, printers);
     action.payload.payload.url.should.equal(
-      'http://example.com/api/printers/transfer'
+      '/api/printers/transfer'
     );
   });
 
