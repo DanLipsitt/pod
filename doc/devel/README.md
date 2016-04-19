@@ -59,6 +59,7 @@ npm run playground
 
 ### Front end
 
+Javascript tests are in `client/test/*.js`
 
 ```
 npm run test
@@ -71,6 +72,8 @@ npm run test:watch
 ```
 
 ### Back end
+
+Python tests are in each django "app" (component) at `*/tests.py`
 
 Run the django test suite with
 
