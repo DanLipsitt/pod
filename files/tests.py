@@ -1,5 +1,6 @@
 from django.core.urlresolvers import reverse
 from django.core.files.uploadedfile import SimpleUploadedFile
+from django.contrib.auth.models import User
 from rest_framework.test import APITestCase
 from io import StringIO
 
@@ -7,6 +8,10 @@ from .models import PrintFile
 
 
 class TestPrintFileViewSet(APITestCase):
+
+    def setUp(self):
+        user = User.objects.create_user('test_user')
+        self.client.force_login(user)
 
     def test_upload_file(self):
         url = reverse('printfile-list')
