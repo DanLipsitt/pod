@@ -27,6 +27,7 @@
 -   [Cosmos](https://github.com/skidding/cosmos) playground
 -   Mocha
 -   Nock
+-   [Sphinx](http://www.sphinx-doc.org/) and [sphinxcontrib-httpdomain](https://pythonhosted.org/sphinxcontrib-httpdomain/) for API documentation
 
 #   Backend
 
