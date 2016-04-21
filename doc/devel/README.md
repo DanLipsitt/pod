@@ -89,6 +89,12 @@ nosy
 
 Configuration is in the `[nosy]` section of setup.cfg.
 
+# API documentation
+
+``` shellsession
+make -C doc/ html
+```
+
 # Technology
 
 There is a [list](tech.md) of some of the frameworks and libraries we are using in this project.
