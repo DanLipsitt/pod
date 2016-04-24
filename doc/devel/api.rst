@@ -12,19 +12,19 @@ Authentication
 
 HTTP API requests use Django's standard session authentication.
 
-.. http:post:: /accounts/login
+.. http:post:: /accounts/login/
 
    :formparam string username: username
    :formparam password: password
    :resheader Cookie: will contain ``sessionid``, ``session``, and
       ``csrftoken`` tokens to be used for subsequent requests.
 
-.. http:get:: /accounts/logout
+.. http:get:: /accounts/logout/
 
 Printers
 --------
 
-.. http:get:: /api/printers
+.. http:get:: /api/printers/
 
    List all printers.
 
@@ -58,7 +58,7 @@ Printers
 Files
 -----
 
-.. http:post:: /api/files
+.. http:post:: /api/files/
 
    Upload a file to the Pod Manager. The response will contain a
    unique identifier.
@@ -91,7 +91,7 @@ Files
    :resjson timestamp createdAt: upload timestamp
    :statuscode 201: success
 
-.. http:get:: /api/files
+.. http:get:: /api/files/
 
    View uploaded files.
 
