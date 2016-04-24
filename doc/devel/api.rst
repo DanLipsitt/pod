@@ -10,16 +10,16 @@ endpoint.
 Authentication
 --------------
 
-HTTP API requests use Django's standard session authentication.
+HTTP API requests use token authentication. Each user has a separate
+token which can be seen at ``/admin/authtoken/token/``.
 
-.. http:post:: /accounts/login/
+.. http:any:: /api/
 
-   :formparam string username: username
-   :formparam password: password
-   :resheader Cookie: will contain ``sessionid``, ``session``, and
-      ``csrftoken`` tokens to be used for subsequent requests.
+   The below apply to all API endpoints:
 
-.. http:get:: /accounts/logout/
+   :reqheader Authorization: Required. The format is the literal
+      string ``Token`` followed by a space and then the authentication token.
+   :statuscode 401: Authentication error.
 
 Printers
 --------
@@ -81,15 +81,15 @@ Files
         "createdAt": "2016-04-21T18:42:53.469470Z"
     }
 
-   :formparam file: gcode file
-   :formparam filename: ignored - stored filename is taken from the
+   :formparam file: GCode file.
+   :formparam filename: Ignored - stored filename is taken from the
                         multipart data.
-   :resjson int id: unique identifier
-   :resjson url restUrl: api endpoint for the object
-   :resjson url file: link to the stored file
-   :resjson string filename: the original filename of the upload
-   :resjson timestamp createdAt: upload timestamp
-   :statuscode 201: success
+   :resjson int id: Unique identifier.
+   :resjson url restUrl: API endpoint for the object.
+   :resjson url file: Link to the stored file.
+   :resjson string filename: The original filename of the upload.
+   :resjson timestamp createdAt: Upload timestamp.
+   :statuscode 201: Success.
 
 .. http:get:: /api/files/
 
