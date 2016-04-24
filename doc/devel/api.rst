@@ -40,14 +40,14 @@ Printers
     [
         {
             "id": 1,
-            "restUrl": "http://pod/api/printers/1/",
+            "restUrl": "http://pod.example.com/api/printers/1/",
             "url": "http://series1-10001:5000",
             "hostname": "series1-10001",
             "port": 5000
         },
         {
             "id": 2,
-            "restUrl": "http://pod/api/printers/2/",
+            "restUrl": "http://pod.example.com/api/printers/2/",
             "url": "http://series1-10002:5000",
             "hostname": "series1-10002",
             "port": 5001
@@ -70,13 +70,13 @@ Files
     HTTP/1.1 201 Created
     Allow: GET, POST, HEAD, OPTIONS
     Content-Type: application/json
-    Location: http://pod/api/files/22/
+    Location: http://pod.example.com/api/files/22/
     Vary: Accept
 
     {
         "id": 22,
-        "restUrl": "http://pod/api/files/22/",
-        "file": "http://pod/uploads/file.gcode",
+        "restUrl": "http://pod.example.com/api/files/22/",
+        "file": "http://pod.example.com/uploads/file.gcode",
         "filename": "file.gcode",
         "createdAt": "2016-04-21T18:42:53.469470Z"
     }
