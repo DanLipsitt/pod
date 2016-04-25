@@ -10,21 +10,21 @@ endpoint.
 Authentication
 --------------
 
-HTTP API requests use Django's standard session authentication.
+HTTP API requests use token authentication. Each user has a separate
+token which can be seen at ``/admin/authtoken/token/``.
 
-.. http:post:: /accounts/login
+.. http:any:: /api/
 
-   :formparam string username: username
-   :formparam password: password
-   :resheader Cookie: will contain ``sessionid``, ``session``, and
-      ``csrftoken`` tokens to be used for subsequent requests.
+   The below apply to all API endpoints:
 
-.. http:get:: /accounts/logout
+   :reqheader Authorization: Required. The format is the literal
+      string ``Token`` followed by a space and then the authentication token.
+   :statuscode 401: Authentication error.
 
 Printers
 --------
 
-.. http:get:: /api/printers
+.. http:get:: /api/printers/
 
    List all printers.
 
@@ -40,14 +40,14 @@ Printers
     [
         {
             "id": 1,
-            "restUrl": "http://pod/api/printers/1/",
+            "restUrl": "http://pod.example.com/api/printers/1/",
             "url": "http://series1-10001:5000",
             "hostname": "series1-10001",
             "port": 5000
         },
         {
             "id": 2,
-            "restUrl": "http://pod/api/printers/2/",
+            "restUrl": "http://pod.example.com/api/printers/2/",
             "url": "http://series1-10002:5000",
             "hostname": "series1-10002",
             "port": 5001
@@ -58,7 +58,7 @@ Printers
 Files
 -----
 
-.. http:post:: /api/files
+.. http:post:: /api/files/
 
    Upload a file to the Pod Manager. The response will contain a
    unique identifier.
@@ -70,28 +70,28 @@ Files
     HTTP/1.1 201 Created
     Allow: GET, POST, HEAD, OPTIONS
     Content-Type: application/json
-    Location: http://pod/api/files/22/
+    Location: http://pod.example.com/api/files/22/
     Vary: Accept
 
     {
         "id": 22,
-        "restUrl": "http://pod/api/files/22/",
-        "file": "http://pod/uploads/file.gcode",
+        "restUrl": "http://pod.example.com/api/files/22/",
+        "file": "http://pod.example.com/uploads/file.gcode",
         "filename": "file.gcode",
         "createdAt": "2016-04-21T18:42:53.469470Z"
     }
 
-   :formparam file: gcode file
-   :formparam filename: ignored - stored filename is taken from the
+   :formparam file: GCode file.
+   :formparam filename: Ignored - stored filename is taken from the
                         multipart data.
-   :resjson int id: unique identifier
-   :resjson url restUrl: api endpoint for the object
-   :resjson url file: link to the stored file
-   :resjson string filename: the original filename of the upload
-   :resjson timestamp createdAt: upload timestamp
-   :statuscode 201: success
+   :resjson int id: Unique identifier.
+   :resjson url restUrl: API endpoint for the object.
+   :resjson url file: Link to the stored file.
+   :resjson string filename: The original filename of the upload.
+   :resjson timestamp createdAt: Upload timestamp.
+   :statuscode 201: Success.
 
-.. http:get:: /api/files
+.. http:get:: /api/files/
 
    View uploaded files.
 
