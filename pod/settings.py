@@ -165,7 +165,7 @@ LOGGING = {
     'loggers': {
         'revproxy.view': {
             'handlers': ['console'],
-            'level': 'DEBUG',
+            'level': 'WARNING',
         },
     }
 }
