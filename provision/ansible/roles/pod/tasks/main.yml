@@ -24,7 +24,8 @@
     virtualenv: "{{pod_virtualenv}}"
     virtualenv_command: pyvenv
     state: latest
-    extra_args: "--find-links={{pod_package_dir}} --pre"
+    extra_args: --find-links={{pod_package_dir}}
+        {{'--pre' if pod_prerelease|default(False) else ''}}
     editable: false
   notify:
     - restart pod
