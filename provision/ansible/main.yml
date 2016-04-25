@@ -2,8 +2,6 @@
 - hosts: default
   become: true
   vars:
-    - pod_package: type-a-pod
-    - pod_package_dir: /tmp/pod-dist/dist
     - pod_prerelase: false
   vars_prompt:
     - name: user_typea_pass
