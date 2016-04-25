@@ -1,0 +1,3 @@
+pod_package: type-a-pod
+pod_package_dir: /tmp/pod-dist/dist
+pod_prerelease: false

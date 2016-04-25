@@ -18,13 +18,20 @@
     src: deployment_key
     dest: ~/.ssh/id_rsa
     mode: "u=r,g-rwx,o-rwx"
+- name: deploy wheels
+  synchronize:
+    src: roles/pod/files/dist
+    dest: /tmp/pod-dist
+    copy_links: true
+    checksum: true
 - name: install latest pod app
   pip:
     name: "{{pod_package}}"
     virtualenv: "{{pod_virtualenv}}"
     virtualenv_command: pyvenv
     state: latest
-    extra_args: "--find-links={{pod_package_dir}} --pre"
+    extra_args: --find-links={{pod_package_dir}}
+        {{'--pre' if pod_prerelease else ''}}
     editable: false
   notify:
     - restart pod

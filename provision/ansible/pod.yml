@@ -1,0 +1,7 @@
+---
+- hosts: default
+  become: true
+  vars:
+    - pod_prerelase: false
+  roles:
+    - pod

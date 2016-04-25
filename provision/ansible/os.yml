@@ -1,8 +1,8 @@
 ---
-- hosts: default
+# os-only install
+- hosts: pod
   become: true
-  vars:
-    - pod_prerelase: false
+  remote_user: typea
   vars_prompt:
     - name: user_typea_pass
       prompt: "new password for user 'typea'"
@@ -11,4 +11,3 @@
       encrypt: 'sha512_crypt'
   roles:
     - base
-    - pod
