@@ -3,7 +3,8 @@
   become: true
   vars:
     - pod_package: type-a-pod
-    - pod_package_dir: /vagrant/dist/
+    - pod_package_dir: /tmp/pod-dist/dist # same as production
+  # - pod_package_dir: /vagrant/dist/
     - pod_prerelase: false
   roles:
     - base

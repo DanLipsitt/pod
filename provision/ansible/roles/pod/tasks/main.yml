@@ -18,6 +18,12 @@
     src: deployment_key
     dest: ~/.ssh/id_rsa
     mode: "u=r,g-rwx,o-rwx"
+- name: deploy wheels
+  synchronize:
+    src: roles/pod/files/dist
+    dest: /tmp/pod-dist
+    copy_links: true
+    checksum: true
 - name: install latest pod app
   pip:
     name: "{{pod_package}}"
