@@ -1,14 +1,19 @@
 Pod Manager API
 ===============
 
-The API is available at ``/api``. All requests must be `authenticated
-<#authentication>`_.
+There are two parts to the Pod Manager API. Realtime `status updates
+<#realtime-printer-status>`_ are served over a websocket. Other
+information and operations are available over an HTTP API.
+
+The HTTP API is available at ``/api``. All requests must be
+`authenticated <#http-authentication>`_. Also, please note that
+trailing slashes are significant for POST requests.
 
 An interactive API viewer is available through the browser at the same
 endpoint.
 
-Authentication
---------------
+HTTP Authentication
+-------------------
 
 HTTP API requests use token authentication. Each user has a separate
 token which can be seen at ``/admin/authtoken/token/``.
@@ -96,8 +101,13 @@ Files
    View uploaded files.
 
 
-.. Printer Status
-   --------------
+Realtime Printer Status
+-----------------------
 
-   Streaming status for each printer is as described in the Octoprint
-   documentation.
+Streaming status for each printer is available from the printer
+directly (over `sockjs <https://github.com/sockjs/sockjs-client>`_ or
+a raw websocket). The `format
+<http://docs.octoprint.org/en/master/api/push.html>`_ of the messages
+is described in the OctoPrint documentation. The URLs are as follows:
+
+``ws://<printer>/sockjs/websocket``
