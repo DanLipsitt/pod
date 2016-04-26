@@ -66,7 +66,8 @@ Files
 .. http:post:: /api/files/
 
    Upload a file to the Pod Manager. The response will contain a
-   unique identifier.
+   unique identifier. The request parameters should be in
+   ``multipart/form-data`` format.
 
    **Example reponse**:
 
