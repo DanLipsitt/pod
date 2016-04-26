@@ -69,6 +69,21 @@ Files
    unique identifier. The request parameters should be in
    ``multipart/form-data`` format.
 
+   **Example request**
+
+   .. sourcecode:: http
+
+    POST /api/files/ HTTP/1.1
+    Authorization: Token 9246bc3063c6f5493a8373827a44faef19d42985
+    Content-Type: multipart/form-data; boundary=----FormBoundary
+
+    ----FormBoundary
+    Content-Disposition: form-data; name="file"; filename="file.gcode"
+    Content-Type: 
+
+    [... file data ...]
+    ----FormBoundary
+
    **Example reponse**:
 
    .. sourcecode:: http
@@ -93,7 +108,7 @@ Files
    :resjson int id: Unique identifier.
    :resjson url restUrl: API endpoint for the object.
    :resjson url file: Link to the stored file.
-   :resjson string filename: The original filename of the upload.
+   :resjson string filename: Read-only. The original filename of the upload.
    :resjson timestamp createdAt: Upload timestamp.
    :statuscode 201: Success.
 
