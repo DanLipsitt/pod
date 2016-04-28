@@ -3,6 +3,7 @@ import json
 from logging import getLogger
 from aiohttp.web import Application, HTTPNotFound, MsgType, WebSocketResponse
 from . import printer_client
+from ..files.models import PrintLog
 
 logger = getLogger('mux.server')
 
@@ -37,11 +38,21 @@ def make_listener(clients):
 
     @asyncio.coroutine
     def listener(data):
+        yield from store_event(data)
         msg = json.dumps(data)
         for ws in clients:
             ws.send_str(msg)
 
     return listener
+
+
+@asyncio.coroutine
+def store_event(data, msg):
+    # FIXME: filter types
+    PrintLog.objects.create(
+        event=data['type'],
+        orig_data=msg,
+    )
 
 
 def init(argv):

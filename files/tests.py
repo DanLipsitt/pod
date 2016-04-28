@@ -1,10 +1,12 @@
+from django.test import TestCase
 from django.core.urlresolvers import reverse
 from django.core.files.uploadedfile import SimpleUploadedFile
 from django.contrib.auth.models import User
 from rest_framework.test import APITestCase
 from io import StringIO
+import json
 
-from .models import PrintFile
+from .models import PrintFile, PrintLog
 
 
 class TestPrintFileViewSet(APITestCase):
@@ -30,3 +32,52 @@ class TestPrintFileViewSet(APITestCase):
         data = {'dummy': 1}
         resp = self.client.post(url, data)
         self.assertEqual(resp.status_code, 400)
+
+
+class TestPrintLog(TestCase):
+
+    def setUp(self):
+        self.data = [
+          {
+            "event": {
+              "type": "PrintStarted",
+              "payload": {
+                "origin": "local", "file": "/uploads/file1.gcode", "filename": "file1.gcode"
+              }
+            }
+          },
+          {
+            "event": {
+              "type": "PrintPaused",
+              "payload": {
+                "origin": "local", "file": "/uploads/file1.gcode", "filename": "file1.gcode"
+              }
+            }
+          },
+          {
+            "event": {
+              "type": "PrintResumed",
+              "payload": {
+                "origin": "local", "file": "/uploads/file1.gcode", "filename": "file1.gcode"
+              }
+            }
+          },
+          {
+            "event": {
+              "type": "PrintDone",
+              "payload": {
+                "origin": "local", "time": 235.70474815368652, "file": "/uploads/file1.gcode", "filename": "file1.gcode"
+              }
+            }
+          }
+        ]
+        self.json = [json.dumps(msg) for msg in self.data]
+
+    def test_message_data(self):
+        for d in self.data:
+            with self.subTest(type=d['event']['type']):
+                o = PrintLog.objects.create_from_msg_data(d)
+                self.assertEqual(o.filename, d['event']['payload']['filename'])
+
+    def test_message_json(self):
+        pass
