@@ -1,3 +1,4 @@
+import json
 from django.db import models
 from printers.models import Printer
 from django.contrib.auth.models import User
@@ -39,8 +40,13 @@ class PrintRun(models.Model):
 class PrintLogManager(models.Manager):
 
     def create_from_msg_data(self, data):
+        msg = json.dumps(data)
         o = self.model(
+            event=data['event']['type'],
+            host=data['host'],
+            port=data['port'],
             filename=data['event']['payload']['filename'],
+            orig_data=msg
         )
         o.save()
         return o
@@ -48,11 +54,23 @@ class PrintLogManager(models.Manager):
 
 class PrintLog(models.Model):
 
+    # Just the event types we're interested in.
+    # http://docs.octoprint.org/en/1.2.10/events/index.html#printing
+    EVENT_TYPES = (
+        ('started', 'PrintStarted'),
+        ('paused', 'PrintPaused'),
+        ('resumed', 'PrintResumed'),
+        ('cancelled', 'PrintCancelled'),
+        ('failed', 'PrintFailed'),
+        ('done', 'PrintDone'),
+    )
+
     printrun = models.ForeignKey(PrintRun, null=True)
     host = models.CharField(max_length=64)
+    port = models.IntegerField()
     filename = models.CharField(max_length=256)
     timestamp = models.DateTimeField(auto_now_add=True)
-    event = models.CharField(max_length=32)
+    event = models.CharField(max_length=32, choices=EVENT_TYPES)
     orig_data = models.TextField()
 
     def save(self, *args, **kwargs):

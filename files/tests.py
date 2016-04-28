@@ -39,6 +39,7 @@ class TestPrintLog(TestCase):
     def setUp(self):
         self.data = [
           {
+            "host": "example.com", "port": 9000,
             "event": {
               "type": "PrintStarted",
               "payload": {
@@ -47,6 +48,7 @@ class TestPrintLog(TestCase):
             }
           },
           {
+            "host": "example.com", "port": 9000,
             "event": {
               "type": "PrintPaused",
               "payload": {
@@ -55,6 +57,7 @@ class TestPrintLog(TestCase):
             }
           },
           {
+            "host": "example.com", "port": 9000,
             "event": {
               "type": "PrintResumed",
               "payload": {
@@ -63,6 +66,7 @@ class TestPrintLog(TestCase):
             }
           },
           {
+            "host": "example.com", "port": 9000,
             "event": {
               "type": "PrintDone",
               "payload": {
@@ -78,6 +82,7 @@ class TestPrintLog(TestCase):
             with self.subTest(type=d['event']['type']):
                 o = PrintLog.objects.create_from_msg_data(d)
                 self.assertEqual(o.filename, d['event']['payload']['filename'])
+                self.assertEqual(o.orig_data, json.dumps(d))
 
     def test_message_json(self):
         pass

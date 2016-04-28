@@ -48,11 +48,11 @@ def make_listener(clients):
 
 @asyncio.coroutine
 def store_event(data, msg):
-    # FIXME: filter types
-    PrintLog.objects.create(
-        event=data['type'],
-        orig_data=msg,
-    )
+    event = data['event']['type']
+    if event not in PrintLog.types:
+        logger.debug('not storing {} event'.format(event))
+        return
+    PrintLog.objects.create_from_msg_data(data)
 
 
 def init(argv):
