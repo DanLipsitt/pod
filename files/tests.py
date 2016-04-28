@@ -1,6 +1,7 @@
 from django.test import TestCase
 from django.core.urlresolvers import reverse
 from django.core.files.uploadedfile import SimpleUploadedFile
+from django.core.exceptions import ValidationError
 from django.contrib.auth.models import User
 from rest_framework.test import APITestCase
 from io import StringIO
@@ -84,5 +85,10 @@ class TestPrintLog(TestCase):
                 self.assertEqual(o.filename, d['event']['payload']['filename'])
                 self.assertEqual(o.orig_data, json.dumps(d))
 
-    def test_message_json(self):
-        pass
+    def test_wrong_type(self):
+        # real type but not one we accept
+        data = {'host': 'example.com', 'port':80,
+                'event': {'type': 'ClientOpened',
+                          'payload': {'filename': 'file.gcode'}}}
+        with self.assertRaises(ValidationError):
+            PrintLog.objects.create_from_msg_data(data)

@@ -2,7 +2,7 @@ import json
 from django.db import models
 from printers.models import Printer
 from django.contrib.auth.models import User
-
+from django.core.exceptions import ValidationError
 
 class PrintFile(models.Model):
 
@@ -48,6 +48,7 @@ class PrintLogManager(models.Manager):
             filename=data['event']['payload']['filename'],
             orig_data=msg
         )
+        o.full_clean()
         o.save()
         return o
 
@@ -57,24 +58,31 @@ class PrintLog(models.Model):
     # Just the event types we're interested in.
     # http://docs.octoprint.org/en/1.2.10/events/index.html#printing
     EVENT_TYPES = (
-        ('started', 'PrintStarted'),
-        ('paused', 'PrintPaused'),
-        ('resumed', 'PrintResumed'),
-        ('cancelled', 'PrintCancelled'),
-        ('failed', 'PrintFailed'),
-        ('done', 'PrintDone'),
+        'PrintStarted',
+        'PrintPaused',
+        'PrintResumed',
+        'PrintCancelled',
+        'PrintFailed',
+        'PrintDone',
     )
+    EVENT_CHOICES = ((item, item) for item in EVENT_TYPES)
 
-    printrun = models.ForeignKey(PrintRun, null=True)
+    printrun = models.ForeignKey(PrintRun, null=True, blank=True)
     host = models.CharField(max_length=64)
     port = models.IntegerField()
     filename = models.CharField(max_length=256)
     timestamp = models.DateTimeField(auto_now_add=True)
-    event = models.CharField(max_length=32, choices=EVENT_TYPES)
+    event = models.CharField(max_length=32, choices=EVENT_CHOICES)
     orig_data = models.TextField()
 
+    def clean(self):
+        if self.event not in self.EVENT_TYPES:
+            raise ValidationError({
+                'event': '{} is not an allowed event type.'.format(self.event)
+            })
+
     def save(self, *args, **kwargs):
-        # set the printrun
+        # FIXME: set the printrun
         super().save(*args, **kwargs)
 
     objects = PrintLogManager()
