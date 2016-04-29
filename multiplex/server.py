@@ -3,7 +3,10 @@ import json
 from logging import getLogger
 from aiohttp.web import Application, HTTPNotFound, MsgType, WebSocketResponse
 from . import printer_client
-from ..files.models import PrintLog
+
+import django
+django.setup()
+from files.models import PrintLog
 
 logger = getLogger('mux.server')
 

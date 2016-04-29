@@ -4,4 +4,4 @@ rabbitmq: ${rabbitmq__bin:-rabbitmq-server}
 celery: celery -A pod worker -l info
 frontend: PORT=${browsersync__port:-3000} npm start
 playground: npm run playground
-mux:  gunicorn -b :9000 multiplex.gunicorn:app --worker-class aiohttp.worker.GunicornWebWorker
+mux:  DJANGO_SETTINGS_MODULE=pod.settings gunicorn -b :9000 multiplex.gunicorn:app --worker-class aiohttp.worker.GunicornWebWorker
