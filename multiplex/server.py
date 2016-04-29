@@ -7,6 +7,7 @@ from . import printer_client
 import django
 django.setup()
 from files.models import PrintLog
+from printers.models import Printer
 
 logger = getLogger('mux.server')
 
@@ -68,10 +69,9 @@ def init(argv):
     app['clients'] = []
     app.router.add_route('GET', '/', ws_handler)
 
-    urls = [
-        'ws://localhost:5000/sockjs/websocket',
-        'ws://localhost:5001/sockjs/websocket',
-    ]
+    printers = Printer.objects.all()
+    urls = ['ws://{0.hostname}:{0.port}/sockjs/websocket'.format(printer)
+            for printer in printers]
 
     listener = make_listener(app['clients'])
     logger.info('starting mux client')
