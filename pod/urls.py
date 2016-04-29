@@ -13,6 +13,7 @@ admin.site.site_title = 'Type A Print Pod'
 
 api_router = routers.DefaultRouter()
 api_router.register(r'files', files.views.PrintFileViewSet)
+api_router.register(r'printlogs', files.views.PrintLogViewSet)
 api_router.register(r'printers', printers.views.PrinterViewSet)
 
 urlpatterns = [
