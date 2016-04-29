@@ -51,8 +51,10 @@ def make_listener(clients):
 
 @asyncio.coroutine
 def store_event(data):
+    if 'event' not in data:
+        return
     event = data['event']['type']
-    if event not in PrintLog.types:
+    if event not in PrintLog.EVENT_TYPES:
         logger.debug('not storing {} event'.format(event))
         return
     PrintLog.objects.create_from_msg_data(data)
