@@ -7,6 +7,7 @@ import FileList from '../components/FileList';
 import {default as TouchBackend} from 'react-dnd-touch-backend';
 import {DragDropContext} from 'react-dnd';
 import {filesFetch, filesAdd} from '../actions';
+import {printLogsFetch} from '../actions';
 import {printersFetch, jobRequest, printerSelect} from '../actions';
 import {fileTransfer} from '../actions';
 
@@ -17,6 +18,7 @@ class App extends React.Component {
     const {dispatch} = this.props;
     dispatch(printersFetch());
     dispatch(filesFetch());
+    dispatch(printLogsFetch());
   }
 
   render() {

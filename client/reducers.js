@@ -11,6 +11,12 @@ const files = handleActions({
   ],
 }, []);
 
+const printLogs = handleActions({
+  PRINT_LOGS_ADD: (state, action) => [
+    ...state, action.payload,
+  ],
+}, []);
+
 const printers = handleActions({
   PRINTERS_ADD: (state, action) => [
     ...state, printerWithDefaults(action.payload),
@@ -36,6 +42,7 @@ const errors = handleActions({
 
 export default combineReducers({
   files,
+  printLogs,
   printers,
   errors,
 });

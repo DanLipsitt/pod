@@ -83,6 +83,20 @@ export const fileTransfer = (fileId, printerIds) => composeEffects(
   ({value}) => printerIds.map((printerId) => fileSelect(printerId, fileId))
 );
 
+/* File Logs */
+
+export const printLogsAdd = createAction('PRINT_LOGS_ADD');
+
+export function printLogsFetch() {
+  return composeEffects(
+    fetch(API_URI.clone().segment('printlogs').toString(), {
+      method: 'GET',
+    }),
+    ({value}) => value.map(printLogsAdd),
+    (response) => handleFetchError(response)
+  );
+}
+
 /* Printers */
 
 export const printerSelect = createAction('PRINTER_SELECT');
