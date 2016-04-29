@@ -2,8 +2,8 @@ from django.shortcuts import render
 from django.utils.datastructures import MultiValueDictKeyError
 from rest_framework import viewsets
 
-from .models import PrintFile
-from .serializers import PrintFileSerializer
+from .models import PrintFile, PrintLog
+from .serializers import PrintFileSerializer, PrintLogSerializer
 
 
 class PrintFileViewSet(viewsets.ModelViewSet):
@@ -18,3 +18,8 @@ class PrintFileViewSet(viewsets.ModelViewSet):
             # validation will catch it.
             pass
         return super().create(request)
+
+
+class PrintLogViewSet(viewsets.ReadOnlyModelViewSet):
+    queryset = PrintLog.objects.all()
+    serializer_class = PrintLogSerializer
