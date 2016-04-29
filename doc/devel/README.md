@@ -18,7 +18,7 @@ npm install
 ./manage.py runserver & npm start
 ```
 
-## Running the server
+## Running the HTTP server
 
 ```
 ./manage.py runserver
@@ -38,6 +38,13 @@ This makes the following available:
   * A site admin interface at http://localhost:8000/admin
   * A browseable api at http://localhost:8000/api
   * The user-facing Pod app at http://localhost:8000/admin
+
+## Running the websocket server
+
+``` shellsession
+DJANGO_SETTINGS_MODULE=pod.settings python -m aiohttp.web -H localhost -P 9000 multiplex.server:init
+
+```
 
 ## Compiling the front end
 

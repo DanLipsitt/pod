@@ -22,7 +22,6 @@ urlpatterns = [
     url(r'^api/', include(api_router.urls)),
     url(r'^api-auth/',
         include('rest_framework.urls', namespace='rest_framework')),
-    url(r'^files/', include('files.urls', namespace='files')),
     url(r'^api/printers/transfer', printers.views.transfer_file),
     url(r'^api/printers/(?P<id>[0-9]+)/(?P<path>.*)$',
         printers.views.PrinterProxy.as_view(),

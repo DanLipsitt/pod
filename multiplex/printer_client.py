@@ -2,6 +2,7 @@ import asyncio
 import aiohttp
 from logging import getLogger
 import json
+from urllib.parse import urlparse
 
 logger = getLogger('mux.client')
 
@@ -30,7 +31,9 @@ def connect(session, url, listener):
             logger.error('error decoding: {}'.format(msg.data))
             next
 
-        data['source'] = url        # FIXME just need host:port
+        url_parts = urlparse(url)
+        data['host'] = url_parts.hostname
+        data['port'] = url_parts.port or 80
         # FIXME: timestamp?
         yield from listener(data)
         logger.debug(data)

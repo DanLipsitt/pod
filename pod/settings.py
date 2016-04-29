@@ -72,6 +72,7 @@ OPTIONAL_APPS = (
     # (app, middleware or none, debug-only?)
     ('django_extensions',),
     ('debug_toolbar', None, True),
+    ('django_nose', None, True),
 )
 
 for app in OPTIONAL_APPS:
@@ -174,3 +175,6 @@ LOGGING = {
         },
     }
 }
+
+if 'django_nose' in INSTALLED_APPS:
+    TEST_RUNNER = 'django_nose.NoseTestSuiteRunner'
