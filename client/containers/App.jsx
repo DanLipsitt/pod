@@ -1,9 +1,10 @@
 import React from 'react';
 import {connect} from 'react-redux';
 import 'bootstrap-webpack';
-import {Row, Col, Button, Glyphicon, Modal} from 'react-bootstrap';
+import {Row, Col, Modal} from 'react-bootstrap';
 import PrinterGrid from '../components/PrinterGrid';
 import FileList from '../components/FileList';
+import PrintLogList from '../components/PrintLogList';
 import {default as TouchBackend} from 'react-dnd-touch-backend';
 import {DragDropContext} from 'react-dnd';
 import {filesFetch, filesAdd} from '../actions';
@@ -22,7 +23,7 @@ class App extends React.Component {
   }
 
   render() {
-    const {files, printers, dispatch, errors} = this.props;
+    const {files, printLogs, printers, dispatch, errors} = this.props;
 
     const uploadHandlers = {
       success: (event, response) => dispatch(filesAdd(response)),
@@ -50,12 +51,7 @@ class App extends React.Component {
             <FileList files={files}
                       uploadHandlers={uploadHandlers}
             />
-            <div>
-              <h2><Glyphicon glyph="hourglass"/> History</h2>
-              <p><b>file5.gcode</b> completed on <b>series1-2003</b> last Wed.</p>
-              <p><b>file1.gcode</b> completed on <b>series1-2001</b> at 2pm yesterday</p>
-              <p><b>file2.gcode</b> cancelled on <b>series1-2003</b> a few seconds ago.</p>
-            </div>
+            <PrintLogList printLogs={printLogs}/>
           </Col>
           <Col sm={9}>
             <PrinterGrid printers={printers} printerHandlers={printerHandlers}
@@ -80,6 +76,7 @@ class App extends React.Component {
 function mapStateToProps(state) {
   return {
     files: state.files,
+    printLogs: state.printLogs,
     printers: state.printers,
     errors: state.errors,
   };
