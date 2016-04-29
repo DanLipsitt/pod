@@ -1,10 +1,10 @@
 import SockJS from 'sockjs-client';
 
-let connections = [];
+let directConnections = [];
 
-export function addConnection(id, url, dispatch) {
+export function addDirectConnection(id, url, dispatch) {
   let conn = new SockJS(url);
-  connections.push(conn);
+  directConnections.push(conn);
 
   conn.onopen = function() {
     console.log(`socket opened (${url})`);
