@@ -11,14 +11,12 @@ export function addConnection(id, url, dispatch) {
   };
 
   conn.onmessage = function({data}) {
-    if ('event' in data) {
-      console.log('event:', id, data.event);
-    } else if ('current' in data) {
+    if ('current' in data) {
       dispatch({type:'OCTO_CURRENT', payload:{id, ...data.current}});
     } else if ('history' in data) {
-      console.log('history:', id, data.current);
+      console.debug('history:', id, data.current);
     } else {
-      console.log('msg:', id, data);
+      console.debug('msg:', id, data);
     }
   };
 
