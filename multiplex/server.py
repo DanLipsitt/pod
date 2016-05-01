@@ -1,32 +1,19 @@
 import asyncio
 import json
+import django
+import os
+from django.conf import settings
 from logging import getLogger
 from aiohttp.web import Application, HTTPNotFound, MsgType, WebSocketResponse
 from . import printer_client
 
-import django
-from django.conf import settings
-import os
-BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-settings.configure(
-    INSTALLED_APPS=(
-        'django.contrib.auth',
-        'django.contrib.contenttypes',
-        'files',
-        'printers',
-    ),
-    DATABASES={                           # FIXME share with django
-        'default': {
-            'ENGINE': 'django.db.backends.sqlite3',
-            'NAME': os.path.join(BASE_DIR, 'db/db.sqlite3'),
-        }
-    }
-)
+logger = getLogger('mux.server')
+
+os.environ.setdefault("DJANGO_SETTINGS_MODULE", "multiplex.settings")
 django.setup()
+
 from files.models import PrintLog
 from printers.models import Printer
-
-logger = getLogger('mux.server')
 
 
 @asyncio.coroutine
