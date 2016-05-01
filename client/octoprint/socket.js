@@ -39,7 +39,7 @@ export function connectPrinterStatus(dispatch) {
 
   conn.onmessage = function(msg) {
     const data = JSON.parse(msg.data);
-    if ('event' in data) && data.event.type in eventTypes) {
+    if ('event' in data && eventTypes.includes(data.event.type)) {
       dispatch(printLogsAdd({
         event: data.event.type,
         host: data.host,
