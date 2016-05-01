@@ -35,7 +35,7 @@ def connect(session, url, listener):
         try:
             data = json.loads(msg.data)
         except TypeError:
-            logger.error('error decoding: {}'.format(msg.data))
+            logger.error('error decoding: %s', msg.data)
             continue
 
         data.update(info)

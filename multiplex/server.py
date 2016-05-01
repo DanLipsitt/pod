@@ -26,7 +26,7 @@ def ws_handler(request):
 
     yield from resp.prepare(request)
     peer_host, peer_port = request.transport.get_extra_info('peername')
-    logger.info('connected {}:{}'.format(peer_host, peer_port))
+    logger.info('connected %s:%s', peer_host, peer_port)
     request.app['clients'].append(resp)
 
     while True:
@@ -37,7 +37,7 @@ def ws_handler(request):
             break
 
     request.app['clients'].remove(resp)
-    logger.info('disconnected {}:{}'.format(peer_host, peer_port))
+    logger.info('disconnected %s:%s', peer_host, peer_port)
 
     return resp
 
@@ -60,7 +60,7 @@ def store_event(data):
         return
     event = data['event']['type']
     if event not in PrintLog.EVENT_TYPES:
-        logger.debug('not storing {} event'.format(event))
+        logger.debug('not storing %s event', event)
         return
     PrintLog.objects.create_from_msg_data(data)
 
