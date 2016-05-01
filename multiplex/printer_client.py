@@ -19,6 +19,11 @@ def connect(session, url, listener):
         listener (coroutine): Decoded messages will be passed to this.
     """
     ws = yield from session.ws_connect(url)
+
+    url_parts = urlparse(url)
+    info = {'host': url_parts.hostname,
+            'port': url_parts.port or 80}
+
     while True:
         msg = yield from ws.receive()
 
@@ -31,9 +36,7 @@ def connect(session, url, listener):
             logger.error('error decoding: {}'.format(msg.data))
             continue
 
-        url_parts = urlparse(url)
-        data['host'] = url_parts.hostname
-        data['port'] = url_parts.port or 80
+        data.update(info)
         # FIXME: timestamp?
         yield from listener(data)
         logger.debug(data)
