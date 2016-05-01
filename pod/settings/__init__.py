@@ -10,29 +10,15 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/1.8/ref/settings/
 """
 
-# Build paths inside the project like this: os.path.join(BASE_DIR, ...)
-import os
+from os import getenv
 
+# Some settings are shared with the multiplex server.
+from .common import *
 
-def _enable_conditional(application, middleware=None, debug_only=False):
-    global INSTALLED_APPS, MIDDLEWARE_CLASSES
-    if debug_only and not DEBUG:
-        return
-    try:
-        __import__(application)
-        INSTALLED_APPS += (application,)
-        MIDDLEWARE_CLASSES += (middleware,) if middleware else ()
-    except ImportError:
-        pass
+from pathlib import Path
+# Build paths inside the project like this: str(BASE_DIR / 'path')
 
-BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-
-
-# Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/1.8/howto/deployment/checklist/
-
-# SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'x$tr6zuvbr#+#$0#@_&*=5#_zfcnb^j42yovsq4dr2et*wi)7r'
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -42,7 +28,7 @@ ALLOWED_HOSTS = []
 
 # Application definition
 
-INSTALLED_APPS = (
+INSTALLED_APPS = [
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -55,9 +41,9 @@ INSTALLED_APPS = (
     'printers',
     'jobs',
     'files',
-)
+]
 
-MIDDLEWARE_CLASSES = (
+MIDDLEWARE_CLASSES = [
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
@@ -66,7 +52,7 @@ MIDDLEWARE_CLASSES = (
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'django.middleware.security.SecurityMiddleware',
-)
+]
 
 OPTIONAL_APPS = (
     # (app, middleware or none, debug-only?)
@@ -76,14 +62,14 @@ OPTIONAL_APPS = (
 )
 
 for app in OPTIONAL_APPS:
-    _enable_conditional(*app)
+    enable_conditional(INSTALLED_APPS, MIDDLEWARE_CLASSES, DEBUG, *app)
 
 ROOT_URLCONF = 'pod.urls'
 
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [os.path.join(BASE_DIR, 'templates')],
+        'DIRS': [str(BASE_DIR / 'templates')],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -97,17 +83,6 @@ TEMPLATES = [
 ]
 
 WSGI_APPLICATION = 'pod.wsgi.application'
-
-
-# Database
-# https://docs.djangoproject.com/en/1.8/ref/settings/#databases
-
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db/db.sqlite3'),
-    }
-}
 
 
 # Internationalization
@@ -129,7 +104,7 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 STATICFILES_DIRS = (
-    os.path.join(BASE_DIR, "build"),
+    str(BASE_DIR / "build"),
 )
 STATIC_ROOT = './static'
 STATICFILES_STORAGE = 'whitenoise.django.GzipManifestStaticFilesStorage'
@@ -167,7 +142,7 @@ LOGGING = {
     'loggers': {
         'django': {
             'handlers': ['console'],
-            'level': os.getenv('DJANGO_LOG_LEVEL', 'INFO'),
+            'level': getenv('DJANGO_LOG_LEVEL', 'INFO'),
         },
         'revproxy.view': {
             'handlers': ['console'],
