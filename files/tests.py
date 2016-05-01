@@ -40,7 +40,7 @@ class TestPrintLog(TestCase):
     def setUp(self):
         self.data = [
           {
-            "host": "example.com", "port": 9000,
+            "host": "pod1", "port": 5000,
             "event": {
               "type": "PrintStarted",
               "payload": {
@@ -49,7 +49,7 @@ class TestPrintLog(TestCase):
             }
           },
           {
-            "host": "example.com", "port": 9000,
+            "host": "pod1", "port": 5000,
             "event": {
               "type": "PrintPaused",
               "payload": {
@@ -58,7 +58,7 @@ class TestPrintLog(TestCase):
             }
           },
           {
-            "host": "example.com", "port": 9000,
+            "host": "pod1", "port": 5000,
             "event": {
               "type": "PrintResumed",
               "payload": {
@@ -67,7 +67,7 @@ class TestPrintLog(TestCase):
             }
           },
           {
-            "host": "example.com", "port": 9000,
+            "host": "pod1", "port": 5000,
             "event": {
               "type": "PrintDone",
               "payload": {
