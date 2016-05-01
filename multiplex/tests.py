@@ -3,7 +3,7 @@ import json
 import django.test
 from unittest.mock import Mock
 # must come before django imports so settings come from the right place
-from .server import make_listener
+from .server import make_listener, store_event
 from files.models import PrintLog
 
 class TestMultiplexListener(django.test.TestCase):
@@ -28,7 +28,7 @@ class TestMultiplexListener(django.test.TestCase):
     def tearDown(self):
         self.loop.close()
 
-    def test_listener_stores_data(self):
+    def test_listener_stores_relevant_events(self):
         expected = {
             "host": "example.com",
             "port": 9000,
@@ -47,3 +47,13 @@ class TestMultiplexListener(django.test.TestCase):
         s = json.dumps(self.data)
         for subscriber in self.subscribers:
             subscriber.send_str.assert_called_once_with(s)
+
+    def test_non_events_not_stored(self):
+        data = {'a': 1}
+        self.loop.run_until_complete(store_event(data))
+        self.assertEqual(PrintLog.objects.count(), 0)
+
+    def test_unwanted_event_types_not_stored(self):
+        self.data['event']['type'] = 'Nope'
+        self.loop.run_until_complete(store_event(self.data))
+        self.assertEqual(PrintLog.objects.count(), 0)
