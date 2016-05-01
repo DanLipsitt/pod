@@ -1,4 +1,8 @@
 import SockJS from 'sockjs-client';
+import {eventTypes} from '../components/PrintLog';
+import {printLogsAdd} from '../actions';
+
+const MUX_URL = 'ws://localhost:9000/';
 
 let directConnections = [];
 
@@ -22,6 +26,31 @@ export function addDirectConnection(id, url, dispatch) {
 
   conn.onclose = function() {
     console.log(`socket closed (${url})`);
+  };
+
+}
+
+export function connectPrinterStatus(dispatch) {
+  /* Connect to the printer mutltiplex websocket aggregator. */
+  let conn = new WebSocket(MUX_URL);
+  conn.onopen = function() {
+    console.debug(`socket opened (${MUX_URL})`);
+  };
+
+  conn.onmessage = function(msg) {
+    const data = JSON.parse(msg.data);
+    if ('event' in data) && data.event.type in eventTypes) {
+      dispatch(printLogsAdd({
+        event: data.event.type,
+        host: data.host,
+        port: data.port,
+        filename: data.event.payload.filename,
+      }));
+    }
+  };
+
+  conn.onclose = function() {
+    console.debug(`socket closed (${MUX_URL})`);
   };
 
 }

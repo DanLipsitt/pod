@@ -11,6 +11,7 @@ import {filesFetch, filesAdd} from '../actions';
 import {printLogsFetch} from '../actions';
 import {printersFetch, jobRequest, printerSelect} from '../actions';
 import {fileTransfer} from '../actions';
+import {connectPrinterStatus} from '../octoprint/socket';
 
 @connect(mapStateToProps)
 @DragDropContext(TouchBackend({enableMouseEvents: true}))
@@ -20,6 +21,7 @@ class App extends React.Component {
     dispatch(printersFetch());
     dispatch(filesFetch());
     dispatch(printLogsFetch());
+    connectPrinterStatus(dispatch);
   }
 
   render() {

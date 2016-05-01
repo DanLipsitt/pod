@@ -11,6 +11,8 @@ const events = {
     'PrintDone': <Label bsStyle="success">done</Label>,
 };
 
+export const eventTypes = Object.keys(events);
+
 var PrintLog = ({event, filename, host, timestamp}) => {
   const time = new Date(timestamp);
   const eventTag = events[event];
