@@ -1,5 +1,6 @@
 import asyncio
 import aiohttp
+from datetime import datetime
 from logging import getLogger
 import json
 from urllib.parse import urlparse
@@ -26,6 +27,7 @@ def connect(session, url, listener):
 
     while True:
         msg = yield from ws.receive()
+        info['timestamp'] = str(datetime.utcnow()) + 'Z'
 
         if msg.tp != aiohttp.MsgType.text:
             break
@@ -37,7 +39,6 @@ def connect(session, url, listener):
             continue
 
         data.update(info)
-        # FIXME: timestamp?
         yield from listener(data)
         logger.debug(data)
 

@@ -45,6 +45,7 @@ export function connectPrinterStatus(dispatch) {
         host: data.host,
         port: data.port,
         filename: data.event.payload.filename,
+        timestamp: data.timestamp,
       }));
     }
   };
