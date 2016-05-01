@@ -42,13 +42,13 @@ def ws_handler(request):
     return resp
 
 
-def make_listener(clients):
+def make_listener(subscribers):
 
     @asyncio.coroutine
     def listener(data):
         yield from store_event(data)
         msg = json.dumps(data)
-        for ws in clients:
+        for ws in subscribers:
             ws.send_str(msg)
 
     return listener
