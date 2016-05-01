@@ -29,7 +29,7 @@ def connect(session, url, listener):
             data = json.loads(msg.data)
         except TypeError:
             logger.error('error decoding: {}'.format(msg.data))
-            next
+            continue
 
         url_parts = urlparse(url)
         data['host'] = url_parts.hostname
