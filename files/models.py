@@ -41,11 +41,16 @@ class PrintLogManager(models.Manager):
 
     def create_from_msg_data(self, data):
         msg = json.dumps(data)
+        try:
+            filename = data['event']['payload']['filename']
+        except:
+            # octoprint is inconsistent
+            filename = data['event']['payload']['file']
         o = self.model(
             event=data['event']['type'],
             host=data['host'],
             port=data['port'],
-            filename=data['event']['payload']['filename'],
+            filename=filename,
             orig_data=msg
         )
         o.full_clean()
