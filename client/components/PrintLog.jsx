@@ -1,6 +1,6 @@
 import React, {PropTypes} from 'react';
 import Time from 'react-time';
-import {Label} from 'react-bootstrap';
+import {Label, ListGroupItem} from 'react-bootstrap';
 
 const events = {
     'PrintStarted': <Label bsStyle="primary">started</Label>,
@@ -16,10 +16,10 @@ export const eventTypes = Object.keys(events);
 var PrintLog = ({event, filename, host, timestamp}) => {
   const time = new Date(timestamp);
   const eventTag = events[event];
-  return <p>
-    <b>{filename}</b> {eventTag} on <b>{host}</b>
+  return <ListGroupItem header={filename}>
+    {eventTag} on <b>{host}</b>
     { } <Time value={time} relative/>
-  </p>;
+  </ListGroupItem>;
 };
 
 export default PrintLog;
