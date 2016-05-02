@@ -4,6 +4,11 @@ from datetime import datetime
 from logging import getLogger
 import json
 from urllib.parse import urlparse
+try:
+    from asyncio import ensure_future
+except ImportError:
+    # before python 3.4.4
+    from asyncio import async as ensure_future
 
 logger = getLogger('mux.client')
 
@@ -49,7 +54,7 @@ def run(urls, listener, loop=None):
     if loop is None:
         loop = asyncio.get_event_loop()
     session = aiohttp.ClientSession()
-    tasks = [asyncio.ensure_future(connect(session, url, listener))
+    tasks = [ensure_future(connect(session, url, listener))
              for url in urls]
     return tasks
 
