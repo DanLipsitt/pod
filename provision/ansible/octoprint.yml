@@ -1,0 +1,7 @@
+---
+# octoprint install
+- hosts: default
+  become: true
+  remote_user: typea
+  roles:
+    - octoprint

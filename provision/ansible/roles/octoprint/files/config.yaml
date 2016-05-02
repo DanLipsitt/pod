@@ -1,0 +1,40 @@
+accessControl:
+  enabled: false
+api:
+  key: pod
+appearance: {}
+devel:
+  virtualPrinter:
+    enabled: true
+feature: {}
+gcodeViewer: {}
+plugins:
+  discovery:
+    httpPassword: null
+    httpUsername: null
+    model:
+      description: null
+      name: Series 1
+      number: null
+      serial: null
+      url: null
+      vendor: Type A Machines
+      vendorUrl: http://www.typeamachines.com
+    pathPrefix: null
+    publicHost: null
+    publicPort: null
+    upnpUuid: null
+    zeroConf: []
+printerParameters: {}
+printerProfiles:
+  defaultProfile: {}
+serial:
+  autoconnect: true
+  port: VIRTUAL
+  timeout: {}
+server:
+  firstRun: false
+  secretKey: notsecret
+system: {}
+temperature: {}
+webcam: {}

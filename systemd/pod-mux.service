@@ -1,0 +1,18 @@
+[Unit]
+Description=Pod websocket multiplexer server
+After=network.target
+
+[Service]
+WorkingDirectory=/opt/pod
+ExecStart=/opt/pod/virtualenv/bin/gunicorn multiplex.gunicorn:app \
+ --worker-class aiohttp.worker.GunicornWebWorker \
+ --bind 127.0.0.1:9000 -b [::1]:9000 \
+ --workers 1 \
+ --name pod-mux
+ExecReload=/bin/kill -s HUP $MAINPID
+ExecStop=/bin/kill -s TERM $MAINPID
+PrivateTmp=true
+User=daemon
+
+[Install]
+WantedBy=multi-user.target
