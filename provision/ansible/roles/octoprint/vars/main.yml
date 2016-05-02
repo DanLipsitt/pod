@@ -1,0 +1,4 @@
+octoprint_home: /opt/octoprint
+octoprint_virtualenv: "{{octoprint_home}}/virtualenv"
+octoprint_user: daemon
+octoprint_ports: [5000, 5001]

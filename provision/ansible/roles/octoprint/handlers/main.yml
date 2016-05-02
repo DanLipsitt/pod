@@ -1,0 +1,5 @@
+- name: reload systemd
+  command: systemctl daemon-reload
+- name: restart octoprint
+  service: name=octoprint@{{item}} state=restarted enabled=yes
+  with_items: "{{octoprint_ports}}"
