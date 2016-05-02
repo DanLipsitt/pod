@@ -6,7 +6,8 @@ After=network.target
 
 [Service]
 WorkingDirectory=/opt/pod
-ExecStart=/opt/pod/virtualenv/bin/gunicorn pod.wsgi
+ExecStart=/opt/pod/virtualenv/bin/gunicorn pod.wsgi \
+ --name pod-web
 ExecReload=/bin/kill -s HUP $MAINPID
 ExecStop=/bin/kill -s TERM $MAINPID
 PrivateTmp=true
