@@ -1,5 +1,6 @@
 import asyncio
 import aiohttp
+from datetime import datetime
 from logging import getLogger
 import json
 from urllib.parse import urlparse
@@ -19,8 +20,14 @@ def connect(session, url, listener):
         listener (coroutine): Decoded messages will be passed to this.
     """
     ws = yield from session.ws_connect(url)
+
+    url_parts = urlparse(url)
+    info = {'host': url_parts.hostname,
+            'port': url_parts.port or 80}
+
     while True:
         msg = yield from ws.receive()
+        info['timestamp'] = str(datetime.utcnow()) + 'Z'
 
         if msg.tp != aiohttp.MsgType.text:
             break
@@ -28,13 +35,10 @@ def connect(session, url, listener):
         try:
             data = json.loads(msg.data)
         except TypeError:
-            logger.error('error decoding: {}'.format(msg.data))
-            next
+            logger.error('error decoding: %s', msg.data)
+            continue
 
-        url_parts = urlparse(url)
-        data['host'] = url_parts.hostname
-        data['port'] = url_parts.port or 80
-        # FIXME: timestamp?
+        data.update(info)
         yield from listener(data)
         logger.debug(data)
 

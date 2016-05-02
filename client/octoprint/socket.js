@@ -1,29 +1,57 @@
 import SockJS from 'sockjs-client';
+import {eventTypes} from '../components/PrintLog';
+import {printLogsAdd} from '../actions';
 
-let connections = [];
+const MUX_URL = 'ws://localhost:9000/';
 
-export function addConnection(id, url, dispatch) {
+let directConnections = [];
+
+export function addDirectConnection(id, url, dispatch) {
   let conn = new SockJS(url);
-  connections.push(conn);
+  directConnections.push(conn);
 
   conn.onopen = function() {
     console.log(`socket opened (${url})`);
   };
 
   conn.onmessage = function({data}) {
-    if ('event' in data) {
-      console.log('event:', id, data.event);
-    } else if ('current' in data) {
+    if ('current' in data) {
       dispatch({type:'OCTO_CURRENT', payload:{id, ...data.current}});
     } else if ('history' in data) {
-      console.log('history:', id, data.current);
+      console.debug('history:', id, data.current);
     } else {
-      console.log('msg:', id, data);
+      console.debug('msg:', id, data);
     }
   };
 
   conn.onclose = function() {
     console.log(`socket closed (${url})`);
+  };
+
+}
+
+export function connectPrinterStatus(dispatch) {
+  /* Connect to the printer mutltiplex websocket aggregator. */
+  let conn = new WebSocket(MUX_URL);
+  conn.onopen = function() {
+    console.debug(`socket opened (${MUX_URL})`);
+  };
+
+  conn.onmessage = function(msg) {
+    const data = JSON.parse(msg.data);
+    if ('event' in data && eventTypes.includes(data.event.type)) {
+      dispatch(printLogsAdd({
+        event: data.event.type,
+        host: data.host,
+        port: data.port,
+        filename: data.event.payload.filename,
+        timestamp: data.timestamp,
+      }));
+    }
+  };
+
+  conn.onclose = function() {
+    console.debug(`socket closed (${MUX_URL})`);
   };
 
 }

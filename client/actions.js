@@ -1,6 +1,6 @@
 import {CALL_API} from 'redux-api-middleware';
 import {createAction} from 'redux-actions';
-import {addConnection} from './octoprint/socket';
+import {addDirectConnection} from './octoprint/socket';
 import {bind as composeEffects} from 'redux-effects';
 import {fetch as effectsFetch} from 'redux-effects-fetch';
 import URI from 'urijs';
@@ -119,7 +119,7 @@ export function printersAdd(printer) {
     dispatch(_printersAdd(printer));
 
     let url = URI(printer.url).segment('sockjs').toString();
-    addConnection(printer.id, url, dispatch);
+    addDirectConnection(printer.id, url, dispatch);
     return Promise.resolve();
   };
 }

@@ -40,7 +40,7 @@ class TestPrintLog(TestCase):
     def setUp(self):
         self.data = [
           {
-            "host": "example.com", "port": 9000,
+            "host": "pod1", "port": 5000,
             "event": {
               "type": "PrintStarted",
               "payload": {
@@ -49,7 +49,7 @@ class TestPrintLog(TestCase):
             }
           },
           {
-            "host": "example.com", "port": 9000,
+            "host": "pod1", "port": 5000,
             "event": {
               "type": "PrintPaused",
               "payload": {
@@ -58,7 +58,7 @@ class TestPrintLog(TestCase):
             }
           },
           {
-            "host": "example.com", "port": 9000,
+            "host": "pod1", "port": 5000,
             "event": {
               "type": "PrintResumed",
               "payload": {
@@ -67,11 +67,20 @@ class TestPrintLog(TestCase):
             }
           },
           {
-            "host": "example.com", "port": 9000,
+            "host": "pod1", "port": 5000,
             "event": {
               "type": "PrintDone",
               "payload": {
                 "origin": "local", "time": 235.70474815368652, "file": "/uploads/file1.gcode", "filename": "file1.gcode"
+              }
+            }
+          },
+          {
+            'host': 'pod1', 'port': 5000,
+            'event': {
+              'type': 'PrintFailed',
+              'payload': {
+                 'origin': 'local', 'file': 'file1.gcode'
               }
             }
           }
@@ -82,7 +91,11 @@ class TestPrintLog(TestCase):
         for d in self.data:
             with self.subTest(type=d['event']['type']):
                 o = PrintLog.objects.create_from_msg_data(d)
-                self.assertEqual(o.filename, d['event']['payload']['filename'])
+                try:
+                    filename = d['event']['payload']['filename']
+                except KeyError:
+                    filename = d['event']['payload']['file']
+                self.assertEqual(o.filename, filename)
                 self.assertEqual(o.orig_data, json.dumps(d))
 
     def test_wrong_type(self):
