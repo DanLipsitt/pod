@@ -1,6 +1,6 @@
 import {CALL_API} from 'redux-api-middleware';
 import {createAction} from 'redux-actions';
-import {addConnection} from './octoprint/socket';
+import {addDirectConnection} from './octoprint/socket';
 import {bind as composeEffects} from 'redux-effects';
 import {fetch as effectsFetch} from 'redux-effects-fetch';
 import URI from 'urijs';
@@ -83,6 +83,20 @@ export const fileTransfer = (fileId, printerIds) => composeEffects(
   ({value}) => printerIds.map((printerId) => fileSelect(printerId, fileId))
 );
 
+/* File Logs */
+
+export const printLogsAdd = createAction('PRINT_LOGS_ADD');
+
+export function printLogsFetch() {
+  return composeEffects(
+    fetch(API_URI.clone().segment('printlogs').toString(), {
+      method: 'GET',
+    }),
+    ({value}) => value.map(printLogsAdd),
+    (response) => handleFetchError(response)
+  );
+}
+
 /* Printers */
 
 export const printerSelect = createAction('PRINTER_SELECT');
@@ -105,7 +119,7 @@ export function printersAdd(printer) {
     dispatch(_printersAdd(printer));
 
     let url = URI(printer.url).segment('sockjs').toString();
-    addConnection(printer.id, url, dispatch);
+    addDirectConnection(printer.id, url, dispatch);
     return Promise.resolve();
   };
 }

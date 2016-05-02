@@ -1,10 +1,13 @@
+from django.test import TestCase
 from django.core.urlresolvers import reverse
 from django.core.files.uploadedfile import SimpleUploadedFile
+from django.core.exceptions import ValidationError
 from django.contrib.auth.models import User
 from rest_framework.test import APITestCase
 from io import StringIO
+import json
 
-from .models import PrintFile
+from .models import PrintFile, PrintLog
 
 
 class TestPrintFileViewSet(APITestCase):
@@ -30,3 +33,75 @@ class TestPrintFileViewSet(APITestCase):
         data = {'dummy': 1}
         resp = self.client.post(url, data)
         self.assertEqual(resp.status_code, 400)
+
+
+class TestPrintLog(TestCase):
+
+    def setUp(self):
+        self.data = [
+          {
+            "host": "pod1", "port": 5000,
+            "event": {
+              "type": "PrintStarted",
+              "payload": {
+                "origin": "local", "file": "/uploads/file1.gcode", "filename": "file1.gcode"
+              }
+            }
+          },
+          {
+            "host": "pod1", "port": 5000,
+            "event": {
+              "type": "PrintPaused",
+              "payload": {
+                "origin": "local", "file": "/uploads/file1.gcode", "filename": "file1.gcode"
+              }
+            }
+          },
+          {
+            "host": "pod1", "port": 5000,
+            "event": {
+              "type": "PrintResumed",
+              "payload": {
+                "origin": "local", "file": "/uploads/file1.gcode", "filename": "file1.gcode"
+              }
+            }
+          },
+          {
+            "host": "pod1", "port": 5000,
+            "event": {
+              "type": "PrintDone",
+              "payload": {
+                "origin": "local", "time": 235.70474815368652, "file": "/uploads/file1.gcode", "filename": "file1.gcode"
+              }
+            }
+          },
+          {
+            'host': 'pod1', 'port': 5000,
+            'event': {
+              'type': 'PrintFailed',
+              'payload': {
+                 'origin': 'local', 'file': 'file1.gcode'
+              }
+            }
+          }
+        ]
+        self.json = [json.dumps(msg) for msg in self.data]
+
+    def test_message_data(self):
+        for d in self.data:
+            with self.subTest(type=d['event']['type']):
+                o = PrintLog.objects.create_from_msg_data(d)
+                try:
+                    filename = d['event']['payload']['filename']
+                except KeyError:
+                    filename = d['event']['payload']['file']
+                self.assertEqual(o.filename, filename)
+                self.assertEqual(o.orig_data, json.dumps(d))
+
+    def test_wrong_type(self):
+        # real type but not one we accept
+        data = {'host': 'example.com', 'port':80,
+                'event': {'type': 'ClientOpened',
+                          'payload': {'filename': 'file.gcode'}}}
+        with self.assertRaises(ValidationError):
+            PrintLog.objects.create_from_msg_data(data)

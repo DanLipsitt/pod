@@ -1,0 +1,14 @@
+[Unit]
+Description=Web interface for 3D printers
+
+[Service]
+WorkingDirectory={{octoprint_home}}
+DefaultInstance=5000
+ExecStart={{octoprint_home}}/virtualenv/bin/octoprint \
+ --config={{octoprint_home}}/config.yaml \
+ --basedir={{octoprint_home}}/%i \
+ --port=%i
+User={{octoprint_user}}
+
+[Install]
+WantedBy=multi-user.target

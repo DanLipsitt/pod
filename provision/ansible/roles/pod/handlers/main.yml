@@ -1,4 +1,8 @@
 - name: reload systemd
   command: systemctl daemon-reload
 - name: restart pod
-  service: name=pod-web state=restarted enabled=yes
+  service: name={{item}} state=restarted enabled=yes
+  with_items:
+    - pod-mux
+    - pod-celery
+    - pod-web

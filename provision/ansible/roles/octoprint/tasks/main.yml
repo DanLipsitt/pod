@@ -1,0 +1,38 @@
+- name: install python2 prereqs
+  apt:
+    name: "{{item}}"
+    state: present
+  with_items:
+    - python-pip
+    - python-virtualenv
+    - python-dev
+- name: install octoprint systemd scripts
+  template:
+    src: octoprint@.service.j2
+    dest: /etc/systemd/system/octoprint@.service
+- name: create octoprint home dir
+  file:
+    path: "{{octoprint_home}}"
+    state: directory
+- name: create octoprint base dirs
+  file:
+    path: "{{octoprint_home}}/{{item}}"
+    state: directory
+    owner: "{{octoprint_user}}"
+  with_items: "{{octoprint_ports}}"
+- name: install octoprint config file
+  copy:
+    src: config.yaml
+    dest: "{{octoprint_home}}/config.yaml"
+    owner: "{{octoprint_user}}"
+    mode: u=rw
+- name: install octoprint
+  pip:
+    name: git+https://bitbucket.org/typeamachines/octoprint-type-a.git
+    virtualenv: "{{octoprint_virtualenv}}"
+    executable: pip2
+    state: present
+    editable: false
+  notify:
+    - reload systemd
+    - restart octoprint

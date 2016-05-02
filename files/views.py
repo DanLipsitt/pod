@@ -2,19 +2,8 @@ from django.shortcuts import render
 from django.utils.datastructures import MultiValueDictKeyError
 from rest_framework import viewsets
 
-from .models import distribute_file, PrintFile
-from .serializers import PrintFileSerializer
-
-
-def index(request):
-    filename = 'foo'
-    printers = ['printer 1', 'printer 2', 'printer 3']
-    distribute_file(None, filename, printers)
-    context = {
-        'filename': filename,
-        'printers': printers
-    }
-    return render(request, 'files/index.htm', context)
+from .models import PrintFile, PrintLog
+from .serializers import PrintFileSerializer, PrintLogSerializer
 
 
 class PrintFileViewSet(viewsets.ModelViewSet):
@@ -29,3 +18,8 @@ class PrintFileViewSet(viewsets.ModelViewSet):
             # validation will catch it.
             pass
         return super().create(request)
+
+
+class PrintLogViewSet(viewsets.ReadOnlyModelViewSet):
+    queryset = PrintLog.objects.all()
+    serializer_class = PrintLogSerializer
