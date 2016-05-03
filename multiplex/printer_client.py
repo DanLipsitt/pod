@@ -40,13 +40,13 @@ def connect(session, url, listener):
 
         try:
             data = json.loads(msg.data)
+            data.update(info)
+            yield from listener(data)
         except TypeError:
             logger.error('error decoding: %s', msg.data)
             continue
-
-        data.update(info)
-        yield from listener(data)
-        logger.debug(data)
+        finally:
+            logger.debug(data)
 
     ws.close()
     logger.info('%s disconnected', url)
