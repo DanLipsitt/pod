@@ -4,13 +4,32 @@
 
 It is strongly recommended that you work in a python virtualenv. The easiest way to do that is with [virtualenvwrapper](https://virtualenvwrapper.readthedocs.org/en/latest/).
 
-### Install
+### Basic Install
 
 ```
 mkvirtualenv pod
 pip install -r requirements.txt
 npm install
 ```
+
+### Server provisioning
+
+* Install Debian Jessie.
+* Log in as root.
+    * Install prereqs for Ansible install.
+
+    ```shellsession
+    apt install sudo avahi-daemon
+    ```
+
+    * Run Ansible. The first time, you will need to specify the
+      password multiple times. After provisioning, sudo and ssh will
+      be set up so you don't need the extra flags.
+
+    ```shellsession
+    ansible-playbook -i inventory/pod1 provision/ansible/main.yml -u typea \
+      --ask-pass --ask-become-pass
+    ```
 
 ### Run
 
