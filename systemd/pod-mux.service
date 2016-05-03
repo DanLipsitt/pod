@@ -6,7 +6,7 @@ After=network.target
 WorkingDirectory=/opt/pod
 ExecStart=/opt/pod/virtualenv/bin/gunicorn multiplex.gunicorn:app \
  --worker-class aiohttp.worker.GunicornWebWorker \
- --bind 0.0.0.0:9000 -b [::]:9000 \
+ --bind 0.0.0.0:9000 \
  --workers 1 \
  --name pod-mux
 ExecReload=/bin/kill -s HUP $MAINPID
