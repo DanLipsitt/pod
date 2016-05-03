@@ -1,6 +1,6 @@
 ---
 # os-only install
-- hosts: pod
+- hosts: default
   become: true
   remote_user: typea
   vars_prompt:
