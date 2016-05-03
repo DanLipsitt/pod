@@ -1,5 +1,6 @@
 import asyncio
 import aiohttp
+from aiohttp.errors import ClientConnectionError
 from datetime import datetime
 from logging import getLogger
 import json
@@ -27,7 +28,7 @@ def connect(url, listener):
     try:
         ws = yield from session.ws_connect(url)
         logger.info('%s connected', url)
-    except aiohttp.errors.ClientOSError:
+    except ClientConnectionError:
         session.close()
         logger.warn('%s connection failed', url)
         return
