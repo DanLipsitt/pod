@@ -1,5 +1,6 @@
 import asyncio
 import aiohttp
+from aiohttp.errors import ClientConnectionError
 from datetime import datetime
 from logging import getLogger
 import json
@@ -14,17 +15,23 @@ logger = getLogger('mux.client')
 
 
 @asyncio.coroutine
-def connect(session, url, listener):
+def connect(url, listener):
     """Connect to a printer's websocket and forward messages to the
     given listener.
 
     Args:
-        session (aiohttp.ClientSession): Shared session between client
-          requests.
         url (str): Websocket url.
         listener (coroutine): Decoded messages will be passed to this.
     """
-    ws = yield from session.ws_connect(url)
+    session = aiohttp.ClientSession()
+
+    try:
+        ws = yield from session.ws_connect(url)
+        logger.info('%s connected', url)
+    except ClientConnectionError:
+        session.close()
+        logger.warn('%s connection failed', url)
+        return
 
     url_parts = urlparse(url)
     info = {'host': url_parts.hostname,
@@ -39,22 +46,32 @@ def connect(session, url, listener):
 
         try:
             data = json.loads(msg.data)
+            data.update(info)
+            yield from listener(data)
         except TypeError:
             logger.error('error decoding: %s', msg.data)
             continue
-
-        data.update(info)
-        yield from listener(data)
-        logger.debug(data)
+        finally:
+            logger.debug(data)
 
     ws.close()
+    session.close()
+    logger.info('%s disconnected', url)
+
+
+@asyncio.coroutine
+def reconnect(url, listener):
+
+    while True:
+        yield from connect(url, listener)
+        yield from asyncio.sleep(1)
+        logger.info('%s retrying', url)
 
 
 def run(urls, listener, loop=None):
     if loop is None:
         loop = asyncio.get_event_loop()
-    session = aiohttp.ClientSession()
-    tasks = [ensure_future(connect(session, url, listener))
+    tasks = [ensure_future(reconnect(url, listener))
              for url in urls]
     return tasks
 
