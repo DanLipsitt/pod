@@ -2,7 +2,8 @@ import SockJS from 'sockjs-client';
 import {eventTypes} from '../components/PrintLog';
 import {printLogsAdd} from '../actions';
 
-const MUX_URL = 'ws://localhost:9000/';
+const hostname = typeof window === 'undefined' ? '' : window.location.hostname;
+const MUX_URL = 'ws://' + hostname + ':9000/';
 
 let directConnections = [];
 
