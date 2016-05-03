@@ -25,6 +25,7 @@ def connect(session, url, listener):
         listener (coroutine): Decoded messages will be passed to this.
     """
     ws = yield from session.ws_connect(url)
+    logger.info('%s connected', url)
 
     url_parts = urlparse(url)
     info = {'host': url_parts.hostname,
@@ -48,13 +49,23 @@ def connect(session, url, listener):
         logger.debug(data)
 
     ws.close()
+    logger.info('%s disconnected', url)
+
+
+@asyncio.coroutine
+def reconnect(session, url, listener):
+
+    while True:
+        yield from connect(session, url, listener)
+        yield from asyncio.sleep(1)
+        logger.info('%s retrying', url)
 
 
 def run(urls, listener, loop=None):
     if loop is None:
         loop = asyncio.get_event_loop()
     session = aiohttp.ClientSession()
-    tasks = [ensure_future(connect(session, url, listener))
+    tasks = [ensure_future(reconnect(url, listener))
              for url in urls]
     return tasks
 
