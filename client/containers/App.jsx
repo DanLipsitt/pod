@@ -47,7 +47,10 @@ class App extends React.Component {
 
     return (
       <div>
-        <header><h1>Type A Machines Pod Manager</h1></header>
+        <header><h1>
+          <img src={require('../img/logo.svg')} style={{height: '1em'}}/>
+          { } Type A Machines Pod Manager
+        </h1></header>
         <Row>
           <Col sm={3}>
             <FileList files={files}
