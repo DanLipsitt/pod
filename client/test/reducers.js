@@ -59,3 +59,21 @@ describe('fatal error reducer', () => {
   });
 
 });
+
+describe('print log reducer', () => {
+
+  it('should add PrintStarted events', () => {
+    const init = {printLogs: []};
+    const item = {event: 'PrintStarted'};
+    reducer(init, a.printLogsAdd(item)).printLogs.should.deep.equal(
+      [item]
+    );
+  });
+
+  it('should drop PrintFailed events', () => {
+    const init = {printLogs: []};
+    const item = {event: 'PrintFailed'};
+    reducer(init, a.printLogsAdd(item)).printLogs.should.be.empty;
+  });
+
+});
