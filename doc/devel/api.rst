@@ -123,9 +123,9 @@ Realtime Printer Status
 -----------------------
 
 Streaming status for each printer is available over a websocket. The
-`format <http://docs.octoprint.org/en/master/api/push.html>`_ and
+`format <http://docs.octoprint.org/en/1.2.11/api/push.html>`_ and
 `payload
-<http://docs.octoprint.org/en/master/api/push.html#current-and-history-payload>`_
+<http://docs.octoprint.org/en/1.2.11/api/push.html#datamodel>`_
 of the messages is described in the OctoPrint documentation, with
 added printer identification fields as described below. The URL is as
 follows:
@@ -135,11 +135,11 @@ follows:
 Message format
 ~~~~~~~~~~~~~~
 
-The most useful printer message is the `event
-<http://docs.octoprint.org/en/master/api/push.html#id4>`_ type, which
-contains print status changes. The format is as sent by OctoPrint,
-with the addition of ``hostname``, ``port``, and ``timestamp`` fields
-at the top level:
+The most useful printer message is the `printer event
+<http://docs.octoprint.org/en/1.2.11/events/index.html#printing>`_
+type, which contains print status changes. The format is as sent by
+OctoPrint, with the addition of ``hostname``, ``port``, and
+``timestamp`` fields at the top level:
 
 .. code-block:: json
 
