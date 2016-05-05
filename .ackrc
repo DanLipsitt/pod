@@ -1,6 +1,7 @@
 --ignore-directory=is:build
 --ignore-directory=is:_build
 --ignore-directory=is:junk
+--ignore-directory=is:uploads
 --ignore-directory=is:type_a_pod.egg-info
 --ignore-file=match:bundle.*.js
 --ignore-file=match:TAGS
