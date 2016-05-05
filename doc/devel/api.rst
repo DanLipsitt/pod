@@ -1,3 +1,5 @@
+[last updated |today|]
+
 Pod Manager API
 ===============
 
