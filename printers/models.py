@@ -2,6 +2,7 @@ from django.db import models
 
 
 class Printer(models.Model):
+    name = models.CharField(max_length=64)
     hostname = models.CharField(max_length=255)
     port = models.IntegerField(default=5000)
 
