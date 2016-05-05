@@ -74,9 +74,6 @@ class PrinterCard extends React.Component {
               printerState={printer.state.text}
               printerFile={printer.job ? printer.job.file.name : null}
           />
-          <ButtonGroup>
-            <Button><Glyphicon glyph="cd" /> Filament</Button>
-          </ButtonGroup>
         </ButtonToolbar>
       </Panel>
     );
