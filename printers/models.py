@@ -7,7 +7,7 @@ class Printer(models.Model):
     port = models.IntegerField(default=5000)
 
     def __str__(self):
-        return self.hostname
+        return self.name or self.hostname
 
     @property
     def url(self):

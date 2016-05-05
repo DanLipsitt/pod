@@ -13,7 +13,7 @@ var PrinterGrid = ({printers, printerHandlers, doTransferFile}) => {
     {rows.map((row, i) =>
       <Row key={i}>
         {row.map(printer => {
-          printer.name = `${printer.hostname}:${printer.port}`;
+          printer.name = printer.name || `${printer.hostname}:${printer.port}`;
           return <Col sm={4} key={printer.id}>
             <PrinterCard printer={printer} printerHandlers={printerHandlers}
                          onDrop={doTransferFile}/>

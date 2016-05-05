@@ -7,4 +7,4 @@ class PrinterSerializer(serializers.HyperlinkedModelSerializer):
 
     class Meta:
         model = Printer
-        fields = ('id', 'restUrl', 'url', 'hostname', 'port')
+        fields = ('id', 'name', 'restUrl', 'url', 'hostname', 'port')
