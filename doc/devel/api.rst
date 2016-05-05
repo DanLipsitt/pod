@@ -122,10 +122,58 @@ Files
 Realtime Printer Status
 -----------------------
 
-Streaming status for each printer is available from the printer
-directly (over `sockjs <https://github.com/sockjs/sockjs-client>`_ or
-a raw websocket). The `format
-<http://docs.octoprint.org/en/master/api/push.html>`_ of the messages
-is described in the OctoPrint documentation. The URLs are as follows:
+Streaming status for each printer is available over a websocket. The
+`format <http://docs.octoprint.org/en/master/api/push.html>`_ and
+`payload
+<http://docs.octoprint.org/en/master/api/push.html#current-and-history-payload>`_
+of the messages is described in the OctoPrint documentation, with
+added printer identification fields as described below. The URL is as
+follows:
 
-``ws://<printer>/sockjs/websocket``
+``ws://<pod hostname>:9000/``
+
+Message format
+~~~~~~~~~~~~~~
+
+The most useful printer message is the `event
+<http://docs.octoprint.org/en/master/api/push.html#id4>`_ type, which
+contains print status changes. The format is as sent by OctoPrint,
+with the addition of ``hostname``, ``port``, and ``timestamp`` fields
+at the top level:
+
+.. code-block:: json
+
+   {
+     "host": "localhost",
+     "timestamp": "2016-05-03 20:11:39.915133Z",
+     "event": {
+       "payload": {
+         "file": "/uploads/file.gcode",
+         "origin": "local",
+         "filename": "file.gcode"
+       },
+       "type": "PrintStarted"
+     },
+     "port": 5000
+   }
+
+
+The following types of ``event`` message are the most relevant:
+
+* ``PrintStarted``
+* ``PrintPaused``
+* ``PrintResumed``
+* ``PrintCancelled``
+* ``PrintDone``
+
+.. warning:: The format of the messages that OctoPrint sends does not
+             match its documentation in the following way: the
+             ``file`` field contains a full path to the uploaded
+             file. there is a separate ``filename`` field that
+             contains just the filename.
+
+.. note:: The ``PrintFailed`` is not as useful as it looks. OctoPrint
+          sends it every time a print is cancelled, so it is redundant
+          with the PrintCancelled event. In addition, differs from the
+          other events in that it uses the ``file`` field instead of
+          the ``filename`` field.
