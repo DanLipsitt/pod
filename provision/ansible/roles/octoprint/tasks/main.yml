@@ -26,6 +26,8 @@
     dest: "{{octoprint_home}}/config.yaml"
     owner: "{{octoprint_user}}"
     mode: u=rw
+  notify:
+    - restart octoprint
 - name: install octoprint
   pip:
     name: git+https://bitbucket.org/typeamachines/octoprint-type-a.git
