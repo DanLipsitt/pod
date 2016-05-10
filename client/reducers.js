@@ -40,11 +40,25 @@ const printers = handleActions({
       printer
     ))
   ),
+  FILE_TRANSFER_STARTED: (state, action) => (
+    state.map(printer => (
+      action.payload.printerIds.includes(printer.id) ?
+      Object.assign({}, printer, {transferPending: true}) :
+      printer
+    ))
+  ),
+  FILE_SELECT_SUCCESS: (state, action) => (
+    state.map(printer => (
+      printer.id == action.payload.printerId ?
+      Object.assign({}, printer, {transferPending: false}) :
+      printer
+    ))
+  ),
   ...printerReducers,
 }, []);
 
 const printerWithDefaults = (data) =>
-  Object.assign({state: {text: 'Offline'}}, data);
+  Object.assign({state: {text: 'Offline'}, transferPending: false}, data);
 
 const errors = handleActions({
   FATAL_ERROR: (state, action) => (

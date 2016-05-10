@@ -72,16 +72,21 @@ export const filesFetch = () => call_api({
 
 /* File Transfers */
 
-export const fileTransfer = (fileId, printerIds) => composeEffects(
-  fetch(
-    API_URI.clone().segment('printers/transfer').toString(),
-    {
-      method: 'POST',
-      body: JSON.stringify({file:fileId, printers:printerIds}),
-    }
+export const fileTransferStarted = createAction('FILE_TRANSFER_STARTED');
+
+export const fileTransfer = (fileId, printerIds) => [
+  fileTransferStarted({printerIds, fileId}),
+  composeEffects(
+    fetch(
+      API_URI.clone().segment('printers/transfer').toString(),
+      {
+        method: 'POST',
+        body: JSON.stringify({file:fileId, printers:printerIds}),
+      }
+    ),
+    ({value}) => printerIds.map((printerId) => fileSelect(printerId, fileId))
   ),
-  ({value}) => printerIds.map((printerId) => fileSelect(printerId, fileId))
-);
+];
 
 /* File Logs */
 
@@ -146,7 +151,9 @@ export const fileSelect = (printerId, fileId, print=false) => {
       body: JSON.stringify({command: 'select', print}),
       method: 'POST',
       headers: {'X-Api-Key': 'pod'},
-      types: ['FILE_SELECT_REQUEST', 'FILE_SELECT_SUCCESS',
+      types: ['FILE_SELECT_REQUEST',
+              {type: 'FILE_SELECT_SUCCESS',
+               payload: (action, state, response) => ({printerId})},
               'FILE_SELECT_FAILURE'],
     }));
   };
