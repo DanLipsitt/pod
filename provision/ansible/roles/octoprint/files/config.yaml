@@ -6,6 +6,7 @@ appearance: {}
 devel:
   virtualPrinter:
     enabled: true
+    rxBuffer: 1024              # prevent underflows
 feature: {}
 gcodeViewer: {}
 plugins:
