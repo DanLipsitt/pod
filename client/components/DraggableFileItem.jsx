@@ -30,9 +30,12 @@ class DraggableFileItem extends Component {
     connectDragSource: PropTypes.func.isRequired,
   });
   render() {
-    return <FileItem {...this.props}
-    style={{opacity: this.props.isDragging ? 0.4 : 1.0}}
-            ref={el => this.props.connectDragSource(findDOMNode(el))}/>;
+    const style = {
+      opacity: this.props.isDragging ? 0.4 : 1.0,
+      cursor: 'move',
+    };
+    return <FileItem {...this.props} style={style}
+                                     ref={el => this.props.connectDragSource(findDOMNode(el))}/>;
   }
 }
 
