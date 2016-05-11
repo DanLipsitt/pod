@@ -4,11 +4,16 @@ from printers.models import Printer
 from django.contrib.auth.models import User
 from django.core.exceptions import ValidationError
 
+
 class PrintFile(models.Model):
 
     file = models.FileField()
     filename = models.CharField(max_length=256)
     createdAt = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        get_latest_by = 'createdAt'
+        ordering = ['-createdAt']
 
 
 class PrintRunManager(models.Manager):
@@ -91,3 +96,7 @@ class PrintLog(models.Model):
         super().save(*args, **kwargs)
 
     objects = PrintLogManager()
+
+    class Meta:
+        get_latest_by = 'timestamp'
+        ordering = ['-timestamp']
