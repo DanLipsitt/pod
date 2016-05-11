@@ -76,4 +76,10 @@ describe('print log reducer', () => {
     reducer(init, a.printLogsAdd(item)).printLogs.should.be.empty;
   });
 
+  it('should add new items to the head of the list' , () => {
+    const init = {printLogs: [{event: 'PrintStarted', timestamp: 1}]};
+    const item = {event: 'PrintStarted', timestamp: 2};
+    const result = reducer(init, a.printLogsAdd(item)).printLogs[0];
+    result.should.equal(item);
+  });
 });

@@ -17,7 +17,7 @@ const printLogs = handleActions({
     stopped print to be a failure and sends both a stop and a fail
     event. */
     action.payload.event === 'PrintFailed' ?
-      state : [...state, action.payload],
+      state : [action.payload, ...state],
 }, []);
 
 const printers = handleActions({
