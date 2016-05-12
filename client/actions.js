@@ -92,7 +92,7 @@ export function printLogsFetch() {
     fetch(API_URI.clone().segment('printlogs').toString(), {
       method: 'GET',
     }),
-    ({value}) => value.map(printLogsAdd),
+    ({value}) => printLogsAdd(value),
     (response) => handleFetchError(response)
   );
 }

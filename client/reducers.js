@@ -12,12 +12,21 @@ const files = handleActions({
 }, []);
 
 const printLogs = handleActions({
-  PRINT_LOGS_ADD: (state, action) =>
+  PRINT_LOGS_ADD: (state, action) => {
     /* Store all events except PrintFailed. Octoprint considers a
     stopped print to be a failure and sends both a stop and a fail
-    event. */
-    action.payload.event === 'PrintFailed' ?
-      state : [action.payload, ...state],
+       event. */
+
+    const items = (
+      // If input is a single item, stuff it into an array.
+      action.payload instanceof Array ? action.payload : [action.payload]
+    ).filter(
+      // filter out PrintFailed events
+      item => item.event !== 'PrintFailed'
+    );
+
+    return [...items, ...state];
+  },
 }, []);
 
 const printers = handleActions({

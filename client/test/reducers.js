@@ -82,4 +82,12 @@ describe('print log reducer', () => {
     const result = reducer(init, a.printLogsAdd(item)).printLogs[0];
     result.should.equal(item);
   });
+
+  it('should accept multiple items at once', () => {
+    const init = {printLogs: []};
+    const item = [{event: 'PrintStarted'}, {event: 'PrintPaused'}];
+    reducer(init, a.printLogsAdd(item)).printLogs.should.deep.equal(
+      item
+    );
+  });
 });
