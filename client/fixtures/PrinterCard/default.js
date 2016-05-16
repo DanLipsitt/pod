@@ -1,16 +1,19 @@
-module.exports = {
-  printer: {
+export const printer = {
     id: 1,
     name: 'Printer 1',
     state: {text: 'Operational'},
     job: {
       file: {name: 'file.gcode'},
     },
-  },
-  printerHandlers: {
+}
+
+export const  printerHandlers = {
     start: () => null,
     stop: () => null,
     pause: () => null,
-  },
-  connectDropTarget: function() {},
-};
+}
+
+export const connectDropTarget = function() {};
+
+export const isOver = false;
+export const canDrop = true;
