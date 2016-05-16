@@ -1,9 +1,2 @@
-module.exports = {
-  printer: {
-    id: '1',
-    name: 'Printer 1',
-  },
-  connectDropTarget: function() {},
-  canDrop: false,
-  isOver: true
-};
+export * from './no-can-drop';
+export const isOver = true;
