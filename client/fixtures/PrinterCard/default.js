@@ -5,6 +5,7 @@ export const printer = {
     job: {
       file: {name: 'file.gcode'},
     },
+    transferPending: false,
 }
 
 export const  printerHandlers = {

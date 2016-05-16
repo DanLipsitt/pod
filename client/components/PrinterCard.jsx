@@ -13,6 +13,7 @@ class PrinterCard extends React.Component {
       job: PropTypes.object.isRequired,
       name: PropTypes.string.isRequired,
       state: PropTypes.object.isRequired,
+      transferPending: PropTypes.bool.isRequired,
     }),
     printerHandlers: PropTypes.object.isRequired,
     /* drag and drop */
@@ -23,11 +24,21 @@ class PrinterCard extends React.Component {
 
   static defaultProps = {
     canDrop: true,
+    transferPending: false,
   };
 
   handleSelect(event) {
     const {printer, printerHandlers} = this.props;
     printerHandlers.select(printer.id, event.target.checked);
+  }
+
+  fileDisplay(printer) {
+    if(printer.transferPending) {
+      return 'transferring...'; //<img/>;
+    } else {
+      return printer.job && printer.job.file.name ?
+             printer.job.file.name : 'No file loaded.';
+    }
   }
 
   render() {
@@ -65,7 +76,7 @@ class PrinterCard extends React.Component {
            <span/>}
         </Panel>
         <p>
-          {printer.job && printer.job.file.name ? printer.job.file.name : 'No file loaded.'}
+          {this.fileDisplay(printer)}
         </p>
         <ButtonToolbar>
           <StartStopButtons
