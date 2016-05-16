@@ -27,7 +27,7 @@ def ws_handler(request):
     yield from resp.prepare(request)
     peer_host, peer_port = request.transport.get_extra_info('peername')
     logger.info('connected %s:%s', peer_host, peer_port)
-    request.app['clients'].append(resp)
+    request.app['subscribers'].append(resp)
 
     while True:
         msg = yield from resp.receive()
@@ -36,7 +36,7 @@ def ws_handler(request):
         if msg.tp != MsgType.text:
             break
 
-    request.app['clients'].remove(resp)
+    request.app['subscribers'].remove(resp)
     logger.info('disconnected %s:%s', peer_host, peer_port)
 
     return resp
@@ -70,14 +70,14 @@ def init(argv):
     logging.basicConfig(level=logging.INFO)
 
     app = Application()
-    app['clients'] = []
+    app['subscribers'] = []
     app.router.add_route('GET', '/', ws_handler)
 
     printers = Printer.objects.all()
     urls = ['ws://{0.hostname}:{0.port}/sockjs/websocket'.format(printer)
             for printer in printers]
 
-    listener = make_listener(app['clients'])
+    listener = make_listener(app['subscribers'])
     logger.info('starting mux client')
     printer_client.run(urls, listener)
     logger.info('mux client started')
