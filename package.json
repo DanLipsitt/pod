@@ -4,7 +4,7 @@
   "description": "Type A Machines Pod interface.",
   "main": "index.js",
   "scripts": {
-    "test": "mocha-webpack --webpack-config webpack.config.test.js --recursive client/test/ --glob '*.js{,x}'",
+    "test": "mocha-webpack --webpack-config webpack.config.test.js --require jsdom-global/register --recursive client/test/ --glob '*.js{,x}'",
     "test:watch": "npm test -- --watch",
     "lint": "eslint client/",
     "sockjs-log": "babel-node sockjs-logger.js -- ",
@@ -73,6 +73,8 @@
     "file-loader": "^0.8.4",
     "imports-loader": "^0.6.5",
     "jquery": "^2.1.4",
+    "jsdom": "9.1.0",
+    "jsdom-global": "2.0.0",
     "less": "^2.5.3",
     "less-loader": "^2.2.1",
     "mocha": "^2.3.4",
