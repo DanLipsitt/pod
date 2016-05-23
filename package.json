@@ -4,7 +4,7 @@
   "description": "Type A Machines Pod interface.",
   "main": "index.js",
   "scripts": {
-    "test": "mocha-webpack --webpack-config webpack.config.test.js --recursive client/test/",
+    "test": "mocha-webpack --webpack-config webpack.config.test.js --recursive client/test/ --glob '*.js{,x}'",
     "test:watch": "npm test -- --watch",
     "lint": "eslint client/",
     "sockjs-log": "babel-node sockjs-logger.js -- ",
