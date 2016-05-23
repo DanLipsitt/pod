@@ -4,7 +4,7 @@
   "description": "Type A Machines Pod interface.",
   "main": "index.js",
   "scripts": {
-    "test": "mocha --compilers js:babel/register --recursive client/test/",
+    "test": "mocha-webpack --webpack-config webpack.config.test.js --recursive client/test/",
     "test:watch": "npm test -- --watch",
     "lint": "eslint client/",
     "sockjs-log": "babel-node sockjs-logger.js -- ",
@@ -76,6 +76,7 @@
     "less": "^2.5.3",
     "less-loader": "^2.2.1",
     "mocha": "^2.3.4",
+    "mocha-webpack": "^0.3.1",
     "nock": "^7.5.0",
     "postcss-loader": "^0.7.0",
     "postcss-nested": "^1.0.0",
@@ -88,6 +89,7 @@
     "url-loader": "^0.5.6",
     "webpack": "^1.12.2",
     "webpack-dev-middleware": "^1.2.0",
-    "webpack-hot-middleware": "^2.5.0"
+    "webpack-hot-middleware": "^2.5.0",
+    "webpack-node-externals": "^1.2.0"
   }
 }
