@@ -9,7 +9,7 @@ const printerCardTarget = {
   },
 
   canDrop(props, monitor) {
-    return true;
+    return ! (props.printer.state && props.printer.state.text == 'Offline');
   },
 };
 
